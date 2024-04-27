@@ -1,0 +1,13 @@
+[
+  {
+    "text": "My Account",
+    "icon": "../../public/icon/account.svg",
+    "link": "/dashboard/my-account"
+  },
+  { "text": "Orders", "icon": "../../public/icon/order.svg", "link": "/dashboard/orders" },
+  {
+    "text": "Saved Items",
+    "icon": "../../public/icon/heart.svg",
+    "link": "/dashboard/saved-items"
+  }
+]

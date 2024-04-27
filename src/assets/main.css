@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./fonts/montserrat-v25-latin-regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserratbold';
+  src: url('./fonts/Montserrat-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'PokemonHollow';
+  src: url('./fonts/PokemonHollow.woff') format('woff');
+  font-weight: bold;
+  /* font-style: normal; */
+}
+@font-face {
+  font-family: 'PokemonSolid';
+  src: url('./fonts/PokemonSolid.woff') format('woff');
+  font-weight: bold;
+  /* font-style: normal; */
+}
+
+body,
+div {
+  font-family: 'Montserrat' !important;
+}
+.font2 {
+  font-family: 'Montserratbold' !important;
+}
+.font_logo {
+  font-family: 'PokemonHollow' !important;
+}
+.font_logo2 {
+  font-family: 'PokemonSolid' !important;
+}
