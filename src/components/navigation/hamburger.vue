@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <div class="container" id="app">
-      <div class="menu-wrapper" @click="openMenu = !openMenu" :class="{ active: openMenu }">
+  <div @click="openMenu = !openMenu" :class="{ active: openMenu }">
+    <div class="" id="app">
+      <div class="menu-wrapper">
         <div class="menu-bar one"></div>
         <div class="menu-bar two"></div>
       </div>
@@ -17,7 +17,7 @@ const openMenu = ref(false)
 
 <style scoped>
 .menu-wrapper {
-  width: 35px;
+  width: 30px;
   /* height: auto; */
   cursor: pointer;
   position: relative;
@@ -39,13 +39,13 @@ const openMenu = ref(false)
 }
 
 .one {
-  top: 0px;
+  top: -0.5rem;
   animation-delay: 0.1s;
   transition: all 0.3s;
 }
 
 .two {
-  top: 8px;
+  top: 0rem;
   transition: all 0.3s;
 }
 
@@ -80,13 +80,36 @@ const openMenu = ref(false)
   animation: none;
 }
 .active .one {
-  top: 50%;
+  top: 0rem;
   left: 0%;
   transform: rotate(45deg);
 }
 .active .two {
-  top: 50%;
+  top: 0rem;
   left: 0%;
   transform: rotate(-45deg);
+}
+
+@media (max-width: 640px) {
+  .active .one {
+    top: 1.3rem;
+    left: 0%;
+    transform: rotate(45deg);
+  }
+  .active .two {
+    top: 1.3rem;
+    left: 0%;
+    transform: rotate(-45deg);
+  }
+  .one {
+    top: 1rem;
+    animation-delay: 0.1s;
+    transition: all 0.3s;
+  }
+
+  .two {
+    top: 1.3rem;
+    transition: all 0.3s;
+  }
 }
 </style>

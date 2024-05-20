@@ -5,12 +5,14 @@
     >
       <!-- full name -->
       <div>
-        <div class="flex items-center py-3" v-if="$isAuthenticated">
-          <div class="font2 rounded-full bg-yellow-400 py-2 px-4">
-            <span class="text-black">{{ first_name.charAt(0) }}</span>
+        <div class="flex items-center py-3" v-if="isLoggedIn && store.user.userInfo">
+          <div>
+            <UserCircle>
+              <span class="text-black">{{ store.user.userInfo.first_name.charAt(0) }}</span>
+            </UserCircle>
           </div>
           <div class="text-sm font2 px-3">
-            <span>{{ full_name }}</span>
+            <span>{{ store.user.userInfo.first_name + ' ' + store.user.userInfo.last_name }}</span>
           </div>
         </div>
       </div>
@@ -28,7 +30,7 @@
           </div>
         </router-link>
       </div>
-      <div v-if="!$isAuthenticated" role="button" class="text-sm font2 text-black px-3 my-2">
+      <div v-if="!isLoggedIn" role="button" class="text-sm font2 text-black px-3 my-2">
         <router-link to="Login">
           <AuthButtons>
             <span>Sign in</span>
@@ -52,7 +54,9 @@
 </template>
 
 <script setup>
+import UserCircle from '@/components/slots/UserCircle.vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'
+import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { useUserStore } from '@/stores/Authentication'
@@ -60,13 +64,14 @@ import User_Data from '../../json/user_drop_down.json'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
+const isLoggedIn = useIsLoggedIn()
 const router = useRouter()
 const store = useUserStore()
 // const user = store.user.userData
 const successMsg = ref('')
 const errorsInfo = ref({})
-const first_name = store.user.userInfo.first_name
-const full_name = store.user.userInfo.first_name + ' ' + store.user.userInfo.last_name
+// const first_name = store.user.userInfo.first_name
+// const full_name = store.user.userInfo.first_name + ' ' + store.user.userInfo.last_name
 
 function logout() {
   const id = toast.loading('Logging out...')

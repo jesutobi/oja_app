@@ -59,6 +59,7 @@ export const useUserStore = defineStore('user', () => {
       const response = await axiosClient.post('/logout')
       localStorage.removeItem('TOKEN')
       localStorage.removeItem('USER')
+      localStorage.removeItem('verfiedUser')
       // pinia.state.value = INITIAL_STATE
 
       // Set token to null in the store

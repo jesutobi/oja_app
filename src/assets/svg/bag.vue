@@ -5,7 +5,7 @@
       viewBox="0 0 1024 1024"
       fill=""
       stroke=""
-      class="icon"
+      class="width"
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -20,4 +20,10 @@
 
 <script setup></script>
 
-<style scoped></style>
+<style scoped>
+@media (max-width: 640px) {
+  .width {
+    width: 25px !important;
+  }
+}
+</style>

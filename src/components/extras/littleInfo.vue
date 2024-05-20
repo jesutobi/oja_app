@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="text-xs flex items-center p-3">
+    <div class="text-xs text-gray-500 flex items-center py-3">
       <div>
         <img src="@/assets/icon/info.svg" style="width: 15px" alt="" />
       </div>
-      <div class="px-2">
+      <div class="px-1">
         <span>{{ text }}</span>
       </div>
     </div>
@@ -18,4 +18,4 @@ const props = defineProps({
 
 const text = props.text
 </script>
-<style lang=""></style>
+<style scoped></style>

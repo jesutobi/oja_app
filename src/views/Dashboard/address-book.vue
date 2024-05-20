@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div class="flex justify-center h-[70vh]">
-      <div>
-        <span class="font2 text-[5rem]">Address-Book</span>
-      </div>
+    <div>
+      <Form />
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import Form from '@/components/Dashboard/address_form.vue'
+</script>
 
 <style></style>

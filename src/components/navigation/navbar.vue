@@ -1,35 +1,53 @@
 <template>
   <div class="relative">
-    <div class="py-4 px-7 relative shadow-md">
+    <div class="min-[640px]:py-[2rem] py-[1rem] px-7 max-[640px]:px-4 relative shadow-md">
       <div class="">
         <div class="flex items-center justify-between">
-          <!--hamburger -->
-          <div><Hamburger /></div>
+          <div class="flex">
+            <!--hamburger -->
+            <div><Hamburger /></div>
+            <!-- mob logo -->
+            <div
+              class="font_logo min-[640px]:hidden px-4 max-[640px]:text-[1.8rem] text-black-400 text-[2.5rem]"
+            >
+              <router-link to="/"> <span>OJA</span></router-link>
+            </div>
+          </div>
           <!-- logo -->
-          <div class="font_logo text-black-400 text-[2.5rem]">
+          <div
+            class="font_logo max-[640px]:text-[2rem] max-[640px]:hidden text-black-400 text-[2.5rem] absolute left-1/2 transform -translate-x-1/2"
+          >
             <router-link to="/"> <span>OJA</span></router-link>
           </div>
           <div class="flex items-center font2 cursor-pointer">
             <div>
-              <Search @click="openSearchModal" :color="`#000000`" />
+              <IconHover>
+                <Search @click="openSearchModal" :color="`#000000`" />
+              </IconHover>
             </div>
 
             <!-- cart -->
-            <div><Bag /></div>
+            <div class="">
+              <IconHover><Bag /></IconHover>
+            </div>
             <!-- userdropdown -->
-            <div>
-              <div @click="dropUser()" class="mx-1">
-                <div v-if="$isAuthenticated" class="rounded-full bg-yellow-400 font2 py-2 px-4">
-                  <span class="text-black">{{ user.charAt(0) }}</span>
+            <div class="group">
+              <div class="mx-1 group-hover:block">
+                <div v-if="isLoggedIn && store.user.userInfo">
+                  <IconHover>
+                    <UserCircle>
+                      <span class="text-black">{{ store.user.userInfo.first_name.charAt(0) }}</span>
+                    </UserCircle>
+                  </IconHover>
                 </div>
                 <div v-else><User :width="'28px'" /></div>
               </div>
 
               <div
-                v-if="DropdownVar"
-                class="z-40 fixed right-[2rem] top-[6rem] animate__animated animate__fadeInUp animate__faster"
+                class="z-40 fixed group-hover:block hidden right-[2rem] top-[3rem] animate__animated animate__fadeInUp animate__faster"
               >
-                <Dropdown />
+                <div class="bg-transparent h-[3rem]"></div>
+                <Dropdown class="group-hover:block" />
               </div>
             </div>
           </div>
@@ -51,9 +69,12 @@ import Dropdown from './dropDown.vue'
 import Bag from '@/components/navigation/cart.vue'
 import Search from '@/assets/svg/search.vue'
 import User from '@/assets/svg/user.vue'
+import IconHover from '@/components/slots/iconHover.vue'
+import UserCircle from '@/components/slots/UserCircle.vue'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/Authentication'
 import SearchM from '../homepage/searchPage.vue'
+import { useIsLoggedIn } from '@/composables/isAuhenticated'
 
 const searchVisibility = ref(false)
 
@@ -70,11 +91,13 @@ const DropdownVar = ref(false)
 
 const store = useUserStore()
 
-const user = store.user.userInfo.first_name
+// const user = store.user.userInfo.first_name
 // console.log(user)
 
+const isLoggedIn = useIsLoggedIn()
+
 function dropUser() {
-  DropdownVar.value = !DropdownVar.value
+  DropdownVar.value = true
 }
 </script>
 

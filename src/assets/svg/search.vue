@@ -5,6 +5,7 @@
       height="30px"
       viewBox="0 0 24 24"
       fill="none"
+      class="width space"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g clip-path="url(#clip0_15_152)">
@@ -24,4 +25,10 @@ defineProps({
   color: String
 })
 </script>
-<style scoped></style>
+<style scoped>
+@media (max-width: 640px) {
+  .width {
+    width: 25px !important;
+  }
+}
+</style>

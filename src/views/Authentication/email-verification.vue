@@ -18,7 +18,8 @@
             </div>
             <div class="py-2 text-sm">
               <span
-                >You need to click the email verification link that was emailed to {{ user }}</span
+                >You need to click the email verification link that was emailed to {{ user }} in
+                order to verify your account</span
               >
             </div>
           </div>

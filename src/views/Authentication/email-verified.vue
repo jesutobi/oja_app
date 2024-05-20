@@ -4,23 +4,41 @@
     <AuthFormGrid>
       <div class="flex items-center justify-center h-[75vh]">
         <div>
-          <div><Back /></div>
+          <!-- <div><Back /></div> -->
 
           <!-- logo -->
           <div class="pt-[3rem] pb-2">
             <Logo />
           </div>
-          {{ route.query.token }}
+
           <!-- text -->
           <div>
             <div class="font2 py-1 text-3xl">
               <span>Email Verified</span>
             </div>
-            <div class="py-2 text-sm">
-              <span>Your email ({{ user }}) has been sucesfully verfied. </span>
+            <div v-if="successMsg !== ''">
+              <div class="py-2 text-sm">
+                <span>Your email ({{ user }}) has been sucesfully verfied. </span>
+              </div>
             </div>
-            <div class="py-1 text-sm">
-              <span>You can now explore our website seamlessly </span>
+            <div v-if="errorsInfo !== ''">
+              <div class="py-2 text-sm">
+                <span>Your email ({{ user }}) has already been verfied. </span>
+              </div>
+            </div>
+            <div v-if="errorsInfo !== '' || successMsg !== ''" class="py-1">
+              <div class="text-sm">
+                <span>You can now explore our website seamlessly </span>
+              </div>
+              <!-- subnit button -->
+
+              <div class="py-1">
+                <router-link to="/">
+                  <AuthButtons class="w-[50%] pt-[2rem]">
+                    <span>Continue </span>
+                  </AuthButtons>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -30,6 +48,7 @@
 </template>
 <script setup>
 import { toast } from 'vue3-toastify'
+import AuthButtons from '../../components/slots/AuthButtons.vue'
 import 'vue3-toastify/dist/index.css'
 import Back from '../../components/extras/goBack.vue'
 import Logo from '../../components/icons/Logo.vue'
@@ -44,6 +63,7 @@ const router = useRouter()
 const verifiedStore = useVerifyEmailStore()
 const userStore = useUserStore()
 const successMsg = ref('')
+const errorsInfo = ref('')
 
 const user_verification_data = {
   token: route.query.token,
@@ -57,10 +77,11 @@ const verifyEmail = (user_verification_data) => {
   verifiedStore
     .verifyUser(user_verification_data)
     .then((msg) => {
-      successMsg.value = msg.message
+      successMsg.value = msg.data.message
+      console.log('sux', msg)
       setTimeout(() => {
         toast.update(id, {
-          render: successMsg,
+          render: successMsg.value,
           autoClose: true,
           closeOnClick: true,
           closeButton: true,
@@ -71,19 +92,17 @@ const verifyEmail = (user_verification_data) => {
           // done
           toast.done(
             router.push({
-              name: 'home'
+              // name: 'home'
             })
           )
         }, 2000)
       }, 2000)
     })
     .catch((error) => {
-      // loading.value = false
-      // errorMsg.value = error.response
-      // errorsInfo.value = error.response.data.message
+      errorsInfo.value = error.response.data.error
       setTimeout(() => {
         toast.update(id, {
-          render: error,
+          render: errorsInfo.value,
           autoClose: true,
           closeOnClick: true,
           closeButton: true,

@@ -4,6 +4,7 @@ import DefaultLayout from '../components/layouts/DefaultLayout.vue'
 import DashboardLayout from '../components/layouts/DashboardLayout.vue'
 // import Home from '../views/index.vue'
 import { useUserStore } from '../stores/Authentication'
+import { useVerifyEmailStore } from '../stores/Email_verification'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,19 @@ const router = createRouter({
       children: [{ path: '/', name: 'home', component: () => import('../views/index.vue') }]
     },
     {
+      path: '/notVerified',
+      name: '/notVerified',
+
+      component: DefaultLayout,
+      children: [
+        {
+          path: '/notVerified',
+          name: 'notVerified',
+          component: () => import('../views/Authentication/email-verification.vue')
+        }
+      ]
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       redirect: '/',
@@ -24,7 +38,7 @@ const router = createRouter({
       component: DashboardLayout,
       children: [
         {
-          // meta: { requiresAuth: true },
+          meta: { requiresEmailVerification: true },
           path: '/dashboard/edit-profile',
           name: '/dashboard/edit-profile',
           component: () => import('../views/Dashboard/edit-profile.vue')
@@ -98,10 +112,14 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = useUserStore()
+  const verifyStore = useVerifyEmailStore()
+
   if (to.meta.requiresAuth && !store.user.token) {
     next({ name: 'Login' })
   } else if (store.user.token && to.meta.isGuest) {
     next({ name: 'home' })
+  } else if (to.meta.requiresAuth && store.user.token && verifyStore.data.user === '') {
+    next({ name: 'notVerified' })
   } else {
     next()
   }

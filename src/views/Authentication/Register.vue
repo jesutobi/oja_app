@@ -200,6 +200,7 @@ const successMsg = ref('')
 const errorsInfo = ref('')
 const inputType = ref('password')
 const store = useUserStore()
+
 // const router = useRouter()
 const user = {
   first_name: '',
