@@ -1,12 +1,26 @@
 <template>
   <div>
     <!-- header -->
-    <div>
-      <Title :text="`Add shipping address`" />
+
+    <div v-if="$route.path === '/dashboard/address-form'" class="flex items-center">
+      <div>
+        <Title :text="`Add shipping address`" />
+      </div>
+      <div>
+        <img src="../../../public/icon/address-book.svg" style="width: 23px" />
+      </div>
+    </div>
+    <div v-else class="flex items-center">
+      <div>
+        <Title :text="`Edit shipping address`" />
+      </div>
+      <div>
+        <img src="../../../public/icon/address-book.svg" style="width: 23px" />
+      </div>
     </div>
     <!-- form space -->
     <div>
-      <form @submit.prevent="update">
+      <form @submit.prevent="addShippingAddress">
         <div class="max-[992px]:flex justify-center">
           <div class="w-[80%] max-[568px]:w-[95%]">
             <!-- first name , last name -->
@@ -45,55 +59,33 @@
               </div>
             </div>
 
-            <!-- email , Phone number -->
-            <div class="lg:flex items-center gap-4">
-              <div class="w-full">
-                <!-- email -->
-                <div class="mt-5 w-full relative group">
-                  <input
-                    readonly
-                    name="floating_email"
-                    id="floating_email"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
-                    placeholder=" "
-                  />
-                  <label
-                    for="floating_email"
-                    class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >Email
-                  </label>
-                </div>
-                <div>
-                  <Info :text="`You don't have access to update your email`" />
-                </div>
-              </div>
-              <!-- phone number -->
-              <div class="w-full">
-                <div class="mt-5 w-full relative group">
-                  <input
-                    v-model="shipping_details.phone_number"
-                    name="floating_phone_number"
-                    id="floating_phone_number"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
-                    placeholder=" "
-                  />
-                  <label
-                    for="floating_phone_number"
-                    class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >Phone number
-                  </label>
-                </div>
+            <!-- phone number -->
+            <div class="w-full">
+              <div class="mt-5 w-full relative group">
+                <input
+                  v-model="shipping_details.phone_number"
+                  name="floating_phone_number"
+                  id="floating_phone_number"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_phone_number"
+                  class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
+                  >Phone number
+                </label>
               </div>
             </div>
+
             <!-- state , city -->
             <div class="lg:flex items-center gap-4">
               <!-- email -->
 
               <div class="w-full">
-                <div class="mt-5 w-full relative group">
+                <div class="mt-5 relative group">
                   <select
                     @change="getCities"
-                    v-model="shipping_details.states"
+                    v-model="shipping_details.state"
                     name="floating_state"
                     id="floating_state"
                     class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm focus:ring-0 peer"
@@ -105,7 +97,11 @@
                     >
                       select state
                     </option>
-                    <option v-for="(item, index) in states" :key="index" :value="item">
+                    <option
+                      v-for="(item, index) in states"
+                      :key="index"
+                      :value="JSON.stringify(item)"
+                    >
                       {{ item.name }}
                     </option>
                   </select>
@@ -113,7 +109,7 @@
               </div>
               <div class="w-full">
                 <!-- select city -->
-                <div class="mt-5 w-full relative group">
+                <div class="mt-5 relative group">
                   <select
                     v-model="shipping_details.city"
                     name="floating_city"
@@ -127,7 +123,11 @@
                     >
                       select city
                     </option>
-                    <option v-for="(item, index) in cities" :key="index" :value="item.name">
+                    <option
+                      v-for="(item, index) in cities"
+                      :key="index"
+                      :value="JSON.stringify(item)"
+                    >
                       {{ item.name }}
                     </option>
                   </select>
@@ -155,7 +155,7 @@
               <!-- Additional information -->
               <div class="mt-5 w-full relative group">
                 <input
-                  v-model="shipping_details.add_information"
+                  v-model="shipping_details.additional_information"
                   name="floating_add_information"
                   id="floating_add_information"
                   class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
@@ -170,9 +170,14 @@
             </div>
             <!-- subnit button -->
 
-            <div class="flex justify-center py-5">
-              <AuthButtons @click="update" class="w-[50%] pt-[4rem]">
-                <span>Save Changes</span>
+            <div v-if="$route.path === '/dashboard/address-form'" class="flex justify-center py-5">
+              <AuthButtons class="w-[50%] pt-[4rem]">
+                <span>Add address</span>
+              </AuthButtons>
+            </div>
+            <div v-else class="flex justify-center py-5">
+              <AuthButtons class="w-[50%] pt-[4rem]">
+                <span>Update Address</span>
               </AuthButtons>
             </div>
           </div>
@@ -183,40 +188,164 @@
 </template>
 
 <script setup>
+import Plus from '@/assets/svg/plus.vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
+import { useShippingAddressStore } from '@/stores/shipping_address'
 import { useStatesStore } from '@/stores/States'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
+import { useForm } from 'vee-validate'
+import { object, string } from 'yup'
 import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 
-const store = useStatesStore()
+const router = useRouter()
+const store = useShippingAddressStore()
+const route = useRoute()
+const stateStore = useStatesStore()
 const states = ref({})
 const cities = ref([])
+const successMsg = ref('')
+const errorsInfo = ref('')
 const shipping_details = ref({
-  states: {},
-  city: '',
+  state: {},
+  city: {},
   delivery_address: '',
   first_name: '',
   last_name: '',
   phone_number: '',
-  add_information: ''
+  additional_information: ''
 })
-console.log(shipping_details.value.states)
+
+const clearForm = () => {
+  shipping_details.value.state = {}
+  shipping_details.value.city = {}
+  shipping_details.value.delivery_address = ''
+  shipping_details.value.first_name = ''
+  shipping_details.value.last_name = ''
+  shipping_details.value.phone_number = ''
+  shipping_details.value.additional_information = ''
+}
+
+const addShippingAddress = () => {
+  if (route.path === '/dashboard/address-form') {
+    const id = toast.loading('Adding shipping address..')
+
+    store
+      .AddShippingAdress(shipping_details.value)
+      .then((msg) => {
+        successMsg.value = msg.data.message
+        setTimeout(() => {
+          toast.update(id, {
+            render: successMsg,
+            autoClose: true,
+            closeOnClick: true,
+            closeButton: true,
+            type: 'success',
+            isLoading: false
+          })
+
+          setTimeout(() => {
+            // done
+            toast.done
+            router.push({
+              name: '/dashboard/address-book'
+            })()
+          }, 2000)
+        }, 2000)
+        clearForm()
+      })
+      .catch((error) => {
+        errorsInfo.value = error.response.data.message
+        setTimeout(() => {
+          toast.update(id, {
+            render: errorsInfo,
+            autoClose: true,
+            closeOnClick: true,
+            closeButton: true,
+            type: 'error',
+            isLoading: false
+          })
+        }, 2000)
+        // errorNotify()
+      })
+  } else {
+    const id = toast.loading('Updating shipping address..')
+
+    store
+      .EditShippingAdressDetail(shipping_details.value, route.params.id)
+      .then((msg) => {
+        console.log(msg)
+        successMsg.value = msg.message
+        setTimeout(() => {
+          toast.update(id, {
+            render: successMsg,
+            autoClose: true,
+            closeOnClick: true,
+            closeButton: true,
+            type: 'success',
+            isLoading: false
+          })
+          setTimeout(() => {
+            // done
+            toast.done
+            router.push({
+              name: '/dashboard/address-book'
+            })()
+          }, 2000)
+        }, 2000)
+      })
+      .catch((error) => {
+        console.log(error)
+        errorsInfo.value = error
+        setTimeout(() => {
+          toast.update(id, {
+            render: errorsInfo,
+            autoClose: true,
+            closeOnClick: true,
+            closeButton: true,
+            type: 'error',
+            isLoading: false
+          })
+        }, 2000)
+        // errorNotify()
+      })
+  }
+}
 
 const getStates = () => {
-  store.GetStates().then((response) => {
+  stateStore.GetStates().then((response) => {
     states.value = response.data
     console.log(response)
   })
 }
+
 const getCities = () => {
   console.log(shipping_details)
-  store.getCities(shipping_details.value.states).then((response) => {
+  stateStore.getCities(shipping_details.value.state).then((response) => {
     cities.value = response.data
   })
 }
 
+const getShippingAdressDetail = () => {
+  console.log(route.params.id)
+  if (route.params.id) {
+    store.GetShippingAdressDetail(route.params.id).then((response) => {
+      shipping_details.value.first_name = response.data.first_name
+      shipping_details.value.last_name = response.data.last_name
+      shipping_details.value.phone_number = response.data.phone_number
+      shipping_details.value.additional_information = response.data.additional_information
+      shipping_details.value.delivery_address = response.data.delivery_address
+      shipping_details.value.state = response.data.state
+      shipping_details.value.city = response.data.city
+      console.log(response)
+    })
+  }
+}
+
 onMounted(() => {
-  getStates()
+  getStates(), getShippingAdressDetail()
 })
 </script>
 

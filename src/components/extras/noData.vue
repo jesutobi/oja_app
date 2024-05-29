@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="flex items-center justify-center h-[27vh]">
+    <div class="flex items-center justify-center h-[60vh]">
       <div>
         <!-- icon -->
         <div class="my-1 flex justify-center">
-          <img src="@/assets/icon/notificationBell.svg" style="width: 80px" alt="" />
+          <img src="@/assets/icon/grey-clipboard.svg" style="width: 120px" alt="" />
         </div>
-        <div class="text-sm text-center w-72">
+        <div class="text-[0.8rem] text-center w-72 my-[2rem]">
           <span>{{ text }}</span>
         </div>
       </div>

@@ -1,8 +1,13 @@
 <template>
   <div>
     <!-- header -->
-    <div>
-      <Title :text="`Edit Profile`" />
+    <div class="flex items-center">
+      <div>
+        <Title :text="`Edit Profile`" />
+      </div>
+      <div>
+        <img src="@/assets/icon/edit.svg" style="width: 23px" />
+      </div>
     </div>
     <!-- form space -->
     <div>
@@ -79,14 +84,10 @@
                 <div>
                   <Info :text="`You don't have access to update your email`" />
                 </div>
-                <!-- validation -->
-                <div class="py-2">
-                  <span class="text-xs text-red-600" v-if="errors.email">{{ errors.email }}</span>
-                </div>
               </div>
               <!-- phone number -->
               <div class="w-full">
-                <div class="mt-5 w-full relative group">
+                <div class="mt-5 lg:mt-0 w-full relative group">
                   <input
                     v-model="form.phone_number"
                     name="floating_phone_number"
@@ -114,19 +115,29 @@
 
               <div class="w-full">
                 <div class="mt-5 w-full relative group">
-                  <input
+                  <select
                     v-model="form.state"
-                    name="floating_country"
-                    id="floating_country"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
-                    placeholder=" "
-                  />
-                  <label
-                    for="floating_country"
-                    class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >State
-                  </label>
+                    name="floating_state"
+                    id="floating_state"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm focus:ring-0 peer"
+                  >
+                    <option
+                      for="floating_state"
+                      class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
+                      value="select state"
+                    >
+                      select state
+                    </option>
+                    <option
+                      v-for="(item, index) in states"
+                      :key="index"
+                      :value="JSON.stringify(item)"
+                    >
+                      {{ item.name }}
+                    </option>
+                  </select>
                 </div>
+
                 <!-- validation -->
                 <div class="py-2">
                   <span class="text-xs text-red-600" v-if="errors.state">{{ errors.state }}</span>
@@ -159,7 +170,7 @@
             <!-- subnit button -->
 
             <div class="flex justify-center py-5">
-              <AuthButtons @click="update" class="w-[50%] pt-[4rem]">
+              <AuthButtons class="w-[50%] pt-[4rem]">
                 <span>Save Changes</span>
               </AuthButtons>
             </div>
@@ -171,6 +182,7 @@
 </template>
 
 <script setup>
+// import Edit from '@/assets/svg/edit.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
 import Info from '@/components/extras/littleInfo.vue'
 import { toast } from 'vue3-toastify'
@@ -180,20 +192,27 @@ import { object, string } from 'yup'
 import { onMounted, ref } from 'vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'
 import { useUpdateUserStore } from '@/stores/Update_user'
+import { useStatesStore } from '@/stores/States'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
+const storeState = useStatesStore()
 const store = useUpdateUserStore()
 const successMsg = ref('')
 const errorsInfo = ref('')
+const states = ref({})
+const user_state = ref({})
 
 const getUser = () => {
   store.GetUser().then((response) => {
-    console.log(form.value.first_name)
+    console.log(form.value.state)
     form.value.first_name = response.data.first_name
     form.value.last_name = response.data.last_name
     form.value.email = response.data.email
     form.value.phone_number = response.data.phone_number
     form.value.home_address = response.data.home_address
-    form.value.state = response.data.state
+    user_state.value = response.data.state
+    form.value.state = user_state.value
   })
 }
 
@@ -204,7 +223,7 @@ const form = ref({
   last_name: '',
   home_address: '',
   phone_number: '',
-  state: '',
+  state: {},
   email: ''
 })
 
@@ -217,6 +236,13 @@ const form = ref({
 //     .matches(/^0[789]\d{9}$/, 'Please enter a valid 11-digit phone number!')
 //     .max(11)
 // })
+
+const getStates = () => {
+  storeState.GetStates().then((response) => {
+    states.value = response.data
+    console.log(response)
+  })
+}
 
 const { errors } = useForm({
   // validationSchema,
@@ -231,12 +257,11 @@ const { errors } = useForm({
 // form.value.phone_number = defineField('phone_number')
 
 const update = () => {
-  errors, console.log('submit')
   const id = toast.loading('Updating user details..')
   store
     .UpdateUser(form.value)
     .then((msg) => {
-      successMsg.value = msg.message
+      successMsg.value = msg.data.message
       setTimeout(() => {
         toast.update(id, {
           render: successMsg,
@@ -246,14 +271,13 @@ const update = () => {
           type: 'success',
           isLoading: false
         })
-        // setTimeout(() => {
-        //   // done
-        //   // toast.done(
-        //   //   router.push({
-        //   //     name: 'home'
-        //   //   })
-        //   // )
-        // }, 2000)
+        setTimeout(() => {
+          // done
+          toast.done
+          router.push({
+            name: '/dashboard/my-account'
+          })
+        }, 2000)
       }, 2000)
     })
     .catch((error) => {
@@ -273,7 +297,7 @@ const update = () => {
 }
 
 onMounted(() => {
-  getUser()
+  getUser(), getStates()
 })
 
 getUser()

@@ -38,7 +38,7 @@ const router = createRouter({
       component: DashboardLayout,
       children: [
         {
-          meta: { requiresEmailVerification: true },
+          // meta: { requiresEmailVerification: true },
           path: '/dashboard/edit-profile',
           name: '/dashboard/edit-profile',
           component: () => import('../views/Dashboard/edit-profile.vue')
@@ -57,6 +57,16 @@ const router = createRouter({
           path: '/dashboard/address-book',
           name: '/dashboard/address-book',
           component: () => import('../views/Dashboard/address-book.vue')
+        },
+        {
+          path: '/dashboard/address-form',
+          name: '/dashboard/address-form',
+          component: () => import('../components/Dashboard/address_form.vue')
+        },
+        {
+          path: '/dashboard/edit-shipping-address/:id',
+          name: '/dashboard/edit-shipping-address',
+          component: () => import('../components/Dashboard/address_form.vue')
         },
         {
           path: '/dashboard/my-account',
@@ -118,7 +128,7 @@ router.beforeEach((to, from, next) => {
     next({ name: 'Login' })
   } else if (store.user.token && to.meta.isGuest) {
     next({ name: 'home' })
-  } else if (to.meta.requiresAuth && store.user.token && verifyStore.data.user === '') {
+  } else if (to.meta.requiresAuth && store.user.token && store.user.userInfo.verified_at == null) {
     next({ name: 'notVerified' })
   } else {
     next()

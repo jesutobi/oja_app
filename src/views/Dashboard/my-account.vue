@@ -1,23 +1,30 @@
 <template>
   <div>
     <!-- header -->
-    <div>
-      <Title :text="`Account Overview`" />
+    <div class="flex items-center">
+      <div>
+        <Title :text="`Account Overview`" />
+      </div>
+      <div>
+        <img src="@/assets/icon/user-svgrepo-com.svg" style="width: 23px" />
+      </div>
     </div>
+
     <!-- my details and default shipping details -->
-    <div class="grid grid-cols-2 max-[1024px]:grid-cols-1 max-[1024px]:p-3 gap-4 my-5">
+    <AdressCardGrid>
       <!-- my details -->
       <DashboardCard>
-        <div class="bg-yellow-400/25 md:px-3 md:py-3 p-2 rounded-t-[1rem]">
+        <DashboardCardHeader>
           <div class="flex justify-between">
             <div>
-              <span class="font2">Profile Details</span>
+              <span class="font2 text-sm">Profile Details</span>
             </div>
             <div class="cursor-pointer">
               <router-link to="/dashboard/edit-profile"> <EditIcon /></router-link>
             </div>
           </div>
-        </div>
+        </DashboardCardHeader>
+
         <div v-if="user_data" class="text-sm md:p-3 p-2">
           <div class="flex items-center py-2">
             <div>
@@ -41,8 +48,8 @@
           </div>
           <div class="flex items-center py-2">
             <div><span> State :</span></div>
-            <div class="px-1 text-gray-500">
-              <span>{{ user_data.state }}</span>
+            <div v-if="state" class="px-1 text-gray-500">
+              <span>{{ state.name }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
@@ -57,75 +64,108 @@
       </DashboardCard>
       <!-- shipping default -->
       <DashboardCard>
-        <div class="bg-yellow-400/25 md:px-3 md:py-3 p-2 rounded-t-[1rem]">
+        <DashboardCardHeader>
           <div class="flex justify-between">
             <div>
-              <span class="font2">Default shipping address</span>
+              <span class="font2 text-sm">Default shipping address</span>
             </div>
-            <div class="cursor-pointer">
-              <router-link to="/dashboard/address-book"> <EditIcon /></router-link>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="">
-          <NoData :text="`Go to your Address Book to update your default shipping Address`" />
-        </div> -->
-        <div v-if="user_data" class="text-sm md:p-3 p-2">
-          <div class="flex items-center py-2">
-            <div>
-              <span>Recipient :</span>
-            </div>
-            <div class="px-1 text-gray-500">
-              <span></span>
+            <div title="Edit shipping address">
+              <Check />
             </div>
           </div>
+        </DashboardCardHeader>
 
-          <div class="flex items-center py-2">
-            <div><span> Phone number :</span></div>
-            <div class="px-1 text-gray-500">
-              <span></span>
+        <div v-if="AddressData === null" class="">
+          <NoData :text="`Go to your Address Book to update your default shipping Address`" />
+        </div>
+        <div v-else class="text-sm md:p-3 p-2">
+          <div>
+            <div class="flex items-center py-2">
+              <div>
+                <span>Recipient : </span>
+              </div>
+              <div class="px-1 text-gray-500">
+                <span>{{ AddressData.first_name + ' ' + AddressData.last_name }}</span>
+              </div>
             </div>
-          </div>
-          <div class="flex items-center py-2">
-            <div><span> State :</span></div>
-            <div class="px-1 text-gray-500">
-              <span></span>
+
+            <div class="flex items-center py-2">
+              <div><span> Phone number :</span></div>
+              <div class="px-1 text-gray-500">
+                <span>{{ AddressData.phone_number }}</span>
+              </div>
             </div>
-          </div>
-          <div class="flex items-center py-2">
-            <div><span> City :</span></div>
-            <div class="px-1 text-gray-500">
-              <span></span>
+            <div class="flex items-center py-2">
+              <div><span> State :</span></div>
+              <div class="px-1 text-gray-500">
+                <span>{{ addressState.name }}</span>
+              </div>
             </div>
-          </div>
-          <div class="flex items-center py-2">
-            <div><span>Home address :</span></div>
-            <div class="px-1 text-gray-500">
-              <span></span>
+            <div class="flex items-center py-2">
+              <div><span> City :</span></div>
+              <div class="px-1 text-gray-500">
+                <span>{{ addressCity.name }}</span>
+              </div>
+            </div>
+            <div class="flex items-center py-2">
+              <div><span>Home address :</span></div>
+              <div class="px-1 text-gray-500">
+                <span>{{ AddressData.delivery_address }}</span>
+              </div>
             </div>
           </div>
         </div>
       </DashboardCard>
-    </div>
+    </AdressCardGrid>
   </div>
 </template>
 
 <script setup>
+import Check from '@/assets/svg/check.vue'
 import EditIcon from '@/assets/svg/edit.vue'
 import NoData from '@/components/extras/noData.vue'
 import LittleInfo from '@/components/extras/littleInfo.vue'
 import DashboardCard from '@/components/slots/DashboardCard.vue'
+import DashboardCardHeader from '@/components/slots/DashboardCardHeader.vue'
+import AdressCardGrid from '@/components/slots/AdressCardGrid.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useShippingAddressStore } from '@/stores/shipping_address'
+import { useUpdateUserStore } from '@/stores/Update_user'
 
-const user_data = ref()
+const user_data = ref({})
+const state = ref('')
+const addressState = ref('')
+const addressCity = ref('')
+const store = useShippingAddressStore()
+const userStore = useUpdateUserStore()
+const AddressData = ref([])
+
+const GetShippingAdress = () => {
+  store.GetShippingAdress().then((response) => {
+    AddressData.value = response.data.data
+    state.value = JSON.parse(response.data.state)
+    console.log(response)
+  })
+}
+const getDefaultAddress = () => {
+  store.GetDefaultAdress().then((response) => {
+    AddressData.value = response.data.data
+    addressState.value = JSON.parse(response.data.data.state)
+    addressCity.value = JSON.parse(response.data.data.city)
+  })
+}
 
 const getData = async () => {
-  user_data.value = JSON.parse(localStorage.getItem('USER'))
+  userStore.GetUser().then((response) => {
+    user_data.value = response.data
+    state.value = JSON.parse(response.data.state)
+    console.log('nirv', response)
+  })
 }
 
 onMounted(() => {
-  getData()
+  getData(), GetShippingAdress(), getDefaultAddress()
 })
 </script>
 

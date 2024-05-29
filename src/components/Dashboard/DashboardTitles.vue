@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="mx-2 pb-1">
-      <span class="font2 text-lg md:text-2xl"> {{ text }}</span>
+    <div class="mx-2">
+      <span class="font2 text-lg md:text-xl"> {{ text }}</span>
     </div>
   </div>
 </template>

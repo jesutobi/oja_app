@@ -51,7 +51,9 @@
             </div>
           </div>
           <!-- route display -->
-          <div class="lg:col-span-9 max-[1024px]:col-span-8 mt-5"><router-view></router-view></div>
+          <div class="lg:col-span-9 max-[1024px]:col-span-8 mt-5">
+            <router-view></router-view>
+          </div>
         </div>
       </div>
     </div>

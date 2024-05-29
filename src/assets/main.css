@@ -27,6 +27,12 @@
   font-weight: bold;
   /* font-style: normal; */
 }
+@font-face {
+  font-family: 'BreeSerif';
+  src: url('./fonts/BreeSerif-Regular.woff.ttf') format('woff');
+  font-weight: bold;
+  /* font-style: normal; */
+}
 
 body,
 div {
@@ -40,4 +46,7 @@ div {
 }
 .font_logo2 {
   font-family: 'PokemonSolid' !important;
+}
+.productFont {
+  font-family: 'BreeSerif' !important;
 }

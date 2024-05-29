@@ -23,10 +23,14 @@ export const useStatesStore = defineStore('States', () => {
     }
   }
   const getCities = async (payload) => {
+    console.log('me', payload)
+    // Parse the payload if it is a stringified JSON
+    let parsedPayload
     try {
-      console.log(payload)
+      parsedPayload = JSON.parse(payload)
+      const state = parsedPayload.state_code
       const response = await axios.get(
-        `https://nigeria-states-towns-lga.onrender.com/api/${payload.state_code}/towns`
+        `https://nigeria-states-towns-lga.onrender.com/api/${state}/towns`
       )
 
       console.log(response)

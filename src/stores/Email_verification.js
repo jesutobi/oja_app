@@ -1,6 +1,7 @@
 import { reactive } from 'vue'
 import { defineStore } from 'pinia'
 import axiosClient from '../axios'
+import { useUpdateUserStore } from './Update_user'
 
 export const useVerifyEmailStore = defineStore('verify_email', () => {
   const data = reactive({
@@ -9,10 +10,12 @@ export const useVerifyEmailStore = defineStore('verify_email', () => {
 
   const verifyUser = async (user_verify_data) => {
     try {
+      const userStore = useUpdateUserStore()
       const response = await axiosClient.post('/verify', user_verify_data)
       data.value = response.data.user
       console.log(response.data.user)
       localStorage.setItem('verfiedUser', JSON.stringify(response.data.user.verified_at))
+      userStore.GetUser()
 
       return response
     } catch (error) {
