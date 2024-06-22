@@ -1,0 +1,142 @@
+[
+  {
+    "product_title": "LED Desk Lamp",
+    "product_category": "Lightings",
+    "product_price": "15,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Vintage Chandelier",
+    "product_category": "Lightings",
+    "product_price": "120,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Smart Light Bulb",
+    "product_category": "Lightings",
+    "product_price": "5,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Modern Sofa",
+    "product_category": "Furnitures",
+    "product_price": "300,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Ergonomic Office Chair",
+    "product_category": "Furnitures",
+    "product_price": "75,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Wooden Bookshelf",
+    "product_category": "Furnitures",
+    "product_price": "50,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Smartphone",
+    "product_category": "Gadgets",
+    "product_price": "150,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Wireless Earbuds",
+    "product_category": "Gadgets",
+    "product_price": "20,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Smart Watch",
+    "product_category": "Gadgets",
+    "product_price": "80,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Air Conditioner",
+    "product_category": "Home Appliances",
+    "product_price": "200,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Microwave Oven",
+    "product_category": "Home Appliances",
+    "product_price": "50,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Washing Machine",
+    "product_category": "Home Appliances",
+    "product_price": "150,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Abstract Painting",
+    "product_category": "Art Work",
+    "product_price": "70,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Sculpture",
+    "product_category": "Art Work",
+    "product_price": "100,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Canvas Print",
+    "product_category": "Art Work",
+    "product_price": "40,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Face Cream",
+    "product_category": "Beauty Products",
+    "product_price": "15,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Shampoo",
+    "product_category": "Beauty Products",
+    "product_price": "5,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Perfume",
+    "product_category": "Beauty Products",
+    "product_price": "25,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Notebook",
+    "product_category": "Stationary",
+    "product_price": "2,000",
+    "images": "",
+    "link": "#"
+  },
+  {
+    "product_title": "Ballpoint Pens",
+    "product_category": "Stationary",
+    "product_price": "500",
+    "images": "",
+    "link": "#"
+  }
+]

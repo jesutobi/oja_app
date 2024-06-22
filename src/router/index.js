@@ -31,6 +31,29 @@ const router = createRouter({
       ]
     },
     {
+      path: '/BackOffice',
+      name: '/BackOffice',
+
+      component: DefaultLayout,
+      children: [
+        {
+          path: '/BackOffice/upload_category',
+          name: '/BackOffice/upload_category',
+          component: () => import('../views/Back_Office/upload_category.vue')
+        },
+        {
+          path: '/BackOffice/upload-feature',
+          name: '/BackOffice/upload-feature',
+          component: () => import('../views/Back_Office/upload_features.vue')
+        },
+        {
+          path: '/BackOffice/upload-product',
+          name: '/BackOffice/upload-product',
+          component: () => import('../views/Back_Office/Upload_Product.vue')
+        }
+      ]
+    },
+    {
       path: '/dashboard',
       name: 'dashboard',
       redirect: '/',

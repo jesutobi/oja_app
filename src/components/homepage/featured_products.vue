@@ -1,61 +1,90 @@
 <template>
   <div>
-    <!-- title -->
-    <div class="text-center my-[3.5rem] text-[1.6rem]">
-      <span class="featured-products font2">Featured Products</span>
-    </div>
-    <!-- product card -->
-    <ProductCard>
-      <div>
-        <!-- image -->
-        <div>
-          <img src="@/assets/images/dunk-low-retro-mens-shoes-lk5Qh4.png" class="w-full" alt="" />
-        </div>
-        <Button_pop_up>
-          <!-- save items -->
-          <div>
-            <Heart />
-          </div>
-          <div>
-            <span>|</span>
-          </div>
-          <!-- add to cart -->
-          <div>
-            <AddToCart />
-          </div>
-        </Button_pop_up>
-        <div class="flex items-center justify-between py-1">
-          <div class="sm:text-[1.1rem] text-[0.8rem]">
-            <!-- product name -->
-            <div class="productFont">
-              <span>Product name</span>
-            </div>
-            <!-- price -->
-            <div class="productFont">
-              <span> &#8358; 56</span>
-            </div>
-          </div>
-          <div class="sm:text-[0.9rem] text-[0.8rem]">
-            <!-- category -->
-            <div class="font2">
-              <span>Gadget</span>
-            </div>
-            <!-- price -->
-            <div>
-              <span>star</span>
-            </div>
-          </div>
-        </div>
+    <div>
+      <!-- title -->
+      <div class="text-center my-[3rem] text-[1.6rem]">
+        <span class="featured-products font2">Featured Products</span>
       </div>
-    </ProductCard>
+      <!-- product card -->
+
+      <Carousel :settings="settings" :breakpoints="breakpoints">
+        <Slide v-for="(product, index) in products" :key="index" class="py-[1.5rem]">
+          <ProductCard :Data="product" class="w-full" />
+        </Slide>
+
+        <template #addons>
+          <Navigation />
+        </template>
+      </Carousel>
+    </div>
   </div>
 </template>
+
 <script setup>
+import { Carousel, Navigation, Slide } from 'vue3-carousel'
+
+import 'vue3-carousel/dist/carousel.css'
+
 import Heart from '@/assets/svg/heart.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
-import ProductCard from '../slots/productCard.vue'
+// import ProductCard from '../slots/productCard.vue'
+import ProductCard from '../Products/product_card.vue'
+import { useProduct } from '@/stores/product'
+import { onMounted, ref, reactive } from 'vue'
+
+const store = useProduct()
+const products = ref({})
+const baseURL = ref('http://localhost:8000')
+
+const settings = reactive({
+  itemsToShow: 1,
+  snapAlign: 'center'
+})
+
+const breakpoints = reactive({
+  300: {
+    itemsToShow: 1.5,
+    snapAlign: 'center'
+  },
+  400: {
+    itemsToShow: 2,
+    snapAlign: 'center'
+  },
+  568: {
+    itemsToShow: 2.6,
+    snapAlign: 'center'
+  },
+  767: {
+    itemsToShow: 3.5,
+    snapAlign: 'center'
+  },
+  992: {
+    itemsToShow: 4,
+    snapAlign: 'start'
+  },
+  1024: {
+    itemsToShow: 4.5,
+    snapAlign: 'start'
+  },
+  1200: {
+    itemsToShow: 5.2,
+    snapAlign: 'start'
+  }
+})
+
+const GetFeaturedProducts = () => {
+  store.GetFeaturedProducts().then((response) => {
+    const data = response.data
+    products.value = data
+  })
+}
+
+onMounted(() => {
+  GetFeaturedProducts()
+})
 </script>
+
 <style scoped>
 .featured-products {
   text-align: center;
