@@ -31,6 +31,19 @@ const router = createRouter({
       ]
     },
     {
+      path: '/notVerified',
+      name: '/notVerified',
+
+      component: DefaultLayout,
+      children: [
+        {
+          path: '/Product_details/:id',
+          name: 'Product_details',
+          component: () => import('../views/Products/product_details.vue')
+        }
+      ]
+    },
+    {
       path: '/BackOffice',
       name: '/BackOffice',
 

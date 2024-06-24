@@ -5,8 +5,8 @@
 @font-face {
   font-family: 'Montserrat';
   src: url('./fonts/montserrat-v25-latin-regular.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+  /* font-weight: normal; */
+  /* font-style: normal; */
 }
 
 @font-face {
@@ -33,6 +33,12 @@
   font-weight: bold;
   /* font-style: normal; */
 }
+@font-face {
+  font-family: 'Helvetica';
+  src: url('./fonts/HelveticaNowDisplay-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: bold;
+}
 
 body,
 div {
@@ -49,4 +55,7 @@ div {
 }
 .productFont {
   font-family: 'BreeSerif' !important;
+}
+.productFont2 {
+  font-family: 'Helvetica' !important;
 }

@@ -6,7 +6,6 @@
         <span class="featured-products font2">New Arrivals</span>
       </div>
       <!-- product card -->
-
       <ProductGrid>
         <div v-for="(product, index) in products" :key="index">
           <ProductCard :Data="product" class="w-full" />

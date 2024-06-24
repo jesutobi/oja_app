@@ -35,5 +35,17 @@ export const useProduct = defineStore('products', () => {
     }
   }
 
-  return { products, GetFeaturedProducts, GetNewArrivals }
+  const GetProductDetail = async (id) => {
+    try {
+      const response = await axiosClient.get(`get_product_detail/${id}`)
+
+      return response.data
+    } catch (error) {
+      // Handle errors
+      console.error('Failed:', error)
+      throw error
+    }
+  }
+
+  return { products, GetFeaturedProducts, GetNewArrivals, GetProductDetail }
 })
