@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --clr-white1: rgb(251, 251, 251);
+}
+
+.bgwhite1 {
+  background-color: var(--clr-white1) !important;
+}
+
 @font-face {
   font-family: 'Montserrat';
   src: url('./fonts/montserrat-v25-latin-regular.woff') format('woff');

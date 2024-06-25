@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center justify-center h-[60vh]">
+    <div class="flex items-center justify-center h-[50vh]">
       <div>
         <!-- icon -->
         <div class="my-1 flex justify-center">

@@ -5,7 +5,7 @@
       <NavBar />
     </div>
 
-    <div>
+    <div class="bgwhite1">
       <router-view></router-view>
     </div>
   </div>

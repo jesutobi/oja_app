@@ -2,7 +2,7 @@
   <div>
     <!-- product card -->
     <router-link :to="`/Product_details/${props.Data.id}`">
-      <div class="hover:shadow-lg hover:rounded-[0.2rem] p-2 w-full relative group">
+      <div class="hover:shadow-lg hover:bg-white hover:rounded-[0.2rem] p-2 w-full relative group">
         <!-- image -->
         <div>
           <img
