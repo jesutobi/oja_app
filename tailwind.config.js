@@ -16,6 +16,9 @@ module.exports = {
       },
       animation: {
         'fade-in-down': 'fade-in-down 0.2s ease-in-out both'
+      },
+      scale: {
+        102: '1.02' // Custom scale value
       }
     }
   }

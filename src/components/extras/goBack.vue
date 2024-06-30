@@ -9,7 +9,7 @@
           style="width: 28px"
         />
       </div>
-      <div class="font2 text-sm">
+      <div class="font2 text-sm d-no">
         <span>Back</span>
       </div>
     </div>
@@ -20,6 +20,7 @@
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
 
 function goBack() {
   router.go(-1) // Go back one step

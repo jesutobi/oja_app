@@ -27,9 +27,20 @@
             </div>
 
             <!-- cart -->
-            <div class="">
-              <IconHover><Bag /></IconHover>
+
+            <div class="relative inline-block">
+              <router-link to="/Product/shopping_cart">
+                <IconHover>
+                  <Bag />
+                </IconHover>
+                <span
+                  class="absolute top-[0.5rem] right-[1.9rem] inline-flex items-center justify-center w-5 h-5 text-xs font-bold font2 bg-yellow-400 rounded-full transform translate-x-1/2 -translate-y-1/2"
+                >
+                  {{ InCartStore.totalQuantity }}
+                </span>
+              </router-link>
             </div>
+
             <!-- userdropdown -->
             <div class="group">
               <div class="mx-1 group-hover:block">
@@ -71,30 +82,27 @@ import Search from '@/assets/svg/search.vue'
 import User from '@/assets/svg/user.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import UserCircle from '@/components/slots/UserCircle.vue'
-import { ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useUserStore } from '@/stores/Authentication'
 import SearchM from '../homepage/searchPage.vue'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
+import { useCartStore } from '@/stores/cart'
 
 const searchVisibility = ref(false)
+const InCartStore = useCartStore()
+const DropdownVar = ref(false)
+const store = useUserStore()
+const isLoggedIn = useIsLoggedIn()
 
 function closeModal(data) {
   console.log(data)
 
   searchVisibility.value = data
 }
+
 function openSearchModal() {
   searchVisibility.value = true
 }
-
-const DropdownVar = ref(false)
-
-const store = useUserStore()
-
-// const user = store.user.userInfo.first_name
-// console.log(user)
-
-const isLoggedIn = useIsLoggedIn()
 
 function dropUser() {
   DropdownVar.value = true

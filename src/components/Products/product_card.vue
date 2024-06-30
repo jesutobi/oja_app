@@ -1,8 +1,9 @@
 <template>
   <div>
     <!-- product card -->
-    <router-link :to="`/Product_details/${props.Data.id}`">
-      <div class="hover:shadow-lg hover:bg-white hover:rounded-[0.2rem] p-2 w-full relative group">
+
+    <div class="hover:shadow-lg hover:bg-white hover:rounded-[0.2rem] p-2 w-full relative group">
+      <router-link :to="`/Product_details/${props.Data.id}`">
         <!-- image -->
         <div>
           <img
@@ -12,19 +13,21 @@
             alt=""
           />
         </div>
-        <Button_pop_up>
-          <!-- save items -->
-          <div>
-            <Heart />
-          </div>
-          <div>
-            <span>|</span>
-          </div>
-          <!-- add to cart -->
-          <div>
-            <AddToCart />
-          </div>
-        </Button_pop_up>
+      </router-link>
+      <Button_pop_up>
+        <!-- save items -->
+        <div>
+          <Heart />
+        </div>
+        <div>
+          <span>|</span>
+        </div>
+        <!-- add to cart -->
+        <div>
+          <AddToCart @click="incrementQuantity(props.Data)" class="cursor-pointer" />
+        </div>
+      </Button_pop_up>
+      <router-link :to="`/Product_details/${props.Data.id}`">
         <div class="flex items-center justify-between py-1">
           <div class="sm:text-[1rem] text-[0.8rem] text-start">
             <!-- product name -->
@@ -57,25 +60,29 @@
             </div>
           </div>
         </div>
-      </div>
-    </router-link>
+      </router-link>
+    </div>
   </div>
 </template>
 <script setup>
 import Heart from '@/assets/svg/heart.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
-
+import { useCartStore } from '@/stores/cart'
 import { ref } from 'vue'
 
 const baseURL = ref('http://localhost:8000')
-
+const store = useCartStore()
 const props = defineProps({
   Data: {
     type: Object,
     required: true
   }
 })
+
+const incrementQuantity = (value) => {
+  store.AddToCart(value)
+}
 </script>
 
 <style scoped></style>

@@ -18,28 +18,46 @@ const router = createRouter({
       children: [{ path: '/', name: 'home', component: () => import('../views/index.vue') }]
     },
     {
-      path: '/notVerified',
-      name: '/notVerified',
+      path: '/email_verification',
+      name: 'email_verification',
 
       component: DefaultLayout,
       children: [
         {
-          path: '/notVerified',
+          path: 'notVerified',
           name: 'notVerified',
           component: () => import('../views/Authentication/email-verification.vue')
         }
       ]
     },
     {
-      path: '/notVerified',
-      name: '/notVerified',
+      path: '/Product_details',
+      name: 'Product_details',
 
       component: DefaultLayout,
       children: [
         {
-          path: '/Product_details/:id',
+          path: ':id',
           name: 'Product_details',
           component: () => import('../views/Products/product_details.vue')
+        },
+        {
+          path: 'write_reviews',
+          name: 'write_reviews',
+          component: () => import('../views/Products/product_details.vue')
+        }
+      ]
+    },
+    {
+      path: '/Product',
+      name: 'Product',
+
+      component: DefaultLayout,
+      children: [
+        {
+          path: 'shopping_cart',
+          name: 'shopping_cart',
+          component: () => import('../views/Shopping_Cart/shopping_cart.vue')
         }
       ]
     },
@@ -75,38 +93,38 @@ const router = createRouter({
       children: [
         {
           // meta: { requiresEmailVerification: true },
-          path: '/dashboard/edit-profile',
-          name: '/dashboard/edit-profile',
+          path: 'edit-profile',
+          name: 'edit-profile',
           component: () => import('../views/Dashboard/edit-profile.vue')
         },
         {
-          path: '/dashboard/orders',
-          name: '/dashboard/orders',
+          path: 'orders',
+          name: 'orders',
           component: () => import('../views/Dashboard/orders.vue')
         },
         {
-          path: '/dashboard/saved-items',
-          name: '/dashboard/saved-items',
+          path: 'saved-items',
+          name: 'saved-items',
           component: () => import('../views/Dashboard/saved-items.vue')
         },
         {
-          path: '/dashboard/address-book',
-          name: '/dashboard/address-book',
+          path: 'address-book',
+          name: 'address-book',
           component: () => import('../views/Dashboard/address-book.vue')
         },
         {
-          path: '/dashboard/address-form',
-          name: '/dashboard/address-form',
+          path: 'address-form',
+          name: 'address-form',
           component: () => import('../components/Dashboard/address_form.vue')
         },
         {
-          path: '/dashboard/edit-shipping-address/:id',
-          name: '/dashboard/edit-shipping-address',
+          path: 'edit-shipping-address/:id',
+          name: 'edit-shipping-address',
           component: () => import('../components/Dashboard/address_form.vue')
         },
         {
-          path: '/dashboard/my-account',
-          name: '/dashboard/my-account',
+          path: 'my-account',
+          name: 'my-account',
           component: () => import('../views/Dashboard/my-account.vue')
         }
       ]
@@ -120,34 +138,34 @@ const router = createRouter({
       component: AuthLayout,
       children: [
         {
-          path: '/login',
+          path: 'login',
           name: 'Login',
           component: () => import('../views/Authentication/login.vue')
         },
         {
-          path: '/register',
+          path: 'register',
           name: 'Register',
           component: () => import('../views/Authentication/Register.vue')
         },
         {
-          path: '/forgot-password',
+          path: 'forgot-password',
           name: 'forgot-password',
           component: () => import('../views/Authentication/forgot-password.vue')
         },
         {
-          path: '/reset-password',
+          path: 'reset-password',
           name: 'reset-password',
           component: () => import('../views/Authentication/reset-password.vue')
         },
+        // {
+        //   meta: { isGuest: false },
+        //   path: 'email-verification',
+        //   name: 'email-verification',
+        //   component: () => import('../views/Authentication/email-verification.vue')
+        // },
         {
           meta: { isGuest: false },
-          path: '/email-verification',
-          name: 'email-verification',
-          component: () => import('../views/Authentication/email-verification.vue')
-        },
-        {
-          meta: { isGuest: false },
-          path: '/email-verified',
+          path: 'email-verified',
           name: 'email-verified',
           component: () => import('../views/Authentication/email-verified.vue')
         }

@@ -46,6 +46,34 @@ export const useProduct = defineStore('products', () => {
       throw error
     }
   }
+  const PostReviews = async (review, id) => {
+    try {
+      const response = await axiosClient.post(`post_product_review/${id}`, review)
+      console.log(response)
+      return response.data
+    } catch (error) {
+      // Handle errors
+      console.error('Failed:', error)
+      throw error
+    }
+  }
+  const GetReviews = async (id) => {
+    try {
+      const response = await axiosClient.get(`get_product_review/${id}`)
+      return response.data
+    } catch (error) {
+      // Handle errors
+      console.error('Failed:', error)
+      throw error
+    }
+  }
 
-  return { products, GetFeaturedProducts, GetNewArrivals, GetProductDetail }
+  return {
+    products,
+    GetFeaturedProducts,
+    GetNewArrivals,
+    GetProductDetail,
+    GetReviews,
+    PostReviews
+  }
 })

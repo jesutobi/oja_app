@@ -6,7 +6,7 @@
     </div>
     <!-- product card -->
 
-    <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true" :dir="ltr">
+    <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
       <Slide v-for="(data, index) in product_category" :key="index" class="py-[2rem]">
         <div class="hover:shadow-lg hover:rounded-[0.2rem] p-2 relative group cursor-pointer">
           <!-- image -->

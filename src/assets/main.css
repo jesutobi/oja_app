@@ -67,3 +67,10 @@ div {
 .productFont2 {
   font-family: 'Helvetica' !important;
 }
+
+input:focus {
+  outline: none !important;
+}
+textarea:focus {
+  outline: none !important;
+}

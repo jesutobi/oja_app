@@ -31,7 +31,7 @@
         </router-link>
       </div>
       <div v-if="!isLoggedIn" role="button" class="text-sm font2 text-black px-3 my-2">
-        <router-link to="Login">
+        <router-link to="/auth/login">
           <AuthButtons>
             <span>Sign in</span>
           </AuthButtons></router-link
