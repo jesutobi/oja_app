@@ -1,62 +1,67 @@
 <template>
   <div class="font">
     <!-- item -->
+
     <div v-for="(item, index) in productInCart" :key="index">
       <!-- <IconHover> -->
       <!-- <> -->
+
       <div
         class="shadow flex relative h-[130px] justify-between bg-white sm:rounded-lg my-3 hover:scale-102 transition-transform duration-300 ease-in-out"
       >
-        <div class="flex">
-          <!-- image -->
-          <div class="sm:block hidden">
-            <img
-              :src="`${baseURL}/storage/${item.images[0].image_path}`"
-              class="object-cover rounded-lg m-2 h-[115px] w-[130px]"
-              alt=""
-            />
-          </div>
-          <!-- details -->
-          <div class="p-2">
-            <!-- product title -->
-            <div class="productFont text-xs sm:text-sm">
-              <span
-                >{{
-                  item.product_title
-                    .toString()
-                    .replace(/(<([^>]+)>)/gi, '')
-                    .substring(0, 50)
-                }}
-              </span>
+        <router-link :to="`/Product_details/${item.id}`">
+          <div class="flex">
+            <!-- image -->
+            <div class="sm:block hidden">
+              <img
+                :src="`${baseURL}/storage/${item.images[0].image_path}`"
+                class="object-cover rounded-lg m-2 h-[115px] w-[130px]"
+                alt=""
+              />
             </div>
-            <!-- product brand -->
-            <div class="font2 py-1 text-yellow-600 text-xs">
-              <span
-                >{{
-                  item.product_brand
-                    .toString()
-                    .replace(/(<([^>]+)>)/gi, '')
-                    .substring(0, 50)
-                }}
-              </span>
-            </div>
+            <!-- details -->
+            <div class="p-2">
+              <!-- product title -->
+              <div class="productFont text-xs sm:text-sm">
+                <span
+                  >{{
+                    item.product_title
+                      .toString()
+                      .replace(/(<([^>]+)>)/gi, '')
+                      .substring(0, 50)
+                  }}
+                </span>
+              </div>
+              <!-- product brand -->
+              <div class="font2 py-1 text-yellow-600 text-xs">
+                <span
+                  >{{
+                    item.product_brand
+                      .toString()
+                      .replace(/(<([^>]+)>)/gi, '')
+                      .substring(0, 50)
+                  }}
+                </span>
+              </div>
 
-            <!-- product features -->
-            <div class="py-1 absolute bottom-0">
-              <ul
-                class="list-disc px-2 py-1 text-xs"
-                v-for="(data, index) in JSON.parse(item.selected_product_feature).slice(0, 2)"
-                :key="index"
-              >
-                <li>
-                  <span>{{ data.key.feature_title }}</span>
+              <!-- product features -->
+              <div class="py-1 absolute bottom-0">
+                <ul
+                  class="list-disc px-2 py-1 text-xs"
+                  v-for="(data, index) in JSON.parse(item.selected_product_feature).slice(0, 2)"
+                  :key="index"
+                >
+                  <li>
+                    <span>{{ data.key.feature_title }}</span>
 
-                  <span class="font-black"> : {{ data.value }}</span>
-                </li>
-              </ul>
+                    <span class="font-black"> : {{ data.value }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
+        </router-link>
+
         <!-- increment button , delete product from cart ,price -->
         <div>
           <!-- product price -->
@@ -65,7 +70,7 @@
           </div>
           <div class="absolute bottom-0 right-0 flex item-center">
             <div
-              @click="removeFromCart(item.id)"
+              @click="InCartStore.removeFromCart(item)"
               class="absolute bottom-0 -left-6 top-2 cursor-pointer"
             >
               <IconHover>
@@ -93,11 +98,11 @@
           </div>
         </div>
       </div>
-      <!-- </IconHover> -->
 
-      <div v-if="productInCart.length === 0">
-        <NoData :text="`Your bag is empty`" />
-      </div>
+      <!-- </IconHover> -->
+    </div>
+    <div v-if="productInCart.length === 0">
+      <NoData :text="`Your bag is empty`" />
     </div>
   </div>
 </template>
@@ -116,16 +121,6 @@ const productInCart = ref(InCartStore.cartItems)
 const selectedFeature = ref(InCartStore.cartItems.selected_product_feature)
 const baseURL = ref('http://localhost:8000')
 const { formatPrice } = useFormatPrice()
-
-const removeFromCart = (productId) => {
-  // Find the index of the item to be removed
-  const index = productInCart.findIndex((item) => item.id === productId)
-
-  // Use Vue's reactivity to remove the item
-  if (index !== -1) {
-    cartItems.value.splice(index, 1)
-  }
-}
 
 onMounted(() => {
   console.log(productInCart)

@@ -78,6 +78,10 @@
         </div>
       </div>
     </div>
+    <!-- similar products
+    <div>
+      <SimilarProducts :id="$route.params.id" />
+    </div> -->
   </div>
 </template>
 

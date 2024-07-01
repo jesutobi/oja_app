@@ -21,19 +21,30 @@ export const useCartStore = defineStore(
       if (existingItem && existingItem.quantity >= 1) {
         existingItem.quantity--
         if (existingItem.quantity === 0) {
-          removeFromCart(product.id)
+          removeFromCart(product)
           window.location.reload()
         }
       }
     }
 
-    const removeFromCart = (productId) => {
-      cartItems.value = cartItems.value.filter((item) => item.id !== productId)
+    const removeFromCart = (product) => {
+      cartItems.value = cartItems.value.filter((cartItem) => cartItem.id !== product.id)
+      // cartItems.value
       window.location.reload()
     }
 
     const totalQuantity = computed(() => {
       return cartItems.value.reduce((total, item) => total + item.quantity, 0)
+    })
+
+    const calculateTotalPrice = (item) => {
+      return item.product_price * item.quantity
+    }
+
+    const totalAmount = computed(() => {
+      return cartItems.value.reduce((total, item) => {
+        return total + item.product_price * item.quantity
+      }, 0)
     })
 
     return {
@@ -42,7 +53,9 @@ export const useCartStore = defineStore(
       DecrementCart,
       cartItemCount,
       totalQuantity,
-      removeFromCart
+      removeFromCart,
+      totalAmount,
+      calculateTotalPrice
     }
   },
   {

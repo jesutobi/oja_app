@@ -70,6 +70,8 @@ import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
 import { useCartStore } from '@/stores/cart'
 import { ref } from 'vue'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const baseURL = ref('http://localhost:8000')
 const store = useCartStore()
@@ -82,6 +84,16 @@ const props = defineProps({
 
 const incrementQuantity = (value) => {
   store.AddToCart(value)
+  setTimeout(() => {
+    const id = 'Added to cart'
+    toast(id, {
+      theme: 'colored',
+      type: 'success',
+      autoClose: 1000,
+      transition: 'slide',
+      dangerouslyHTMLString: true
+    })
+  })
 }
 </script>
 
