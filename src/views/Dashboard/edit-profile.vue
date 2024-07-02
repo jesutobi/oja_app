@@ -82,7 +82,7 @@
                   </label>
                 </div>
                 <div>
-                  <Info :text="`You don't have access to update your email`" />
+                  <Info class="py-3" :text="`You don't have access to update your email`" />
                 </div>
               </div>
               <!-- phone number -->

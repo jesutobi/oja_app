@@ -11,7 +11,7 @@ export const useSimilarProducts = defineStore(
     const GetSimilarProducts = async (id) => {
       try {
         const response = await axiosClient.get(`get_similar_products/${id}`)
-        simlarProducts.value = response
+        simlarProducts.value = response.data
         return response.data
       } catch (error) {
         // Handle errors

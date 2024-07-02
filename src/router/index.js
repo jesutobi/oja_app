@@ -9,6 +9,7 @@ import { useVerifyEmailStore } from '../stores/Email_verification'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    // home
     {
       path: '/',
       name: 'home',
@@ -17,6 +18,7 @@ const router = createRouter({
       component: DefaultLayout,
       children: [{ path: '/', name: 'home', component: () => import('../views/index.vue') }]
     },
+    // email verification
     {
       path: '/email_verification',
       name: 'email_verification',
@@ -30,6 +32,7 @@ const router = createRouter({
         }
       ]
     },
+    // product details
     {
       path: '/Product_details',
       name: 'Product_details',
@@ -48,6 +51,7 @@ const router = createRouter({
         }
       ]
     },
+    // order process
     {
       path: '/Product',
       name: 'Product',
@@ -57,10 +61,17 @@ const router = createRouter({
         {
           path: 'shopping_cart',
           name: 'shopping_cart',
-          component: () => import('../views/Shopping_Cart/shopping_cart.vue')
+          component: () => import('../views/Order_Process/shopping_cart.vue')
+        },
+        {
+          meta: { requiresAuth: true },
+          path: 'checkout',
+          name: 'checkout',
+          component: () => import('../views/Order_Process/checkout.vue')
         }
       ]
     },
+    // back office
     {
       path: '/BackOffice',
       name: '/BackOffice',
@@ -84,6 +95,7 @@ const router = createRouter({
         }
       ]
     },
+    // dahsboard
     {
       path: '/dashboard',
       name: 'dashboard',
@@ -129,6 +141,7 @@ const router = createRouter({
         }
       ]
     },
+    // authentication
     {
       path: '/auth',
       name: 'auth',

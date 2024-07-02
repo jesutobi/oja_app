@@ -51,7 +51,7 @@
       </div>
 
       <!-- order summary -->
-      <div class="lg:col-span-4 max-[1024px]:col-span-4 max-[768px]:hidden">
+      <div class="lg:col-span-4 max-[1024px]:col-span-4 max-[768px]:hidden mt-[7.5rem]">
         <CartSummary />
       </div>
     </div>
@@ -64,8 +64,8 @@ import ProdButton from '../../components/slots/productButtons.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import Trash from '@/assets/svg/trash.vue'
 import { useCartStore } from '@/stores/cart'
-import ProductInCart from '@/components/Products/ProductInCart.vue'
-import CartSummary from '@/components/Products/CartSummary.vue'
+import ProductInCart from '@/components/Order_Process/ProductInCart.vue'
+import CartSummary from '@/components/Order_Process/CartSummary.vue'
 
 const InCartStore = useCartStore()
 const productInCart = InCartStore.cartItems

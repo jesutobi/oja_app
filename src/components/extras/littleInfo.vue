@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-xs text-gray-500 flex items-center py-3">
+    <div class="text-xs text-gray-500 flex items-center">
       <div>
         <img src="@/assets/icon/info.svg" style="width: 15px" alt="" />
       </div>

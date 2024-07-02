@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <div class="">
     <!-- header -->
-    <div class="flex items-center">
+    <CheckOutCardTitle>
       <div>
         <Title :text="`Account Overview`" />
       </div>
       <div>
         <img src="@/assets/icon/user-svgrepo-com.svg" style="width: 23px" />
       </div>
-    </div>
+    </CheckOutCardTitle>
 
     <!-- my details and default shipping details -->
     <AdressCardGrid>
@@ -60,7 +60,7 @@
           </div>
         </div>
         <!-- info -->
-        <LittleInfo class="px-2" :text="`Go to Edit profile to update profile details`" />
+        <LittleInfo class="px-2 py-3" :text="`Go to Edit profile to update profile details`" />
       </DashboardCard>
       <!-- shipping default -->
       <DashboardCard>
@@ -121,6 +121,7 @@
 </template>
 
 <script setup>
+import CheckOutCardTitle from '@/components/slots/CheckOutCardTitle.vue'
 import Check from '@/assets/svg/check.vue'
 import EditIcon from '@/assets/svg/edit.vue'
 import NoData from '@/components/extras/noData.vue'

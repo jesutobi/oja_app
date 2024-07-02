@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="rounded-[1rem] bg-white shadow-md text-black text-sm font1 z-40 py-2 px-4 w-[300px]"
+      class="rounded-[1rem] bg-white shadow-md text-black text-sm font1 z-40 py-2 px-1 w-[300px]"
     >
       <!-- full name -->
       <div>
@@ -30,7 +30,7 @@
           </div>
         </router-link>
       </div>
-      <div v-if="!isLoggedIn" role="button" class="text-sm font2 text-black px-3 my-2">
+      <div v-if="!isLoggedIn" role="button" class="text-sm font2 text-black px-1 my-1">
         <router-link to="/auth/login">
           <AuthButtons>
             <span>Sign in</span>

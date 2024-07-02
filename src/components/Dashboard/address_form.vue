@@ -31,7 +31,7 @@
                     v-model="shipping_details.first_name"
                     name="floating_First_name"
                     id="floating_First_name"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block bg-white rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label

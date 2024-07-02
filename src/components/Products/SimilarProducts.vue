@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- title -->
-    <div class="text-center my-[3rem] text-[1.6rem]">
+    <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem]">
       <span class="featured-products font2">Similar Products</span>
     </div>
 
@@ -18,24 +18,17 @@
 import ProductGrid from '../slots/productCard.vue'
 import ProductCard from './product_card.vue'
 import { useSimilarProducts } from '@/stores/similar_products'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const store = useSimilarProducts()
-const Data = store.GetSimilarProducts
+const Data = ref([])
 const route = useRoute()
 
-const props = defineProps({
-  id: Number
-})
-
 const getSimilarProduct = async () => {
-  const id = JSON.stringify(props.id)
-  console.log(props.id)
   try {
-    const response = await store.GetSimilarProducts(props.id)
-    // product_review.value = response.data.reviews
-    // console.log(product_review.value)
+    const response = await store.GetSimilarProducts(route.params.id)
+    Data.value = response.data
   } catch (error) {
     console.error('Failed to fetch similar product:', error)
   }
@@ -47,4 +40,20 @@ onMounted(() => {
 // const similarProducts
 </script>
 
-<style scoped></style>
+<style scoped>
+.featured-products {
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.featured-products:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #c0392b; /* color of the underline */
+  margin: 2px auto 0;
+  border-radius: 3px;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- title -->
-    <div class="text-center my-[3rem] text-[1.6rem]">
+    <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem">
       <span class="featured-products font2">Shop by Category</span>
     </div>
     <!-- product card -->

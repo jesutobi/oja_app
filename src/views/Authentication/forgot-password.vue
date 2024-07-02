@@ -89,7 +89,7 @@ const forgot_password = handleSubmit((values) => {
   store
     .sendLink(values)
     .then((msg) => {
-      successMsg.value = msg.message
+      successMsg.value = 'A reset link has been sent to your mail'
       setTimeout(() => {
         toast.update({
           render: successMsg,

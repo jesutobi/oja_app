@@ -1,8 +1,8 @@
 import { computed } from 'vue'
-import { useUserStore } from '@/stores/Authentication' // Import your Vuex store hook
+import { useUserStore } from '@/stores/Authentication'
 
 export function useIsLoggedIn() {
-  const store = useUserStore() // Assuming you have a composable for accessing the store
+  const store = useUserStore()
 
   return computed(() => store.user.token)
 }

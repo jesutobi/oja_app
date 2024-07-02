@@ -46,10 +46,10 @@
           </div>
           <div class="sm:text-[0.75rem] text-[0.8rem] text-end">
             <!-- category -->
-            <div class="font2" v-if="props.Data.product_category">
+            <div class="font2">
               <span>{{
-                JSON.parse(props.Data.product_category)
-                  .category_title.toString()
+                props.Data.product_category.category_title
+                  .toString()
                   .replace(/(<([^>]+)>)/gi, '')
                   .substring(0, 12)
               }}</span>

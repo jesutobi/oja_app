@@ -11,7 +11,9 @@ export const useStatesStore = defineStore('States', () => {
 
   const GetStates = async () => {
     try {
-      const response = await axios.get(` https://nigeria-states-towns-lga.onrender.com/api/states`)
+      const response = await axios.get(
+        `https://nigeriastateandlocalgovtarea.herokuapp.com/lgalists`
+      )
       //   localStorage.setItem('USER', JSON.stringify(response.data))
       console.log('get', response)
 

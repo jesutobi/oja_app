@@ -2,8 +2,7 @@
   <div class="container mx-auto">
     <div>
       <ProductDetail />
-      <SimilarProducts :id="8" />
-      {{ Category.id }}
+      <SimilarProducts />
     </div>
   </div>
 </template>
