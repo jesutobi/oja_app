@@ -16,7 +16,7 @@
         </div>
       </CheckOutCardTitle>
       <!-- address -->
-      <div class="flex w-full mt-4 p-2">
+      <div v-for="(item, index) in ShippingAddresses" :key="index" class="flex w-full mt-4 p-2">
         <div class="">
           <input id="specifyColor" type="radio" name="" />
         </div>
@@ -117,6 +117,21 @@ import LittleInfo from '@/components/extras/littleInfo.vue'
 import Check from '@/assets/svg/check.vue'
 import CheckOutCard from '@/components/slots/CheckOutCards.vue'
 import CheckOutCardTitle from '@/components/slots/CheckOutCardTitle.vue'
+import { useShippingAddressStore } from '@/stores/shipping_address'
+import { onMounted, ref } from 'vue'
+
+const store = useShippingAddressStore()
+const ShippingAddresses = ref([])
+
+const getShippingAddress = () => {
+  store.GetShippingAdress()
+  ShippingAddresses.value = store.ShippingAddresses
+  console.log(ShippingAddresses.value)
+}
+
+onMounted(() => {
+  getShippingAddress()
+})
 </script>
 <style scoped>
 #specifyColor {

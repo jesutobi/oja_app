@@ -2,32 +2,29 @@
   <div>
     <div>
       <!-- header -->
-      <div class="flex items-center justify-between">
+
+      <DashTitleSlot>
         <div class="flex items-center">
           <div>
             <Title :text="`Address Book`" />
           </div>
           <div>
-            <img src="../../../public/icon/address-book.svg" style="width: 23px" />
+            <img src="../../../public/icon/address-book.svg" style="width: 20px" />
           </div>
         </div>
         <div class="">
-          <IconHover>
-            <router-link to="/dashboard/address-form">
-              <button
-                class="rounded-xl p-2 flex items-center text-white hover:bg-black bg-black text-[0.8rem]"
-              >
-                <div>
-                  <span>Add new address</span>
-                </div>
-                <div class="px-2">
-                  <Plus :color="`#FFFFFF`" />
-                </div>
-              </button>
-            </router-link>
-          </IconHover>
+          <router-link to="/dashboard/address-form">
+            <button class="flex items-center text-black text-[0.8rem]">
+              <div class="font-black underline">
+                <span>Add new address</span>
+              </div>
+              <div class="px-2">
+                <Plus :color="`#00000`" />
+              </div>
+            </button>
+          </router-link>
         </div>
-      </div>
+      </DashTitleSlot>
 
       <div v-if="AddressData == ''" class="">
         <NoData :text="`You have no active shipping address`" />
@@ -40,6 +37,7 @@
 </template>
 
 <script setup>
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import Plus from '@/assets/svg/plus.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'

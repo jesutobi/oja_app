@@ -2,27 +2,27 @@
   <div>
     <!-- header -->
 
-    <div v-if="$route.path === '/dashboard/address-form'" class="flex items-center">
+    <DashTitleSlot v-if="$route.path === '/dashboard/address-form'">
       <div>
         <Title :text="`Add shipping address`" />
       </div>
       <div>
         <img src="../../../public/icon/address-book.svg" style="width: 23px" />
       </div>
-    </div>
-    <div v-else class="flex items-center">
+    </DashTitleSlot>
+    <DashTitleSlot v-else>
       <div>
         <Title :text="`Edit shipping address`" />
       </div>
       <div>
         <img src="../../../public/icon/address-book.svg" style="width: 23px" />
       </div>
-    </div>
+    </DashTitleSlot>
     <!-- form space -->
     <div>
       <form @submit.prevent="addShippingAddress">
-        <div class="max-[992px]:flex justify-center">
-          <div class="w-[80%] max-[568px]:w-[95%]">
+        <div class="">
+          <div class="">
             <!-- first name , last name -->
             <div class="lg:flex items-center gap-4">
               <div class="w-full">
@@ -31,7 +31,7 @@
                     v-model="shipping_details.first_name"
                     name="floating_First_name"
                     id="floating_First_name"
-                    class="block bg-white rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block bg-white rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -47,7 +47,7 @@
                     v-model="shipping_details.last_name"
                     name="floating_Last_name"
                     id="floating_Last_name"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -66,7 +66,7 @@
                   v-model="shipping_details.phone_number"
                   name="floating_phone_number"
                   id="floating_phone_number"
-                  class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                   placeholder=" "
                 />
                 <label
@@ -84,25 +84,25 @@
               <div class="w-full">
                 <div class="mt-5 relative group">
                   <select
-                    @change="getCities"
+                    @change="getCities(shipping_details.state)"
                     v-model="shipping_details.state"
                     name="floating_state"
                     id="floating_state"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
                   >
                     <option
                       for="floating_state"
                       class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                      value="select state"
+                      value=""
                     >
-                      select state
+                      Select state
                     </option>
                     <option
                       v-for="(item, index) in states"
                       :key="index"
                       :value="JSON.stringify(item)"
                     >
-                      {{ item.name }}
+                      {{ item.state }}
                     </option>
                   </select>
                 </div>
@@ -114,7 +114,7 @@
                     v-model="shipping_details.city"
                     name="floating_city"
                     id="floating_city"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
                   >
                     <option
                       for="floating_city"
@@ -128,7 +128,7 @@
                       :key="index"
                       :value="JSON.stringify(item)"
                     >
-                      {{ item.name }}
+                      {{ item }}
                     </option>
                   </select>
                 </div>
@@ -141,7 +141,7 @@
                   v-model="shipping_details.delivery_address"
                   name="floating_delivery_address"
                   id="floating_delivery_address"
-                  class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                   placeholder=" "
                 />
                 <label
@@ -158,7 +158,7 @@
                   v-model="shipping_details.additional_information"
                   name="floating_add_information"
                   id="floating_add_information"
-                  class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                   placeholder=" "
                 />
                 <label
@@ -188,6 +188,8 @@
 </template>
 
 <script setup>
+import NaijaStates from 'naija-state-local-government'
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import Plus from '@/assets/svg/plus.vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
@@ -203,8 +205,8 @@ import { useRoute, useRouter } from 'vue-router'
 const router = useRouter()
 const store = useShippingAddressStore()
 const route = useRoute()
-const stateStore = useStatesStore()
-const states = ref({})
+const states = NaijaStates.all()
+
 const cities = ref([])
 const successMsg = ref('')
 const errorsInfo = ref('')
@@ -217,6 +219,11 @@ const shipping_details = ref({
   phone_number: '',
   additional_information: ''
 })
+const getCities = (data) => {
+  const selectedState = JSON.parse(data)
+  cities.value = NaijaStates.lgas(selectedState.state).lgas
+  console.log(selectedState)
+}
 
 const clearForm = () => {
   shipping_details.value.state = {}
@@ -250,7 +257,7 @@ const addShippingAddress = () => {
             // done
             toast.done
             router.push({
-              name: '/dashboard/address-book'
+              name: 'address-book'
             })()
           }, 2000)
         }, 2000)
@@ -291,7 +298,7 @@ const addShippingAddress = () => {
             // done
             toast.done
             router.push({
-              name: '/dashboard/address-book'
+              name: 'address-book'
             })()
           }, 2000)
         }, 2000)
@@ -314,22 +321,7 @@ const addShippingAddress = () => {
   }
 }
 
-const getStates = () => {
-  stateStore.GetStates().then((response) => {
-    states.value = response.data
-    console.log(response)
-  })
-}
-
-const getCities = () => {
-  console.log(shipping_details)
-  stateStore.getCities(shipping_details.value.state).then((response) => {
-    cities.value = response.data
-  })
-}
-
 const getShippingAdressDetail = () => {
-  console.log(route.params.id)
   if (route.params.id) {
     store.GetShippingAdressDetail(route.params.id).then((response) => {
       shipping_details.value.first_name = response.data.first_name
@@ -345,7 +337,8 @@ const getShippingAdressDetail = () => {
 }
 
 onMounted(() => {
-  getStates(), getShippingAdressDetail()
+  // console.log(shipping_details.value.state)
+  getShippingAdressDetail()
 })
 </script>
 

@@ -1,20 +1,21 @@
 <template>
   <div class="">
     <!-- header -->
-    <CheckOutCardTitle>
+
+    <DashTitleSlot>
       <div>
         <Title :text="`Account Overview`" />
       </div>
       <div>
         <img src="@/assets/icon/user-svgrepo-com.svg" style="width: 23px" />
       </div>
-    </CheckOutCardTitle>
+    </DashTitleSlot>
 
     <!-- my details and default shipping details -->
     <AdressCardGrid>
       <!-- my details -->
       <DashboardCard>
-        <DashboardCardHeader>
+        <DashboardCardHeader class="p-2">
           <div class="flex justify-between">
             <div>
               <span class="font2 text-sm">Profile Details</span>
@@ -49,7 +50,7 @@
           <div class="flex items-center py-2">
             <div><span> State :</span></div>
             <div v-if="state" class="px-1 text-gray-500">
-              <span>{{ state.name }}</span>
+              <span>{{ state.state }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
@@ -64,7 +65,7 @@
       </DashboardCard>
       <!-- shipping default -->
       <DashboardCard>
-        <DashboardCardHeader>
+        <DashboardCardHeader class="p-2">
           <div class="flex justify-between">
             <div>
               <span class="font2 text-sm">Default shipping address</span>
@@ -97,20 +98,20 @@
             </div>
             <div class="flex items-center py-2">
               <div><span> State :</span></div>
-              <div class="px-1 text-gray-500">
-                <span>{{ addressState.name }}</span>
+              <div v-if="addressState" class="px-1 text-gray-500">
+                <span>{{ JSON.parse(addressState).state }}</span>
               </div>
             </div>
             <div class="flex items-center py-2">
-              <div><span> City :</span></div>
-              <div class="px-1 text-gray-500">
-                <span>{{ addressCity.name }}</span>
+              <div><span> Lga :</span></div>
+              <div v-if="addressCity" class="px-1 text-gray-500">
+                <span>{{ JSON.parse(addressCity) }}</span>
               </div>
             </div>
-            <div class="flex items-center py-2">
-              <div><span>Home address :</span></div>
-              <div class="px-1 text-gray-500">
-                <span>{{ AddressData.delivery_address }}</span>
+            <div class="py-2">
+              <div>
+                <span>Home address :</span
+                ><span class="px-1 text-gray-500">{{ AddressData.delivery_address }}</span>
               </div>
             </div>
           </div>
@@ -121,7 +122,7 @@
 </template>
 
 <script setup>
-import CheckOutCardTitle from '@/components/slots/CheckOutCardTitle.vue'
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import Check from '@/assets/svg/check.vue'
 import EditIcon from '@/assets/svg/edit.vue'
 import NoData from '@/components/extras/noData.vue'
@@ -152,8 +153,9 @@ const GetShippingAdress = () => {
 const getDefaultAddress = () => {
   store.GetDefaultAdress().then((response) => {
     AddressData.value = response.data.data
-    addressState.value = JSON.parse(response.data.data.state)
-    addressCity.value = JSON.parse(response.data.data.city)
+    addressState.value = response.data.data.state
+    console.log(addressState.value)
+    addressCity.value = response.data.data.city
   })
 }
 

@@ -3,7 +3,7 @@
     <div>
       <AdressCardGrid>
         <DashboardCard v-for="(data, index) in AddressData" :key="index">
-          <DashboardCardHeader>
+          <DashboardCardHeader class="p-2">
             <div class="flex items-center justify-between">
               <div class="font2 text-sm">
                 <span>shipping Address {{ index + 1 }}</span>
@@ -36,23 +36,21 @@
                 <span> State : </span>
               </div>
               <div class="px-1 text-gray-500">
-                <span>{{ JSON.parse(data.state).name }}</span>
+                <span>{{ JSON.parse(data.state).state }}</span>
               </div>
             </div>
             <div class="flex items-center py-2">
               <div>
-                <span> City : </span>
+                <span> Lga : </span>
               </div>
               <div class="px-1 text-gray-500">
-                <span>{{ JSON.parse(data.city).name }}</span>
+                <span>{{ JSON.parse(data.city) }}</span>
               </div>
             </div>
-            <div class="flex items-center py-2">
+            <div class="py-2">
               <div class="">
-                <span>Delivery address :</span>
-              </div>
-              <div class="px-1 text-gray-500">
-                <span> {{ data.delivery_address }}</span>
+                <span>Delivery address :</span
+                ><span class="px-1 text-gray-500"> {{ data.delivery_address }}</span>
               </div>
             </div>
           </div>

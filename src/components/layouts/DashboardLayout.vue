@@ -4,7 +4,7 @@
       <!-- nav -->
       <NavBar />
     </div>
-    <div class="bgwhite1">
+    <div class="bgwhite1 bg-cover">
       <div class="container mx-auto">
         <div class="mx-2">
           <div class="py-5"><Back /></div>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <!-- route display -->
-            <div class="lg:col-span-9 max-[1024px]:col-span-8 mt-5 bg-white p-2 shadow rounded-xl">
+            <div class="lg:col-span-9 max-[1024px]:col-span-8 rounded-xl">
               <router-view></router-view>
             </div>
           </div>

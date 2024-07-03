@@ -1,19 +1,21 @@
 <template>
   <div>
     <!-- header -->
-    <div class="flex items-center">
+
+    <DashTitleSlot>
       <div>
         <Title :text="`Edit Profile`" />
       </div>
       <div>
         <img src="@/assets/icon/edit.svg" style="width: 23px" />
       </div>
-    </div>
+    </DashTitleSlot>
+
     <!-- form space -->
     <div>
       <form @submit.prevent="update">
-        <div class="max-[992px]:flex justify-center">
-          <div class="w-[80%] max-[568px]:w-[95%]">
+        <div class="">
+          <div class="">
             <!-- first name , last name -->
             <div class="lg:flex items-center gap-4">
               <div class="w-full">
@@ -22,7 +24,7 @@
                     v-model="form.first_name"
                     name="floating_First_name"
                     id="floating_First_name"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -44,7 +46,7 @@
                     v-model="form.last_name"
                     name="floating_Last_name"
                     id="floating_Last_name"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -72,7 +74,7 @@
                     v-model="form.email"
                     name="floating_email"
                     id="floating_email"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -92,7 +94,7 @@
                     v-model="form.phone_number"
                     name="floating_phone_number"
                     id="floating_phone_number"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -119,29 +121,29 @@
                     v-model="form.state"
                     name="floating_state"
                     id="floating_state"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
                   >
                     <option
                       for="floating_state"
                       class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                      value="select state"
+                      value=""
                     >
-                      select state
+                      Select state
                     </option>
                     <option
                       v-for="(item, index) in states"
                       :key="index"
                       :value="JSON.stringify(item)"
                     >
-                      {{ item.name }}
+                      {{ item.state }}
                     </option>
                   </select>
                 </div>
 
                 <!-- validation -->
-                <div class="py-2">
+                <!-- <div class="py-2">
                   <span class="text-xs text-red-600" v-if="errors.state">{{ errors.state }}</span>
-                </div>
+                </div> -->
               </div>
               <div class="w-full">
                 <!-- address -->
@@ -150,7 +152,7 @@
                     v-model="form.home_address"
                     name="floating_address"
                     id="floating_address"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-400 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
+                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm appearance-none focus:ring-0 peer"
                     placeholder=" "
                   />
                   <label
@@ -182,6 +184,8 @@
 </template>
 
 <script setup>
+import NaijaStates from 'naija-state-local-government'
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 // import Edit from '@/assets/svg/edit.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
 import Info from '@/components/extras/littleInfo.vue'
@@ -200,8 +204,9 @@ const storeState = useStatesStore()
 const store = useUpdateUserStore()
 const successMsg = ref('')
 const errorsInfo = ref('')
-const states = ref({})
+
 const user_state = ref({})
+const states = NaijaStates.all()
 
 const getUser = () => {
   store.GetUser().then((response) => {
@@ -236,13 +241,6 @@ const form = ref({
 //     .matches(/^0[789]\d{9}$/, 'Please enter a valid 11-digit phone number!')
 //     .max(11)
 // })
-
-const getStates = () => {
-  storeState.GetStates().then((response) => {
-    states.value = response.data
-    console.log(response)
-  })
-}
 
 const { errors } = useForm({
   // validationSchema,
@@ -297,7 +295,7 @@ const update = () => {
 }
 
 onMounted(() => {
-  getUser(), getStates()
+  getUser()
 })
 
 getUser()
