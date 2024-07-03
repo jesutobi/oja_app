@@ -2,7 +2,7 @@
   <div>
     <div>
       <AdressCardGrid>
-        <DashboardCard v-for="(data, index) in AddressData" :key="index">
+        <DashboardCard v-for="(data, index) in store.ShippingAddresses" :key="index">
           <DashboardCardHeader class="p-2">
             <div class="flex items-center justify-between">
               <div class="font2 text-sm">
@@ -121,18 +121,19 @@ import DashboardCardHeader from '@/components/slots/DashboardCardHeader.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import AdressCardGrid from '@/components/slots/AdressCardGrid.vue'
 import { useShippingAddressStore } from '@/stores/shipping_address'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, reactive } from 'vue'
+import { useSetDefault } from '../../composables/setAsDefault'
+
+const { setAsDefault } = useSetDefault()
 
 const store = useShippingAddressStore()
-const AddressData = ref([])
+const AddressData = reactive(store.ShippingAddresses)
 const successMsg = ref('')
 const errorsInfo = ref('')
 
 const GetShippingAdress = () => {
-  store.GetShippingAdress().then((response) => {
-    AddressData.value = response.data.data
-    console.log(response)
-  })
+  store.GetShippingAdress()
+  AddressData.value = store.ShippingAddresses
 }
 const DeleteAddress = (value) => {
   confirm('Are you sure you want to delete address')
@@ -162,50 +163,6 @@ const DeleteAddress = (value) => {
     .catch((error) => {
       console.log(error)
       errorsInfo.value = error.response.data.message
-      setTimeout(() => {
-        toast.update(id, {
-          render: errorsInfo,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'error',
-          isLoading: false
-        })
-      }, 2000)
-      // errorNotify()
-    })
-  GetShippingAdress()
-}
-
-const setAsDefault = (value) => {
-  confirm('Do you want to set as default')
-  const id = toast.loading('setting..')
-  store
-    .setAsDefault(value)
-    .then((msg) => {
-      console.log(msg)
-      successMsg.value = msg.message
-      setTimeout(() => {
-        toast.update(id, {
-          render: successMsg,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'success',
-          isLoading: false
-        })
-        // setTimeout(() => {
-        //   // done
-        //   toast.done
-        //   router.push({
-        //     // name: 'home'
-        //   })()
-        // }, 2000)
-      }, 2000)
-    })
-    .catch((error) => {
-      console.log(error)
-      errorsInfo.value = error
       setTimeout(() => {
         toast.update(id, {
           render: errorsInfo,

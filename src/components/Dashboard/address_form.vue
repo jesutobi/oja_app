@@ -37,7 +37,7 @@
                   <label
                     for="floating_First_name"
                     class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >First name
+                    >First name*
                   </label>
                 </div>
               </div>
@@ -53,14 +53,14 @@
                   <label
                     for="floating_Last_name"
                     class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >Last name
+                    >Last name*
                   </label>
                 </div>
               </div>
             </div>
 
             <!-- phone number -->
-            <div class="w-full">
+            <div class="w-full flex items-center gap-4">
               <div class="mt-5 w-full relative group">
                 <input
                   v-model="shipping_details.phone_number"
@@ -72,69 +72,9 @@
                 <label
                   for="floating_phone_number"
                   class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                  >Phone number
+                  >Phone number*
                 </label>
               </div>
-            </div>
-
-            <!-- state , city -->
-            <div class="lg:flex items-center gap-4">
-              <!-- email -->
-
-              <div class="w-full">
-                <div class="mt-5 relative group">
-                  <select
-                    @change="getCities(shipping_details.state)"
-                    v-model="shipping_details.state"
-                    name="floating_state"
-                    id="floating_state"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
-                  >
-                    <option
-                      for="floating_state"
-                      class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                      value=""
-                    >
-                      Select state
-                    </option>
-                    <option
-                      v-for="(item, index) in states"
-                      :key="index"
-                      :value="JSON.stringify(item)"
-                    >
-                      {{ item.state }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="w-full">
-                <!-- select city -->
-                <div class="mt-5 relative group">
-                  <select
-                    v-model="shipping_details.city"
-                    name="floating_city"
-                    id="floating_city"
-                    class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
-                  >
-                    <option
-                      for="floating_city"
-                      class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                      value=""
-                    >
-                      select city
-                    </option>
-                    <option
-                      v-for="(item, index) in cities"
-                      :key="index"
-                      :value="JSON.stringify(item)"
-                    >
-                      {{ item }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="w-full">
               <!--Delivery address-->
               <div class="mt-5 w-full relative group">
                 <input
@@ -147,10 +87,70 @@
                 <label
                   for="floating_delivery_address"
                   class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                  >Delivery address
+                  >Delivery address*
                 </label>
               </div>
             </div>
+          </div>
+
+          <!-- state , city -->
+          <div class="lg:flex items-center gap-4">
+            <!-- email -->
+
+            <div class="w-full">
+              <div class="mt-5 relative group">
+                <select
+                  @change="getCities(shipping_details.state)"
+                  v-model="shipping_details.state"
+                  name="floating_state"
+                  id="floating_state"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
+                >
+                  <option
+                    for="floating_state"
+                    class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
+                    value=""
+                  >
+                    Select state*
+                  </option>
+                  <option
+                    v-for="(item, index) in states"
+                    :key="index"
+                    :value="JSON.stringify(item)"
+                  >
+                    {{ item.state }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="w-full">
+              <!-- select city -->
+              <div class="mt-5 relative group">
+                <select
+                  v-model="shipping_details.city"
+                  name="floating_city"
+                  id="floating_city"
+                  class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
+                >
+                  <option
+                    for="floating_city"
+                    class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
+                    value=""
+                  >
+                    select Lga*
+                  </option>
+                  <option
+                    v-for="(item, index) in cities"
+                    :key="index"
+                    :value="JSON.stringify(item)"
+                  >
+                    {{ item }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="w-full">
             <div class="w-full">
               <!-- Additional information -->
               <div class="mt-5 w-full relative group">
@@ -175,8 +175,8 @@
                 <span>Add address</span>
               </AuthButtons>
             </div>
-            <div v-else class="flex justify-center py-5">
-              <AuthButtons class="w-[50%] pt-[4rem]">
+            <div v-else class="flex justify-center py-1">
+              <AuthButtons class="w-[50%] pt-[2rem]">
                 <span>Update Address</span>
               </AuthButtons>
             </div>

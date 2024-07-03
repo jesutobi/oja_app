@@ -7,14 +7,14 @@
       class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 max-[1024px]:gap-2 pt-[2rem] min-[1024px]:gap-6"
     >
       <!-- product in cart -->
-      <div class="lg:col-span-8 max-[1024px]:col-span-8 relative">
+      <div class="lg:col-span-8 max-[1024px]:col-span-7 relative">
         <div>
           <CheckoutMethods />
         </div>
       </div>
 
       <!-- order summary -->
-      <div class="lg:col-span-4 max-[1024px]:col-span-4 max-[768px]:hidden mt-[0.8rem]">
+      <div class="lg:col-span-4 max-[1024px]:col-span-5 mt-[0.8rem]">
         <CartSummary />
       </div>
     </div>

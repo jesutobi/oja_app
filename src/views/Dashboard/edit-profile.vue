@@ -30,7 +30,7 @@
                   <label
                     for="floating_First_name"
                     class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >First name
+                    >First name*
                   </label>
                 </div>
                 <!-- validation -->
@@ -52,7 +52,7 @@
                   <label
                     for="floating_Last_name"
                     class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >Last name
+                    >Last name*
                   </label>
                 </div>
                 <!-- validation -->
@@ -80,16 +80,16 @@
                   <label
                     for="floating_email"
                     class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                    >Email
+                    >Email*
                   </label>
                 </div>
                 <div>
-                  <Info class="py-3" :text="`You don't have access to update your email`" />
+                  <Info class="pt-3" :text="`You don't have access to update your email`" />
                 </div>
               </div>
               <!-- phone number -->
               <div class="w-full">
-                <div class="mt-5 lg:mt-0 w-full relative group">
+                <div class="mt-5 lg:mt-2 w-full relative group">
                   <input
                     v-model="form.phone_number"
                     name="floating_phone_number"
@@ -116,7 +116,7 @@
               <!-- email -->
 
               <div class="w-full">
-                <div class="mt-5 w-full relative group">
+                <div class="mt-1 w-full relative group">
                   <select
                     v-model="form.state"
                     name="floating_state"
@@ -171,8 +171,8 @@
             </div>
             <!-- subnit button -->
 
-            <div class="flex justify-center py-5">
-              <AuthButtons class="w-[50%] pt-[4rem]">
+            <div class="flex justify-center py-1">
+              <AuthButtons class="w-[50%] pt-[2rem]">
                 <span>Save Changes</span>
               </AuthButtons>
             </div>

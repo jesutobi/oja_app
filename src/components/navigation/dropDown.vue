@@ -1,11 +1,11 @@
 <template>
   <div>
     <div
-      class="rounded-[1rem] bg-white shadow-md text-black text-sm font1 z-40 py-2 px-1 w-[300px]"
+      class="rounded-[1rem] bg-white shadow-md text-black text-sm font1 z-40 py-2 px-2 w-[300px]"
     >
       <!-- full name -->
       <div>
-        <div class="flex items-center py-3" v-if="isLoggedIn && store.user.userInfo">
+        <div class="flex items-center p-2" v-if="isLoggedIn && store.user.userInfo">
           <div>
             <UserCircle>
               <span class="text-black">{{ store.user.userInfo.first_name.charAt(0) }}</span>

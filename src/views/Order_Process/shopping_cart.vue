@@ -4,23 +4,23 @@
       <Back />
     </div> -->
     <div
-      class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 max-[1024px]:gap-2 pt-[2rem] min-[1024px]:gap-6"
+      class="grid grid-cols-12 max-[768px]:gap-0 max-[1024px]:grid-cols-1 max-[1024px]:gap-0 pt-[2rem] min-[1024px]:gap-6"
     >
       <!-- product in cart -->
-      <div class="lg:col-span-8 max-[1024px]:col-span-8 relative">
+      <div class="lg:col-span-8 max-[1024px]:col-span-7 relative">
         <!-- title -->
-        <div class="flex justify-between mb-[4rem] items-center">
+        <DashTitleSlot class="mb-[2.5rem]">
           <div>
             <div class="sm:text-[1.5rem] text-[1rem] font-semibold">
               <span>Shopping Bag</span>
             </div>
-            <div class="sm:text-sm txt-xs font-black">
+            <div class="sm:text-sm text-xs font-black">
               <span class="font2 px-1">{{ productInCart.length }} </span>
               <span>items in your bag</span>
             </div>
           </div>
           <!-- remove product from cart -->
-          <div v-if="productInCart.length >= 1" class="mb-4 flex justify-end">
+          <div v-if="productInCart.length >= 1" class="">
             <ProdButton class="">
               <div class="flex items-center p-0">
                 <div class="px-2 text-xs font2">
@@ -32,7 +32,7 @@
               </div>
             </ProdButton>
           </div>
-          <div v-if="productInCart.length === 0" class="mb-4 flex justify-end">
+          <div v-if="productInCart.length === 0">
             <ProdButton class="">
               <div class="flex items-center p-0">
                 <div class="px-2 text-xs font2">
@@ -44,20 +44,21 @@
               </div>
             </ProdButton>
           </div>
-        </div>
+        </DashTitleSlot>
         <div>
           <ProductInCart />
         </div>
       </div>
 
       <!-- order summary -->
-      <div class="lg:col-span-4 max-[1024px]:col-span-4 max-[768px]:hidden mt-[7.5rem]">
+      <div class="lg:col-span-4 max-[1024px]:col-span-5 mt-2 lg:mt-[7.5rem]">
         <CartSummary />
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import Back from '@/components/extras/goBack.vue'
 import ProdButton from '../../components/slots/productButtons.vue'
 // import { useCartStore } from '@/stores/cart'
