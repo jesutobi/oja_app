@@ -85,7 +85,14 @@
       <!-- address -->
       <div class="flex w-full mt-4 p-2">
         <div class="">
-          <input id="specifyColor" type="radio" name="" />
+          <input
+            @change="emitInputValue"
+            id="specifyColor"
+            v-model="payWith"
+            type="radio"
+            value="PayStack"
+            name=""
+          />
         </div>
 
         <div class="px-2">
@@ -116,14 +123,16 @@ import 'vue3-toastify/dist/index.css'
 const store = useShippingAddressStore()
 const ShippingAddresses = ref([])
 const { setAsDefault } = useSetDefault()
+const payWith = ref('')
+const emit = defineEmits(['pay_with_PayStack'])
 
 const getShippingAddress = () => {
   store.GetShippingAdress()
   ShippingAddresses.value = store.ShippingAddresses
-  console.log(ShippingAddresses.value)
 }
+
 const prioritizedShippingAddresses = computed(() => {
-  getShippingAddress()
+  // getShippingAddress()
   const defaultAddress = ShippingAddresses.value.find((item) => item.is_default == 1)
   const otherAddresses = ShippingAddresses.value.filter((item) => item.is_default != 1)
   const prioritized = defaultAddress ? [defaultAddress, ...otherAddresses] : otherAddresses
@@ -131,25 +140,15 @@ const prioritizedShippingAddresses = computed(() => {
   return prioritized.slice(0, 2)
 })
 
-// const alertUsers = (value) => {
-//   if (value === 0) {
-//     setTimeout(() => {
-//       const id = 'You can only select a default shipping address'
-//       toast(id, {
-//         theme: 'colored',
-//         type: 'warning',
-//         autoClose: 1000,
-//         transition: 'slide',
-//         dangerouslyHTMLString: true
-//       })
-//     })
-//   }
-// }
+const emitInputValue = (value) => {
+  emit('pay_with_PayStack', payWith.value)
+}
 
 onMounted(() => {
   getShippingAddress(), prioritizedShippingAddresses
 })
 </script>
+
 <style scoped>
 #specifyColor {
   accent-color: black;

@@ -4,6 +4,8 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+// import paystack from 'vue-paystack'
+</script>
 
 <style scoped></style>

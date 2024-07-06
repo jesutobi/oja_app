@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Vue3Toasity from 'vue3-toastify'
 import piniaPluginPersistedState from 'pinia-plugin-persistedstate'
+// import paystack from 'vue3-paystack'
 
 import App from './App.vue'
 import router from './router'
@@ -14,6 +15,7 @@ const pinia = createPinia()
 pinia.use(piniaPluginPersistedState)
 
 app.use(Vue3Toasity)
+// app.use(paystack)
 app.use(pinia)
 app.use(router)
 app.mount('#app')

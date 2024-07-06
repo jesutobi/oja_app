@@ -9,13 +9,13 @@
       <!-- product in cart -->
       <div class="lg:col-span-8 max-[1024px]:col-span-7 relative">
         <div>
-          <CheckoutMethods />
+          <CheckoutMethods @pay_with_PayStack="SelectedMethod" />
         </div>
       </div>
 
       <!-- order summary -->
       <div class="lg:col-span-4 max-[1024px]:col-span-5 mt-[0.8rem]">
-        <CartSummary />
+        <CartSummary :SelectedPaymentOption="selectedPaymentValue" />
       </div>
     </div>
   </div>
@@ -29,8 +29,15 @@ import Trash from '@/assets/svg/trash.vue'
 import { useCartStore } from '@/stores/cart'
 import CheckoutMethods from '@/components/Order_Process/CheckoutMethods.vue'
 import CartSummary from '@/components/Order_Process/CartSummary.vue'
+import { ref } from 'vue'
 
 const InCartStore = useCartStore()
 const productInCart = InCartStore.cartItems
+
+const selectedPaymentValue = ref('')
+
+const SelectedMethod = (value) => {
+  selectedPaymentValue.value = value
+}
 </script>
 <style scoped></style>
