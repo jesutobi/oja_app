@@ -19,13 +19,22 @@
         </div>
       </CheckOutCardTitle>
       <!-- address -->
+
       <div
         v-for="(item, index) in prioritizedShippingAddresses"
         :key="index"
         class="flex w-full mt-4 p-2"
       >
         <div class="">
-          <input id="specifyColor" type="radio" name="" :disabled="item.is_default === 0" />
+          <input
+            id="specifyColor"
+            v-model="SelectedShipping"
+            @change="getSelectedShippingId"
+            type="radio"
+            :value="item.id"
+            name=""
+            :disabled="item.is_default === 0"
+          />
         </div>
         <div class="flex w-full justify-between items-center">
           <div class="px-2">
@@ -86,7 +95,7 @@
       <div class="flex w-full mt-4 p-2">
         <div class="">
           <input
-            @change="emitInputValue"
+            @change="getSelectedShippingId"
             id="specifyColor"
             v-model="payWith"
             type="radio"
@@ -117,18 +126,22 @@ import CheckOutCardTitle from '@/components/slots/CheckOutCardTitle.vue'
 import { useShippingAddressStore } from '@/stores/shipping_address'
 import { computed, onMounted, ref } from 'vue'
 import { useSetDefault } from '../../composables/setAsDefault'
+import { useOrdersStore } from '@/stores/orders'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import { storeToRefs } from 'pinia'
 
 const store = useShippingAddressStore()
-const ShippingAddresses = ref([])
+const { ShippingAddresses } = storeToRefs(store)
+const orderStore = useOrdersStore()
+// const ShippingAddresses = ref([])
 const { setAsDefault } = useSetDefault()
 const payWith = ref('')
-const emit = defineEmits(['pay_with_PayStack'])
+const SelectedShipping = ref({})
 
 const getShippingAddress = () => {
   store.GetShippingAdress()
-  ShippingAddresses.value = store.ShippingAddresses
+  // ShippingAddresses.value = store.ShippingAddresses
 }
 
 const prioritizedShippingAddresses = computed(() => {
@@ -140,8 +153,9 @@ const prioritizedShippingAddresses = computed(() => {
   return prioritized.slice(0, 2)
 })
 
-const emitInputValue = (value) => {
-  emit('pay_with_PayStack', payWith.value)
+const getSelectedShippingId = () => {
+  orderStore.selected_shipping_id = SelectedShipping.value
+  orderStore.selected_payment_method = payWith.value
 }
 
 onMounted(() => {

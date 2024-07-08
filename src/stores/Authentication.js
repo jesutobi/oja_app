@@ -1,49 +1,38 @@
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import axiosClient from '../axios'
 
-// import { useLocalStorage } from '@vueuse/core'
-
 export const useUserStore = defineStore('user', () => {
-  // Define your state here
-  const user = reactive({
+  const user = ref({
     userInfo: JSON.parse(localStorage.getItem('USER')),
     token: localStorage.getItem('TOKEN')
   })
 
-  // Define your actions here
   const login = async (userData) => {
     try {
-      // Make a POST request to the /register endpoint with the user object
       const response = await axiosClient.post('/login', userData)
 
-      // set user
       user.token = response.data.token
       setToken(response.data.token)
-      console.log(response.data.user)
       setUser(JSON.stringify(response.data.user))
       user.userInfo = response.data.user
 
-      console.log('login successful:', response.data)
       return response.data
     } catch (error) {
       console.error('login failed:', error)
       throw error
     }
   }
-  // Define your actions here
+
   const register = async (userData) => {
     try {
-      // Make a POST request to the /register endpoint with the user object
       const response = await axiosClient.post('/register', userData)
 
-      // set user
       user.token = response.data.token
       setToken(response.data.token)
       setUser(JSON.stringify(response.data.user))
       user.userInfo = response.data.user
 
-      console.log('Registration successful:', response.data)
       return response.data
     } catch (error) {
       // Handle errors
@@ -60,9 +49,8 @@ export const useUserStore = defineStore('user', () => {
       localStorage.removeItem('TOKEN')
       localStorage.removeItem('USER')
       localStorage.removeItem('verfiedUser')
-      // pinia.state.value = INITIAL_STATE
+      localStorage.removeItem('Orders')
 
-      // Set token to null in the store
       user.token = null
       user.userInfo = null
 
@@ -74,7 +62,7 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // set to session function
+  // set to local storage
   const setToken = (data) => {
     localStorage.setItem('TOKEN', data)
   }

@@ -36,7 +36,7 @@
                 <span
                   class="absolute top-[0.5rem] right-[1.9rem] inline-flex items-center justify-center w-5 h-5 text-xs font-bold font2 bg-yellow-400 rounded-full transform translate-x-1/2 -translate-y-1/2"
                 >
-                  {{ InCartStore.totalQuantity }}
+                  {{ totalQuantity }}
                 </span>
               </router-link>
             </div>
@@ -87,9 +87,11 @@ import { useUserStore } from '@/stores/Authentication'
 import SearchM from '../homepage/searchPage.vue'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import { useCartStore } from '@/stores/cart'
+import { storeToRefs } from 'pinia'
 
 const searchVisibility = ref(false)
 const InCartStore = useCartStore()
+const { totalQuantity } = storeToRefs(InCartStore)
 const DropdownVar = ref(false)
 const store = useUserStore()
 const isLoggedIn = useIsLoggedIn()

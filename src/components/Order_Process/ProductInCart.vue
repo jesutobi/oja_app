@@ -2,7 +2,7 @@
   <div class="font">
     <!-- item -->
 
-    <div v-for="(item, index) in productInCart" :key="index">
+    <div v-for="(item, index) in cartItems" :key="index">
       <!-- <IconHover> -->
       <!-- <> -->
 
@@ -101,7 +101,7 @@
 
       <!-- </IconHover> -->
     </div>
-    <div v-if="productInCart.length === 0">
+    <div v-if="cartItems.length === 0">
       <NoData :text="`Your bag is empty`" />
     </div>
   </div>
@@ -114,16 +114,16 @@ import { onMounted, ref } from 'vue'
 import { useFormatPrice } from '../../composables/formatPrice'
 import Trash from '@/assets/svg/trash.vue'
 import { useQuantityPerProduct } from '../../composables/quantityPerProduct'
+import { storeToRefs } from 'pinia'
 
 const { getQuantity, incrementQuantity, decrementQuantity, removeProduct } = useQuantityPerProduct()
 const InCartStore = useCartStore()
-const productInCart = ref(InCartStore.cartItems)
-const selectedFeature = ref(InCartStore.cartItems.selected_product_feature)
+const { cartItems } = storeToRefs(InCartStore)
 const baseURL = ref('http://localhost:8000')
 const { formatPrice } = useFormatPrice()
 
-onMounted(() => {
-  console.log(productInCart)
-})
+// onMounted(() => {
+//   console.log(productInCart)
+// })
 </script>
 <style scoped></style>

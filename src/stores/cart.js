@@ -29,8 +29,6 @@ export const useCartStore = defineStore(
 
     const removeFromCart = (product) => {
       cartItems.value = cartItems.value.filter((cartItem) => cartItem.id !== product.id)
-      // cartItems.value
-      window.location.reload()
     }
 
     const totalQuantity = computed(() => {
@@ -47,6 +45,11 @@ export const useCartStore = defineStore(
       }, 0)
     })
 
+    const clearBag = () => {
+      cartItems.value = []
+      cartItemCount.value = 0
+    }
+
     return {
       AddToCart,
       cartItems,
@@ -55,7 +58,8 @@ export const useCartStore = defineStore(
       totalQuantity,
       removeFromCart,
       totalAmount,
-      calculateTotalPrice
+      calculateTotalPrice,
+      clearBag
     }
   },
   {

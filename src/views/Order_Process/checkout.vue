@@ -9,13 +9,13 @@
       <!-- product in cart -->
       <div class="lg:col-span-8 max-[1024px]:col-span-7 relative">
         <div>
-          <CheckoutMethods @pay_with_PayStack="SelectedMethod" />
+          <CheckoutMethods />
         </div>
       </div>
 
       <!-- order summary -->
       <div class="lg:col-span-4 max-[1024px]:col-span-5 mt-[0.8rem]">
-        <CartSummary :SelectedPaymentOption="selectedPaymentValue" />
+        <CartSummary />
       </div>
     </div>
   </div>
@@ -35,9 +35,13 @@ const InCartStore = useCartStore()
 const productInCart = InCartStore.cartItems
 
 const selectedPaymentValue = ref('')
+const SelectedAddress = ref('')
 
 const SelectedMethod = (value) => {
   selectedPaymentValue.value = value
+}
+const SelectedShippingAddress = (value) => {
+  SelectedAddress.value = value
 }
 </script>
 <style scoped></style>

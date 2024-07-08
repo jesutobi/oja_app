@@ -15,13 +15,13 @@
               <span>Shopping Bag</span>
             </div>
             <div class="sm:text-sm text-xs font-black">
-              <span class="font2 px-1">{{ productInCart.length }} </span>
+              <span class="font2 px-1">{{ cartItems.length }} </span>
               <span>items in your bag</span>
             </div>
           </div>
           <!-- remove product from cart -->
-          <div v-if="productInCart.length >= 1" class="">
-            <ProdButton class="">
+          <div v-if="cartItems.length >= 1" class="">
+            <ProdButton @click="clear" class="">
               <div class="flex items-center p-0">
                 <div class="px-2 text-xs font2">
                   <span> Clear bag</span>
@@ -32,7 +32,7 @@
               </div>
             </ProdButton>
           </div>
-          <div v-if="productInCart.length === 0">
+          <div v-if="cartItems.length === 0">
             <ProdButton class="">
               <div class="flex items-center p-0">
                 <div class="px-2 text-xs font2">
@@ -67,8 +67,13 @@ import Trash from '@/assets/svg/trash.vue'
 import { useCartStore } from '@/stores/cart'
 import ProductInCart from '@/components/Order_Process/ProductInCart.vue'
 import CartSummary from '@/components/Order_Process/CartSummary.vue'
+import { storeToRefs } from 'pinia'
 
 const InCartStore = useCartStore()
-const productInCart = InCartStore.cartItems
+const { cartItems, clearBag } = storeToRefs(InCartStore)
+
+const clear = () => {
+  InCartStore.clearBag()
+}
 </script>
 <style scoped></style>

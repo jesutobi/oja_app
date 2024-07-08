@@ -12,10 +12,10 @@
       </div>
       <div class="bg-slate-200/25 shadow p-2 rounded-lg">
         <div class="py-2 font2">
-          <span>Price Details ({{ productInCart.length }} item)</span>
+          <span>Price Details ({{ cartItems.length }} item)</span>
         </div>
         <!-- summary -->
-        <div v-for="(item, index) in productInCart" :key="index" class="flex py-2 justify-between">
+        <div v-for="(item, index) in cartItems" :key="index" class="flex py-2 justify-between">
           <div class="text-gray-500">
             <span
               >{{ getQuantity(item.id) }} x
@@ -45,24 +45,24 @@
             <span>Total Amount</span>
           </div>
           <div class="productFont text-green-600">
-            <span>&#8358; {{ formatPrice(TotalAmount) }}</span>
+            <span>&#8358; {{ formatPrice(totalAmount) }}</span>
           </div>
         </div>
       </div>
       <div v-if="isLoggedIn">
         <div v-if="$route.name === 'shopping_cart'">
-          <router-link to="checkout">
-            <ProdButton :Width="`w-full`" class="mt-2">
-              <div class="flex items-center justify-center">
-                <div class="px-2 text-xs sm:text-[0.9rem] font2">
-                  <span> Proceed to Checkout</span>
-                </div>
-                <div>
-                  <img src="@/assets/icon/truck-long-svgrepo-com.svg" class="w-[30px]" alt="" />
-                </div>
+          <!-- <router-link to="checkout"> -->
+          <ProdButton @click="CheckOut" :Width="`w-full`" class="mt-2">
+            <div class="flex items-center justify-center">
+              <div class="px-2 text-xs sm:text-[0.9rem] font2">
+                <span> Proceed to Checkout</span>
               </div>
-            </ProdButton>
-          </router-link>
+              <div>
+                <img src="@/assets/icon/truck-long-svgrepo-com.svg" class="w-[30px]" alt="" />
+              </div>
+            </div>
+          </ProdButton>
+          <!-- </router-link> -->
         </div>
         <div v-if="$route.name === 'checkout'">
           <ProdButton @click="initializePayment" :Width="`w-full`" class="mt-2">
@@ -114,31 +114,85 @@ import { useQuantityPerProduct } from '../../composables/quantityPerProduct'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/Authentication'
+import { useOrdersStore } from '@/stores/orders'
+import axios from 'axios'
+import { storeToRefs } from 'pinia'
 
-const props = defineProps({
-  SelectedPaymentOption: String
-})
-
+const router = useRouter()
 const store = useUserStore()
-const user = store.user.userInfo
+const orderStore = useOrdersStore()
+const { selected_shipping_id, selected_payment_method } = storeToRefs(orderStore)
 const userEmail = store.user.userInfo.email
-const PUBLIC_KEY = 'pk_test_3267ad833473ba445a15e20bd2c4382746945327'
-const route = useRoute()
 const isLoggedIn = useIsLoggedIn()
 const { getQuantity } = useQuantityPerProduct()
 const { formatPrice } = useFormatPrice()
 const InCartStore = useCartStore()
-const TotalAmount = ref(InCartStore.totalAmount)
-const productInCart = ref(InCartStore.cartItems)
+const { cartItems, totalAmount } = storeToRefs(InCartStore)
 const transactionReference = ref('')
+const ipDetails = ref({})
+const orderCode = ref('')
+
+const orderDetails = ref({
+  user_id: store.user.userInfo.id,
+  shipping_address_id: selected_shipping_id.value,
+  total_amount: totalAmount.value,
+  total_item: cartItems.value.length,
+  payment_status: 'unpaid',
+  ip_address: JSON.stringify(ipDetails),
+  payment_method: selected_payment_method.value,
+  order_items: cartItems.value,
+  order_code: orderCode
+})
+
+const PlaceOrder = () => {
+  orderStore
+    .PlaceOrder(orderDetails.value)
+    .then((msg) => {
+      successMsg.value = msg
+      setTimeout(() => {
+        toast.update(id, {
+          render: successMsg,
+          theme: 'colored',
+          type: 'success',
+          autoClose: 1000,
+          transition: 'slide',
+          dangerouslyHTMLString: true
+        })
+        setTimeout(() => {
+          // done
+          toast.done(
+            router.push({
+              name: 'home'
+            })
+          )
+        })
+      }, 2000)
+    })
+    .catch((error) => {
+      errorsInfo.value = error
+      console.log(errorsInfo)
+      setTimeout(() => {
+        toast.update(id, {
+          render: 'The Provided credentials are not correct',
+          autoClose: true,
+          closeOnClick: true,
+          closeButton: true,
+          type: 'error',
+          isLoading: false
+        })
+      }, 2000)
+      // errorNotify()
+    })
+}
 
 const initializePayment = () => {
-  if (props.SelectedPaymentOption === 'PayStack') {
+  if (orderDetails.payment_method !== '' && orderDetails.shipping_address_id !== '') {
     generateTransactionReference()
+    PlaceOrder()
     const handler = PaystackPop.setup({
       key: 'pk_test_3267ad833473ba445a15e20bd2c4382746945327',
       email: userEmail,
-      amount: TotalAmount.value * 100,
+      amount: totalAmount.value * 100,
       currency: 'NGN',
       ref: transactionReference.value,
       callback: (response) => {
@@ -153,7 +207,7 @@ const initializePayment = () => {
     handler.openIframe()
   } else {
     setTimeout(() => {
-      const id = ' Select your payment option'
+      const id = ' You omitted a required option'
       toast(id, {
         theme: 'dark',
         type: 'warning',
@@ -166,18 +220,30 @@ const initializePayment = () => {
 }
 
 const generateReference = (prefix) => {
-  const length = 10
-  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  let result = prefix
+  if (prefix === 'Oja_') {
+    const length = 10
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let result = prefix
 
-  for (let i = length; i > 0; --i) {
-    result += chars[Math.floor(Math.random() * chars.length)]
+    for (let i = length; i > 0; --i) {
+      result += chars[Math.floor(Math.random() * chars.length)]
+    }
+    return result
+  } else {
+    const length = 4
+    const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let result = prefix
+
+    for (let i = length; i > 0; --i) {
+      result += chars[Math.floor(Math.random() * chars.length)]
+    }
+    return result
   }
-  return result
 }
 
 const generateTransactionReference = () => {
   transactionReference.value = generateReference('Oja_')
+  orderCode.value = generateReference('OJA_')
 }
 
 const processPayment = () => {
@@ -204,8 +270,38 @@ const close = () => {
     })
   })
 }
+const CheckOut = () => {
+  if (cartItems.length === 0) {
+    setTimeout(() => {
+      const id = ' You need to add product to cart'
+      toast(id, {
+        theme: 'dark',
+        type: 'warning',
+        autoClose: 2000,
+        transition: 'slide',
+        dangerouslyHTMLString: true
+      })
+    })
+  } else {
+    router.push({
+      name: 'checkout'
+    })
+  }
+}
+
+const getIpData = async () => {
+  try {
+    const response = await axios.get('https://ipinfo.io/json?token=f49c0e45d47a54')
+    ipDetails.value = response.data
+  } catch (error) {
+    // Handle errors
+    console.error('failed:', error)
+    throw error
+  }
+}
 
 onMounted(() => {
+  getIpData()
   const script = document.createElement('script')
   script.setAttribute('src', 'https://js.paystack.co/v1/inline.js')
   document.body.appendChild(script)
