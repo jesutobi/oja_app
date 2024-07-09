@@ -2,14 +2,14 @@
   <div>
     <!-- product card -->
 
-    <div class="hover:shadow-lg hover:bg-white hover:rounded-[0.2rem] p-2 w-full relative group">
+    <div class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group">
       <router-link :to="`/Product_details/${props.Data.id}`">
         <!-- image -->
         <div>
           <img
             :src="`${baseURL}/storage/${props.Data.images[0].image_path}`"
             class="w-full object-cover rounded"
-            style="height: 230px"
+            style="height: 227px"
             alt=""
           />
         </div>
@@ -40,7 +40,7 @@
               }}</span>
             </div>
             <!-- price -->
-            <div class="productFont text-yellow-600">
+            <div class="productFont text-[#FFBF00]">
               <span> &#8358; {{ props.Data.product_price }}</span>
             </div>
           </div>
@@ -55,7 +55,7 @@
               }}</span>
             </div>
             <!-- price -->
-            <div class="productFont text-yellow-600">
+            <div class="productFont">
               <span>star</span>
             </div>
           </div>

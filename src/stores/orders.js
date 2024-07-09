@@ -7,11 +7,14 @@ export const useOrdersStore = defineStore(
   () => {
     const selected_shipping_id = ref('')
     const selected_payment_method = ref('')
+    const orderResponseId = ref('')
 
     const PlaceOrder = async (payload) => {
       try {
         const response = await axiosClient.post(`place_order`, payload)
+        orderResponseId.value = response.data.orderItem.order_details_id
 
+        console.log(orderResponseId.value)
         return response
       } catch (error) {
         // Handle errors
@@ -23,14 +26,18 @@ export const useOrdersStore = defineStore(
     return {
       PlaceOrder,
       selected_shipping_id,
-      selected_payment_method
+      selected_payment_method,
+      orderResponseId
     }
   },
   {
     persist: {
       enabled: true,
       strategies: [
-        { storage: localStorage, paths: ['selected_shipping_id', 'selected_payment_method'] }
+        {
+          storage: localStorage,
+          paths: ['selected_shipping_id', 'selected_payment_method', 'orderResponse']
+        }
       ]
     }
   }

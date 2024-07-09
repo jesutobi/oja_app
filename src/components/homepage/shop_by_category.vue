@@ -1,9 +1,16 @@
 <template>
   <div>
     <!-- title -->
-    <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem">
-      <span class="featured-products font2">Shop by Category</span>
-    </div>
+    <!-- title -->
+    <DashTitleSlot class="mt-[2.5rem]">
+      <div>
+        <Title :text="`Shop by Category`" />
+      </div>
+      <div>
+        <img src="@/assets/icon/category-svgrepo-com.svg" class="w-[30px]" alt="" />
+      </div>
+    </DashTitleSlot>
+
     <!-- product card -->
 
     <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
@@ -32,7 +39,9 @@
 </template>
 <script setup>
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
-
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
+import Star from '@/assets/svg/star.vue'
+import Title from '@/components/Dashboard/DashboardTitles.vue'
 import 'vue3-carousel/dist/carousel.css'
 import ProductCard from '../slots/productCard.vue'
 import { useProductCategory } from '@/stores/product_category'

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="grid grid-cols-7 xl:gap-[2rem] mt-[4rem]">
+    <div class="grid grid-cols-12 xl:gap-[2rem] mt-[4rem]">
       <!-- product -->
-      <div class="xl:col-span-2 max-[1189px]:hidden">
+      <div class="xl:col-span-3 max-[1189px]:hidden">
         <div class="max-[1280px]:grid grid-cols-6 gap-[3rem] max-[1280px]:my-[3rem]">
-          <div class="bg-black max-[1280px]:h-[20rem] xl:h-[15rem] col-span-3 mb-[3rem]">sdsf</div>
-          <div class="bg-black max-[1280px]:h-[20rem] xl:h-[17rem] col-span-3">sdsf</div>
+          <div class="bg-black max-[1280px]:h-[23rem] xl:h-[17rem] col-span-3 mb-[3rem]">sdsf</div>
+          <div class="bg-black max-[1280px]:h-[23rem] xl:h-[17rem] col-span-3">sdsf</div>
         </div>
       </div>
       <!-- hero advert -->
-      <div class="col-span-7 xl:col-span-5">
+      <div class="col-span-12 xl:col-span-9">
         <div class="relative">
           <div class="">
-            <img src="@/assets/images/b1.png" class="xl:h-[35rem]" alt="" />
+            <img src="@/assets/images/b1.png" class="xl:h-[37rem] object-fill w-full" alt="" />
           </div>
           <div
             class="absolute text-black -right-5 sm:h-[40vh] md:bottom-[5rem] bottom-[0rem] w-[50%]"

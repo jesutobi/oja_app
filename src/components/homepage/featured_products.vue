@@ -2,9 +2,17 @@
   <div>
     <div>
       <!-- title -->
-      <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem">
-        <span class="featured-products font2">Featured Products</span>
-      </div>
+      <DashTitleSlot class="mt-[5.5rem]">
+        <div>
+          <Title :text="`Featured Products`" />
+        </div>
+        <div class="w-[80px] flex">
+          <div class="" v-for="(star, index) in starFive" :key="index">
+            <Star :color="`#FFBF00`" />
+          </div>
+        </div>
+      </DashTitleSlot>
+
       <!-- product card -->
 
       <Carousel :settings="settings" :breakpoints="breakpoints">
@@ -21,6 +29,9 @@
 </template>
 
 <script setup>
+import Star from '@/assets/svg/star.vue'
+import Title from '@/components/Dashboard/DashboardTitles.vue'
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 
 import 'vue3-carousel/dist/carousel.css'
@@ -36,6 +47,7 @@ import { onMounted, ref, reactive } from 'vue'
 const store = useProduct()
 const products = ref({})
 const baseURL = ref('http://localhost:8000')
+const starFive = ref(5)
 
 const settings = reactive({
   itemsToShow: 1,

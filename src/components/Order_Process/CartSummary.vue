@@ -24,7 +24,7 @@
                   .toString()
                   .replace(/(<([^>]+)>)/gi, '')
                   .substring(0, 20)
-              }}...</span
+              }}..</span
             >
           </div>
           <div class="productFont">
@@ -115,13 +115,15 @@ import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/Authentication'
 import { useOrdersStore } from '@/stores/orders'
+import { usePaymentStore } from '@/stores/payment_details.js'
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 
 const router = useRouter()
 const store = useUserStore()
+const paymentstore = usePaymentStore()
 const orderStore = useOrdersStore()
-const { selected_shipping_id, selected_payment_method } = storeToRefs(orderStore)
+const { selected_shipping_id, selected_payment_method, orderResponseId } = storeToRefs(orderStore)
 const userEmail = store.user.userInfo.email
 const isLoggedIn = useIsLoggedIn()
 const { getQuantity } = useQuantityPerProduct()
@@ -134,59 +136,34 @@ const orderCode = ref('')
 
 const orderDetails = ref({
   user_id: store.user.userInfo.id,
-  shipping_address_id: selected_shipping_id.value,
+  shipping_address_id: selected_shipping_id,
   total_amount: totalAmount.value,
   total_item: cartItems.value.length,
   payment_status: 'unpaid',
   ip_address: JSON.stringify(ipDetails),
-  payment_method: selected_payment_method.value,
+  payment_method: selected_payment_method,
   order_items: cartItems.value,
   order_code: orderCode
 })
 
 const PlaceOrder = () => {
-  orderStore
-    .PlaceOrder(orderDetails.value)
-    .then((msg) => {
-      successMsg.value = msg
-      setTimeout(() => {
-        toast.update(id, {
-          render: successMsg,
-          theme: 'colored',
-          type: 'success',
-          autoClose: 1000,
-          transition: 'slide',
-          dangerouslyHTMLString: true
-        })
-        setTimeout(() => {
-          // done
-          toast.done(
-            router.push({
-              name: 'home'
-            })
-          )
-        })
-      }, 2000)
+  orderStore.PlaceOrder(orderDetails.value).then((response) => {
+    const id = response.data.message
+    toast(id, {
+      theme: 'colored',
+      type: 'success',
+      autoClose: 1000,
+      transition: 'slide',
+      dangerouslyHTMLString: true
     })
-    .catch((error) => {
-      errorsInfo.value = error
-      console.log(errorsInfo)
-      setTimeout(() => {
-        toast.update(id, {
-          render: 'The Provided credentials are not correct',
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'error',
-          isLoading: false
-        })
-      }, 2000)
-      // errorNotify()
-    })
+    selected_shipping_id.value = ''
+    selected_payment_method.value = ''
+    InCartStore.clearBag()
+  })
 }
 
 const initializePayment = () => {
-  if (orderDetails.payment_method !== '' && orderDetails.shipping_address_id !== '') {
+  if (selected_payment_method.value !== '' && selected_shipping_id.value !== '') {
     generateTransactionReference()
     PlaceOrder()
     const handler = PaystackPop.setup({
@@ -195,11 +172,18 @@ const initializePayment = () => {
       amount: totalAmount.value * 100,
       currency: 'NGN',
       ref: transactionReference.value,
+
       callback: (response) => {
-        console.log(response)
-        // var reference = response.reference
         processPayment()
+        const payload = {
+          payment_status: response.status,
+          transaction_code: response.transaction,
+          reference_code: response.trxref,
+          order_details_id: orderResponseId.value
+        }
+        paymentstore.PaymentDetails(payload)
       },
+
       onClose: function () {
         close()
       }
@@ -209,8 +193,8 @@ const initializePayment = () => {
     setTimeout(() => {
       const id = ' You omitted a required option'
       toast(id, {
-        theme: 'dark',
-        type: 'warning',
+        theme: 'colored',
+        type: 'error',
         autoClose: 2000,
         transition: 'slide',
         dangerouslyHTMLString: true
@@ -247,22 +231,24 @@ const generateTransactionReference = () => {
 }
 
 const processPayment = () => {
-  setTimeout(() => {
-    const id = 'Successful Payment'
-    toast(id, {
-      theme: 'colored',
-      type: 'success',
-      autoClose: 2000,
-      transition: 'slide',
-      dangerouslyHTMLString: true
-    })
+  const id = 'Payment Successful'
+  toast(id, {
+    theme: 'colored',
+    type: 'success',
+    autoClose: 2000,
+    transition: 'slide',
+    dangerouslyHTMLString: true
   })
+  // paymentstore.PaymentDetails(payload)
+  // router.push({
+  //   name: 'shopping_cart'
+  // })
 }
 const close = () => {
   setTimeout(() => {
     const id = ' You closed the payment gateway'
     toast(id, {
-      theme: 'dark',
+      theme: 'colored',
       type: 'info',
       autoClose: 2000,
       transition: 'slide',
@@ -271,13 +257,13 @@ const close = () => {
   })
 }
 const CheckOut = () => {
-  if (cartItems.length === 0) {
+  if (cartItems.value.length === 0) {
     setTimeout(() => {
       const id = ' You need to add product to cart'
       toast(id, {
-        theme: 'dark',
-        type: 'warning',
-        autoClose: 2000,
+        theme: 'colored',
+        type: 'error',
+        autoClose: 1000,
         transition: 'slide',
         dangerouslyHTMLString: true
       })

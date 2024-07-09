@@ -13,7 +13,7 @@ export const useStatesStore = defineStore(
         //   localStorage.setItem('USER', JSON.stringify(response.data))
 
         Nigerian_States.value = response.data.data
-        console.log('get', Nigerian_States.value)
+
         return response
       } catch (error) {
         // Handle errors

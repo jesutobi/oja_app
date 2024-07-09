@@ -2,20 +2,30 @@
   <div>
     <div>
       <!-- title -->
-      <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem">
-        <span class="featured-products font2">New Arrivals</span>
-      </div>
+      <DashTitleSlot class="mt-[2.5rem]">
+        <div>
+          <Title :text="`New Arrivals`" />
+        </div>
+        <div>
+          <img src="@/assets/icon/new-star.svg" class="w-[30px]" alt="" />
+        </div>
+      </DashTitleSlot>
       <!-- product card -->
-      <ProductGrid>
-        <div v-for="(product, index) in products" :key="index">
+      <ProductGrid v-if="products.splice">
+        <!-- <div > -->
+        <div v-for="(product, index) in products.splice(0, 10)" :key="index">
           <ProductCard :Data="product" class="w-full" />
         </div>
+        <!-- </div> -->
       </ProductGrid>
     </div>
   </div>
 </template>
 
 <script setup>
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
+import Star from '@/assets/svg/star.vue'
+import Title from '@/components/Dashboard/DashboardTitles.vue'
 import Heart from '@/assets/svg/heart.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'

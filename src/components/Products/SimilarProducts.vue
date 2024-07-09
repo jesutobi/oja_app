@@ -1,9 +1,14 @@
 <template>
   <div>
     <!-- title -->
-    <div class="text-center my-[3rem] md:text-[1.6rem] text-[1.2rem]">
-      <span class="featured-products font2">Similar Products</span>
-    </div>
+    <DashTitleSlot class="mt-[2.5rem]">
+      <div>
+        <Title :text="`Similar products`" />
+      </div>
+      <div>
+        <img src="@/assets/icon/similar-svgrepo-com.svg" class="w-[30px]" alt="" />
+      </div>
+    </DashTitleSlot>
 
     <!-- product card -->
     <ProductGrid>
@@ -15,6 +20,9 @@
 </template>
 
 <script setup>
+import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
+import Star from '@/assets/svg/star.vue'
+import Title from '@/components/Dashboard/DashboardTitles.vue'
 import ProductGrid from '../slots/productCard.vue'
 import ProductCard from './product_card.vue'
 import { useSimilarProducts } from '@/stores/similar_products'
