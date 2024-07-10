@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="px-6"><Cart /></div>
+    <div class="sm:px-5 px-3"><Cart /></div>
   </div>
 </template>
 

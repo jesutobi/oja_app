@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="min-[640px]:py-[2rem] py-[1rem] px-7 max-[640px]:px-4 relative shadow-md">
+    <div class="sm:py-[2rem] max-[640px]:py-[1.6rem] px-7 max-[640px]:px-1 relative shadow-md">
       <div class="">
         <div class="flex items-center justify-between">
           <div class="flex">
@@ -8,7 +8,7 @@
             <div><Hamburger /></div>
             <!-- mob logo -->
             <div
-              class="font_logo min-[640px]:hidden px-4 max-[640px]:text-[1.8rem] text-black-400 text-[2.5rem]"
+              class="font_logo sm:hidden max-[640px]:px-2 max-[640px]:text-[1.6rem] text-black-400 text-[2.5rem]"
             >
               <router-link to="/"> <span>OJA</span></router-link>
             </div>
@@ -20,7 +20,7 @@
             <router-link to="/"> <span>OJA</span></router-link>
           </div>
           <div class="flex items-center font2 cursor-pointer">
-            <div>
+            <div class="">
               <IconHover>
                 <Search @click="openSearchModal" :color="`#000000`" />
               </IconHover>
@@ -34,7 +34,7 @@
                   <Bag />
                 </IconHover>
                 <span
-                  class="absolute top-[0.5rem] right-[1.9rem] inline-flex items-center justify-center w-5 h-5 text-xs font-bold font2 bg-yellow-400 rounded-full transform translate-x-1/2 -translate-y-1/2"
+                  class="absolute top-[0.5rem] sm:top-[0.5rem] sm:right-[1.6rem] right-[0.9rem] inline-flex items-center justify-center w-4 h-4 sm:w-5 sm:h-5 text-xs font-bold font2 bg-yellow-400 rounded-full transform translate-x-1/2 -translate-y-1/2"
                 >
                   {{ totalQuantity }}
                 </span>
@@ -42,7 +42,7 @@
             </div>
 
             <!-- userdropdown -->
-            <div class="group">
+            <div class="group max-[450px]:hidden">
               <div class="mx-1 group-hover:block">
                 <div v-if="isLoggedIn && store.user.userInfo">
                   <IconHover>

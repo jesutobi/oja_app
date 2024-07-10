@@ -7,21 +7,20 @@
         <Title :text="`Shop by Category`" />
       </div>
       <div>
-        <img src="@/assets/icon/category-svgrepo-com.svg" class="w-[30px]" alt="" />
+        <img src="@/assets/icon/category-svgrepo-com.svg" class="w-[28px]" alt="" />
       </div>
     </DashTitleSlot>
 
     <!-- product card -->
 
     <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
-      <Slide v-for="(data, index) in product_category" :key="index" class="py-[2rem]">
-        <div class="hover:shadow-lg hover:rounded-[0.2rem] p-2 relative group cursor-pointer">
+      <Slide v-for="(data, index) in product_category" :key="index" class="py-[1rem]">
+        <div class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group">
           <!-- image -->
           <div>
             <img
               :src="`${baseURL}/storage/${data.card_image}`"
-              class="w-full object-cover rounded"
-              style="height: 230px; width: 300px"
+              class="w-full object-cover rounded max-[500px]:h-[140px] min-[500px]:h-[227px]"
               alt=""
             />
           </div>
@@ -58,20 +57,20 @@ const settings = reactive({
 
 const breakpoints = reactive({
   300: {
-    itemsToShow: 1.5,
-    snapAlign: 'center'
-  },
-  400: {
     itemsToShow: 2,
-    snapAlign: 'center'
+    snapAlign: 'start'
+  },
+  450: {
+    itemsToShow: 2.6,
+    snapAlign: 'start'
   },
   568: {
-    itemsToShow: 2.6,
-    snapAlign: 'center'
+    itemsToShow: 3,
+    snapAlign: 'start'
   },
   767: {
     itemsToShow: 3.5,
-    snapAlign: 'center'
+    snapAlign: 'start'
   },
   992: {
     itemsToShow: 4,

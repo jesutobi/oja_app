@@ -1,10 +1,7 @@
 <template>
-  <div @click="openMenu = !openMenu" :class="{ active: openMenu }">
-    <div class="" id="app">
-      <div class="menu-wrapper">
-        <div class="menu-bar one"></div>
-        <div class="menu-bar two"></div>
-      </div>
+  <div>
+    <div>
+      <img src="@/assets/icon/hamburger.svg" class="w-[34px] sm:w-[43px]" alt="" />
     </div>
   </div>
 </template>

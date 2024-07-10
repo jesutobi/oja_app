@@ -2,7 +2,7 @@
   <div>
     <div>
       <!-- title -->
-      <DashTitleSlot class="mt-[5.5rem]">
+      <DashTitleSlot class="mt-[3rem]">
         <div>
           <Title :text="`Featured Products`" />
         </div>
@@ -16,7 +16,7 @@
       <!-- product card -->
 
       <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="(product, index) in products" :key="index" class="py-[1.5rem]">
+        <Slide v-for="(product, index) in products" :key="index" class="py-[1rem]">
           <ProductCard :Data="product" class="w-full" />
         </Slide>
 
@@ -56,20 +56,20 @@ const settings = reactive({
 
 const breakpoints = reactive({
   300: {
-    itemsToShow: 1.5,
-    snapAlign: 'center'
-  },
-  400: {
     itemsToShow: 2,
-    snapAlign: 'center'
+    snapAlign: 'start'
+  },
+  450: {
+    itemsToShow: 2.6,
+    snapAlign: 'start'
   },
   568: {
-    itemsToShow: 2.6,
-    snapAlign: 'center'
+    itemsToShow: 3,
+    snapAlign: 'start'
   },
   767: {
     itemsToShow: 3.5,
-    snapAlign: 'center'
+    snapAlign: 'start'
   },
   992: {
     itemsToShow: 4,

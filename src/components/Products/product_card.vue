@@ -8,8 +8,7 @@
         <div>
           <img
             :src="`${baseURL}/storage/${props.Data.images[0].image_path}`"
-            class="w-full object-cover rounded"
-            style="height: 227px"
+            class="w-full object-cover rounded max-[500px]:h-[140px] min-[500px]:h-[227px]"
             alt=""
           />
         </div>

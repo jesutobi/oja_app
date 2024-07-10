@@ -2,7 +2,7 @@
   <div>
     <div>
       <!-- title -->
-      <DashTitleSlot class="mt-[2.5rem]">
+      <DashTitleSlot class="">
         <div>
           <Title :text="`New Arrivals`" />
         </div>
