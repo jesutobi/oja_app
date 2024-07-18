@@ -66,6 +66,9 @@
           </div>
         </div>
       </div>
+      <div v-if="ShippingAddresses.length === 0" class="">
+        <NoData :text="`You have no Shipping address`" />
+      </div>
 
       <!-- add new address -->
       <div class="p-2 flex justify-end">
@@ -119,6 +122,8 @@
   </div>
 </template>
 <script setup>
+import NoData from '@/components/extras/noData.vue'
+import Title from '@/components/Dashboard/DashboardTitles.vue'
 import LittleInfo from '@/components/extras/littleInfo.vue'
 import Check from '@/assets/svg/check.vue'
 import CheckOutCard from '@/components/slots/CheckOutCards.vue'

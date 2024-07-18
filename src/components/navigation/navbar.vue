@@ -40,14 +40,15 @@
                 </span>
               </router-link>
             </div>
+            <!-- {{ userInfo.first_name }} -->
 
             <!-- userdropdown -->
-            <div class="group max-[450px]:hidden">
+            <div class="max-[450px]:hidden relative group">
               <div class="mx-1 group-hover:block">
-                <div v-if="isLoggedIn && store.user.userInfo">
+                <div v-if="isLoggedIn && userInfo">
                   <IconHover>
                     <UserCircle>
-                      <span class="text-black">{{ store.user.userInfo.first_name.charAt(0) }}</span>
+                      <span class="text-black">{{ userInfo.first_name.charAt(0) }}</span>
                     </UserCircle>
                   </IconHover>
                 </div>
@@ -55,10 +56,10 @@
               </div>
 
               <div
-                class="z-40 fixed group-hover:block hidden right-[2rem] top-[3rem] animate__animated animate__fadeInUp animate__faster"
+                class="z-40 group-hover:block absolute hidden top-[1rem] right-0 animate__animated animate__fadeInUp animate__faster"
               >
-                <div class="bg-transparent h-[3rem]"></div>
-                <Dropdown class="group-hover:block" />
+                <div class="bg-transparent h-[4rem]"></div>
+                <Dropdown class="" />
               </div>
             </div>
           </div>
@@ -95,6 +96,7 @@ const { totalQuantity } = storeToRefs(InCartStore)
 const DropdownVar = ref(false)
 const store = useUserStore()
 const isLoggedIn = useIsLoggedIn()
+const { userInfo } = storeToRefs(store)
 
 function closeModal(data) {
   console.log(data)

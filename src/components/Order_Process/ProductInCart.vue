@@ -68,7 +68,7 @@
           <div class="productFont text-[0.9rem] px-2">
             <span>&#8358;{{ formatPrice(item.product_price) }}</span>
           </div>
-          <div class="absolute bottom-0 right-0 flex item-center">
+          <div class="absolute bottom-0 right-0 flex items-center">
             <div
               @click="InCartStore.removeFromCart(item)"
               class="absolute bottom-0 -left-6 top-2 cursor-pointer"
@@ -77,24 +77,7 @@
                 <Trash />
               </IconHover>
             </div>
-            <div
-              class="flex items-center rounded-lg p-1 text-center m-1 font text-xs justify-between bg-yellow-400 w-[100px] sm:w-[100px]"
-            >
-              <!-- decrement -->
-              <div @click="decrementQuantity(item)" class="px-1 cursor-pointer">
-                <img src="@/assets/svg/minus-svgrepo-com.svg" class="w-[15px]" alt="" />
-              </div>
-              <div><span class="font2">|</span></div>
-              <!-- data -->
-              <div>
-                <span class="">{{ getQuantity(item.id) }}</span>
-              </div>
-              <div><span class="font2">|</span></div>
-              <!-- increment -->
-              <div @click="incrementQuantity(item)" class="px-1 cursor-pointer">
-                <img src="@/assets/svg/plus-svgrepo-com.svg" class="w-[18px]" alt="" />
-              </div>
-            </div>
+            <QuantityChange :Data="item" />
           </div>
         </div>
       </div>
@@ -107,6 +90,7 @@
   </div>
 </template>
 <script setup>
+import QuantityChange from '@/components/extras/quantityChange.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import NoData from '@/components/extras/noData.vue'
 import { useCartStore } from '@/stores/cart'

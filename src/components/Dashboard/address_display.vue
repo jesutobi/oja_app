@@ -80,7 +80,7 @@
                     <div class="font2">
                       <span>Default Address</span>
                     </div>
-                    <div class="px-2 cursor-pointer" title="Edit address">
+                    <div class="px-2 cursor-pointer">
                       <Check />
                     </div>
                   </div>
@@ -95,7 +95,7 @@
                     <div>
                       <span>Set as default</span>
                     </div>
-                    <div class="px-2 cursor-pointer" title="Edit address">
+                    <div class="px-2 cursor-pointer" title="set address">
                       <Set />
                     </div>
                   </div>

@@ -74,3 +74,21 @@ input:focus {
 textarea:focus {
   outline: none !important;
 }
+
+.yellowBadge {
+  color: black !important;
+  background: #ffbf005f !important;
+  border: 1px solid #ffbf00 !important;
+}
+
+.greenBadge {
+  color: rgb(4, 164, 49) !important;
+  background: rgba(128, 231, 157, 0.429) !important;
+  border: 1px solid rgb(4, 164, 49) !important;
+}
+
+.redBadge {
+  color: red !important;
+  background: rgba(237, 28, 35, 0.192) !important;
+  border: 1px solid red !important;
+}

@@ -5,6 +5,7 @@ import DashboardLayout from '../components/layouts/DashboardLayout.vue'
 // import Home from '../views/index.vue'
 import { useUserStore } from '../stores/Authentication'
 import { useVerifyEmailStore } from '../stores/Email_verification'
+import { storeToRefs } from 'pinia'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -115,6 +116,11 @@ const router = createRouter({
           component: () => import('../views/Dashboard/orders.vue')
         },
         {
+          path: 'order-detail/:id',
+          name: 'order-detail',
+          component: () => import('../views/Dashboard/order-detail.vue')
+        },
+        {
           path: 'saved-items',
           name: 'saved-items',
           component: () => import('../views/Dashboard/saved-items.vue')
@@ -190,12 +196,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const store = useUserStore()
   const verifyStore = useVerifyEmailStore()
+  const { userInfo, token } = storeToRefs(store)
 
-  if (to.meta.requiresAuth && !store.user.token) {
+  if (to.meta.requiresAuth && !token.value) {
     next({ name: 'Login' })
-  } else if (store.user.token && to.meta.isGuest) {
+  } else if (token.value && to.meta.isGuest) {
     next({ name: 'home' })
-  } else if (to.meta.requiresAuth && store.user.token && store.user.userInfo.verified_at == null) {
+  } else if (to.meta.requiresAuth && token.value && userInfo.value.verified_at == null) {
     next({ name: 'notVerified' })
   } else {
     next()

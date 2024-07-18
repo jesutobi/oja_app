@@ -22,7 +22,7 @@ export const useCartStore = defineStore(
         existingItem.quantity--
         if (existingItem.quantity === 0) {
           removeFromCart(product)
-          window.location.reload()
+          // window.location.reload()
         }
       }
     }

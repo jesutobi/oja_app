@@ -1,18 +1,16 @@
 <template>
   <div>
-    <div
-      class="rounded-[1rem] bg-white shadow-md text-black text-sm font1 z-40 py-2 px-2 w-[300px]"
-    >
+    <div class="rounded-[1rem] bg-white text-black text-sm font1 z-40 py-2 px-2 w-[300px] shadow">
       <!-- full name -->
       <div>
-        <div class="flex items-center p-2" v-if="isLoggedIn && store.user.userInfo">
+        <div class="flex items-center p-2" v-if="isLoggedIn && userInfo">
           <div>
             <UserCircle>
-              <span class="text-black">{{ store.user.userInfo.first_name.charAt(0) }}</span>
+              <span class="text-black">{{ userInfo.first_name.charAt(0) }}</span>
             </UserCircle>
           </div>
           <div class="text-sm font2 px-3">
-            <span>{{ store.user.userInfo.first_name + ' ' + store.user.userInfo.last_name }}</span>
+            <span>{{ userInfo.first_name + ' ' + userInfo.last_name }}</span>
           </div>
         </div>
       </div>
@@ -63,15 +61,15 @@ import { useUserStore } from '@/stores/Authentication'
 import User_Data from '../../json/user_drop_down.json'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const isLoggedIn = useIsLoggedIn()
 const router = useRouter()
 const store = useUserStore()
-// const user = store.user.userData
+// const user = userData
 const successMsg = ref('')
 const errorsInfo = ref({})
-// const first_name = store.user.userInfo.first_name
-// const full_name = store.user.userInfo.first_name + ' ' + store.user.userInfo.last_name
+const { userInfo } = storeToRefs(store)
 
 function logout() {
   const id = toast.loading('Logging out...')

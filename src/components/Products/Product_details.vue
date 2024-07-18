@@ -5,11 +5,11 @@
     >
       <!-- product images -->
       <div class="lg:col-span-5 col-span-12 shadow bg-white sm:rounded-lg">
-        <Images :Data="product_detail" />
+        <Images :Data="productDetail" />
       </div>
       <!-- product info -->
       <div class="lg:col-span-7 col-span-12 py-2 px-4 shadow bg-white sm:rounded-lg">
-        <Info :Feature="product_feature" :Data="product_detail" />
+        <Info :Feature="product_feature" :Data="productDetail" />
       </div>
     </div>
     <!-- product description and review -->
@@ -88,20 +88,19 @@
 <script setup>
 import ProdButton from '../slots/productButtons.vue'
 import Images from '@/components/Product_Details/product_images.vue'
-import GoBack from '../extras/goBack.vue'
 import Info from '@/components/Product_Details/Product_info.vue'
 import Description from '@/components/Product_Details/Product_description.vue'
 import Review from '@/components/Product_Details/Product_review.vue'
 import DisplayReview from '@/components/Product_Details/Display_review.vue'
-import Plus from '@/assets/svg/plus.vue'
-import Minus from '@/assets/svg/minus.vue'
 
 import { useProduct } from '@/stores/product'
 import NoData from '@/components/extras/noData.vue'
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 const store = useProduct()
+const { productDetail, productFeature } = storeToRefs(store)
 const route = useRoute()
 const product_detail = ref({})
 const product_feature = ref([])

@@ -27,7 +27,7 @@
           </div>
           <!-- date -->
           <div class="text-xs" style="color: #04a431">
-            <span>{{ formatTime(data.created_at) }}</span>
+            <span>{{ formatDate(data.created_at) }}</span>
           </div>
         </div>
       </div>
@@ -35,7 +35,7 @@
   </div>
 </template>
 <script setup>
-import moment from 'moment'
+import { useFormatDate } from '../../composables/formatDate'
 
 import UserCircle from '@/components/slots/UserCircle.vue'
 import Icon from '@/components/slots/UserCircle.vue'
@@ -45,9 +45,7 @@ const props = defineProps({
   Data: Array
 })
 
-const formatTime = (value) => {
-  return moment(value).format('MMMM Do YYYY')
-}
+const { formatDate } = useFormatDate()
 
 const product_review = props.Data
 </script>

@@ -33,9 +33,11 @@ import Back from '../../components/extras/goBack.vue'
 import Logo from '../../components/icons/Logo.vue'
 import AuthFormGrid from '../../components/slots/AuthFormGrid.vue'
 import { useUserStore } from '@/stores/Authentication'
+import { storeToRefs } from 'pinia'
 
 const store = useUserStore()
+const { userInfo } = storeToRefs(store)
 
-const user = store.user.userInfo.email
+const user = userInfo.value.email
 </script>
 <style scoped></style>

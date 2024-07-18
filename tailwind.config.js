@@ -19,6 +19,11 @@ module.exports = {
       },
       scale: {
         102: '1.02' // Custom scale value
+      },
+      colors: {
+        yellow: {
+          400: '#FFBF00' // your custom shade of yellow
+        }
       }
     }
   }

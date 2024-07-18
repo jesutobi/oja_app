@@ -57,6 +57,7 @@ import { useVerifyEmailStore } from '@/stores/Email_verification'
 import { useUserStore } from '@/stores/Authentication'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const route = useRoute()
 const router = useRouter()
@@ -64,13 +65,14 @@ const verifiedStore = useVerifyEmailStore()
 const userStore = useUserStore()
 const successMsg = ref('')
 const errorsInfo = ref('')
+const { userInfo } = storeToRefs(userStore)
 
 const user_verification_data = {
   token: route.query.token,
   user_id: route.query.id
 }
 
-const user = userStore.user.userInfo.email
+const user = userInfo.value.email
 
 const verifyEmail = (user_verification_data) => {
   const id = toast.loading('Verifying..')

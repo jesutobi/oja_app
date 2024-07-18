@@ -1,40 +1,44 @@
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import axiosClient from '../axios'
 
-export const useUpdateUserStore = defineStore('update_users', () => {
-  // Define your state here
-  const data = reactive({
-    AuthResponse: ''
-  })
+export const useUpdateUserStore = defineStore(
+  'update_users',
+  () => {
+    // Define your state here
 
-  const GetUser = async () => {
-    try {
-      const response = await axiosClient.get(`user`)
-      localStorage.setItem('USER', JSON.stringify(response.data))
-      console.log('get', response.data)
+    const AuthResponse = ref('')
 
-      return response
-    } catch (error) {
-      // Handle errors
-      console.error('Authentication Failed:', error)
-      throw error
+    const GetUser = async () => {
+      try {
+        const response = await axiosClient.get(`user`)
+        AuthResponse.value = response.data
+
+        return response
+      } catch (error) {
+        // Handle errors
+        console.error('Authentication Failed:', error)
+        throw error
+      }
+    }
+    const UpdateUser = async (payload) => {
+      try {
+        const response = await axiosClient.put(`update_user`, payload)
+
+        return response
+      } catch (error) {
+        // Handle errors
+        console.error('Authentication Failed:', error)
+        throw error
+      }
+    }
+
+    return { GetUser, UpdateUser, AuthResponse }
+  },
+  {
+    persist: {
+      enabled: true,
+      strategies: [{ storage: localStorage, paths: ['AuthResponse'] }]
     }
   }
-  const UpdateUser = async (payload) => {
-    try {
-      console.log(payload)
-      const response = await axiosClient.put(`update_user`, payload)
-
-      console.log(response)
-
-      return response
-    } catch (error) {
-      // Handle errors
-      console.error('Authentication Failed:', error)
-      throw error
-    }
-  }
-
-  return { data, GetUser, UpdateUser }
-})
+)

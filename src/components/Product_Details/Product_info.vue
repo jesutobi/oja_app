@@ -48,29 +48,12 @@
 
     <div class="flex items-center sm:text-sm text-xs py-3">
       <div><span>Add to bag : </span></div>
-      <div
-        class="flex items-center rounded p-1 mx-1 font sm:text-sm text-xs justify-between bg-yellow-400 w-[130px] sm:w-[160px]"
-      >
-        <!-- decrement -->
-        <div @click="decrementQuantity(Data)" class="sm:px-2 px-1 cursor-pointer">
-          <img src="@/assets/svg/minus-svgrepo-com.svg" class="sm:w-[20px] w-[18px]" alt="" />
-        </div>
-        <div><span>|</span></div>
-        <!-- data -->
-        <div>
-          <span class="">{{ getQuantity(Data.id) }}</span>
-        </div>
-        <div><span>|</span></div>
-        <!-- increment -->
-        <div @click="incrementQuantity(Data)" class="sm:px-2 px-1 cursor-pointer">
-          <img src="@/assets/svg/plus-svgrepo-com.svg" class="sm:w-[20px] w-[18px]" alt="" />
-        </div>
-      </div>
+      <QuantityChange :Data="Data" />
     </div>
-
     <!-- buy now button -->
-    <div class="py-3">
-      <ProdButton :Width="`w-[36%]`" class="">Buy Now</ProdButton>
+    <div class="py-3 flex items-center w-full">
+      <ProdButton :Width="`w-[100%]`" class="w-[40%] md:w-[30%]">Buy Now</ProdButton>
+      <SaveButton :Data="Data" class="px-2" />
     </div>
 
     <!-- product features-->
@@ -78,6 +61,7 @@
       <div class="py-2 font2">
         <span>Features</span>
       </div>
+      <!-- {{ JSON.parse(Feature) }} -->
       <div>
         <ul class="list-disc p-2" v-for="(data, index) in Feature" :key="index">
           <li>
@@ -96,11 +80,12 @@
   </div>
 </template>
 <script setup>
+import SaveButton from '@/components/extras/saveButton.vue'
+import QuantityChange from '@/components/extras/quantityChange.vue'
 import ProdButton from '../slots/productButtons.vue'
 import { ref, reactive } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useFormatPrice } from '../../composables/formatPrice'
-import { useQuantityPerProduct } from '../../composables/quantityPerProduct'
 
 defineProps({
   Data: Object,
@@ -114,7 +99,6 @@ const copy = ref(false)
 const copyButton = ref(true)
 const link = ref(null)
 const { formatPrice } = useFormatPrice()
-const { getQuantity, incrementQuantity, decrementQuantity } = useQuantityPerProduct()
 
 const copyLink = () => {
   if (link.value) {

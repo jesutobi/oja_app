@@ -124,18 +124,20 @@ const store = useUserStore()
 const paymentstore = usePaymentStore()
 const orderStore = useOrdersStore()
 const { selected_shipping_id, selected_payment_method, orderResponseId } = storeToRefs(orderStore)
-const userEmail = store.user.userInfo.email
+
 const isLoggedIn = useIsLoggedIn()
 const { getQuantity } = useQuantityPerProduct()
 const { formatPrice } = useFormatPrice()
 const InCartStore = useCartStore()
 const { cartItems, totalAmount } = storeToRefs(InCartStore)
+const { userInfo } = storeToRefs(store)
 const transactionReference = ref('')
 const ipDetails = ref({})
 const orderCode = ref('')
+const userEmail = userInfo.value ? userInfo.value.email : null
 
 const orderDetails = ref({
-  user_id: store.user.userInfo.id,
+  user_id: userInfo.value ? userInfo.value.id : null,
   shipping_address_id: selected_shipping_id,
   total_amount: totalAmount.value,
   total_item: cartItems.value.length,
@@ -240,9 +242,11 @@ const processPayment = () => {
     dangerouslyHTMLString: true
   })
   // paymentstore.PaymentDetails(payload)
-  // router.push({
-  //   name: 'shopping_cart'
-  // })
+  setTimeout(() => {
+    router.push({
+      name: 'shopping_cart'
+    })
+  }, 2000)
 }
 const close = () => {
   setTimeout(() => {

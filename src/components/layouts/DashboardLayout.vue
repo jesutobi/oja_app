@@ -4,12 +4,12 @@
       <!-- nav -->
       <NavBar />
     </div>
-    <div class="bgwhite1 bg-cover">
+    <div class="bgwhite1 bg-cover h-[100vh]">
       <div class="container mx-auto">
         <div class="mx-2">
-          <div class="py-5"><Back /></div>
+          <div class="pt-7"><Back /></div>
           <div
-            class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 my-11 max-[1024px]:gap-2 min-[1024px]:gap-8"
+            class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 my-7 max-[1024px]:gap-2 min-[1024px]:gap-8"
           >
             <!-- dashboard control -->
 

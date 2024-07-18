@@ -1,7 +1,6 @@
 import { reactive, ref } from 'vue'
 import { defineStore } from 'pinia'
 import axiosClient from '../axios'
-ref
 
 export const useShippingAddressStore = defineStore(
   'shipping_address',

@@ -15,9 +15,7 @@
       </router-link>
       <Button_pop_up>
         <!-- save items -->
-        <div>
-          <Heart />
-        </div>
+        <div><SaveButton :Data="Data" /></div>
         <div>
           <span>|</span>
         </div>
@@ -64,7 +62,7 @@
   </div>
 </template>
 <script setup>
-import Heart from '@/assets/svg/heart.vue'
+import SaveButton from '@/components/extras/saveButton.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
 import { useCartStore } from '@/stores/cart'
@@ -72,8 +70,12 @@ import { ref } from 'vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 const baseURL = ref('http://localhost:8000')
 const store = useCartStore()
+
 const props = defineProps({
   Data: {
     type: Object,
