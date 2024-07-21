@@ -21,8 +21,13 @@
           <!-- image -->
           <div class="">
             <img
+              loading="lazy"
+              @load="onImageLoad"
               :src="`${baseURL}/storage/${data.product.images[0].image_path}`"
               class="object-cover rounded-lg h-[75px] w-[75px]"
+              :class="{
+                'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+              }"
               alt=""
             />
           </div>
@@ -252,12 +257,21 @@ import DashboardCardHeader from '@/components/slots/DashboardCardHeader.vue'
 import { useOrdersStore } from '@/stores/orders'
 import { useFormatPrice } from '../../composables/formatPrice'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const baseURL = ref('http://localhost:8000')
 // const { formatDate, formatTime } = useFormatDate()
 const { formatPrice } = useFormatPrice()
 const orderStore = useOrdersStore()
 const { singleOrderDetail } = storeToRefs(orderStore)
+const isLoaded = ref(false)
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
+onMounted(() => {
+  onImageLoad()
+})
 </script>
 <style></style>

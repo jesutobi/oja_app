@@ -4,9 +4,14 @@
       <!-- image -->
       <div>
         <img
+          loading="lazy"
+          @load="onImageLoad"
           src="@/assets/images/living_room.jpeg"
           alt=""
           class="w-full object-cover sm:rounded-[2.5rem] lg:h-[510px] md:h-[480px]"
+          :class="{
+            'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+          }"
         />
       </div>
       <!-- text -->
@@ -28,6 +33,18 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref, onBeforeMount, onMounted } from 'vue'
+
+const isLoaded = ref(false)
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
+onMounted(() => {
+  onImageLoad()
+})
+</script>
 
 <style scoped></style>

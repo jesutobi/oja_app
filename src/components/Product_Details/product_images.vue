@@ -4,9 +4,14 @@
       <Slide v-for="(data, index) in Data.images" :key="index" class="md:w-full sm:p-2">
         <div class="carousel__item w-full">
           <img
+            loading="lazy"
+            @load="onImageLoad"
             :src="`${baseURL}/storage/${data.image_path}`"
             class="object-cover sm:rounded-lg h-[400px] w-full sm:h-[500px]"
             alt=""
+            :class="{
+              'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+            }"
           />
         </div>
       </Slide>
@@ -30,9 +35,14 @@
       <Slide v-for="(data, index) in Data.images" :key="index">
         <div class="carousel__item my-2" @click="slideTo(index - 1)">
           <img
+            loading="lazy"
+            @load="onImageLoad"
             :src="`${baseURL}/storage/${data.image_path}`"
             class="object-cover rounded h-[80px] w-[80px] sm:w-[90px] sm:h-[90px]"
             alt=""
+            :class="{
+              'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+            }"
           />
         </div>
       </Slide>
@@ -47,8 +57,7 @@ defineProps({
   Data: Object
 })
 
-import { reactive, ref } from 'vue'
-
+import { reactive, ref, onMounted } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
@@ -56,6 +65,11 @@ const baseURL = ref('http://localhost:8000')
 const currentSlide = ref(0)
 const name = ref('Gallery')
 const carousel = ref(null)
+const isLoaded = ref(false)
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
 
 const slideTo = (val) => {
   currentSlide.value = val
@@ -77,6 +91,10 @@ const breakpoints = reactive({
     itemsToShow: 5,
     snapAlign: 'center'
   }
+})
+
+onMounted(() => {
+  onImageLoad()
 })
 </script>
 <style scoped></style>

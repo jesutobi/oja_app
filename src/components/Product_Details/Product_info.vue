@@ -52,7 +52,9 @@
     </div>
     <!-- buy now button -->
     <div class="py-3 flex items-center w-full">
-      <ProdButton :Width="`w-[100%]`" class="w-[40%] md:w-[30%]">Buy Now</ProdButton>
+      <ProdButton @click="BuyNow(Data)" :Width="`w-[100%]`" class="w-[40%] md:w-[30%]"
+        >Buy Now</ProdButton
+      >
       <SaveButton :Data="Data" class="px-2" />
     </div>
 
@@ -86,6 +88,7 @@ import ProdButton from '../slots/productButtons.vue'
 import { ref, reactive } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useFormatPrice } from '../../composables/formatPrice'
+import { useBuyNow } from '@/composables/buyNow.js'
 
 defineProps({
   Data: Object,
@@ -99,6 +102,7 @@ const copy = ref(false)
 const copyButton = ref(true)
 const link = ref(null)
 const { formatPrice } = useFormatPrice()
+const { BuyNow } = useBuyNow()
 
 const copyLink = () => {
   if (link.value) {

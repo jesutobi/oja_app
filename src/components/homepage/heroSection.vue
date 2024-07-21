@@ -12,8 +12,18 @@
       <div class="col-span-12 xl:col-span-9">
         <div class="relative">
           <div class="">
-            <img src="@/assets/images/b1.png" class="xl:h-[37rem] object-fill w-full" alt="" />
+            <img
+              @load="onImageLoad"
+              loading="lazy"
+              src="@/assets/images/b1.png"
+              class="xl:h-[37rem] object-fill w-full"
+              alt=""
+              :class="{
+                'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+              }"
+            />
           </div>
+
           <div
             class="absolute text-black -right-5 sm:h-[40vh] md:bottom-[5rem] max-[450px]:top-[6rem] max-[640px]:top-[7rem] bottom-[0rem] w-[50%]"
           >
@@ -47,7 +57,20 @@
     </div>
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { onMounted, ref } from 'vue'
+
+const isLoaded = ref(false)
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
+onMounted(() => {
+  onImageLoad()
+})
+</script>
+
 <style scoped>
 @keyframes slide-up {
   0% {

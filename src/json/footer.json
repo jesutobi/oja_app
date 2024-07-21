@@ -1,0 +1,41 @@
+{
+  "Address": [
+    {
+      "state": "Abuja, Nigeria /Remote",
+      "email": "Jesutobit@gmail.com",
+      "Number": "+234-(0)8143400267"
+    }
+  ],
+  "Socials": [
+    {
+      "name": "Instagram",
+      "link": "https://www.instagram.com/jesutobbi/"
+    },
+    {
+      "name": "linkedin",
+      "link": "https://www.linkedin.com/in/jesutobi-joseph-191557167/"
+    },
+    {
+      "name": "Resume",
+      "link": "https://docs.google.com/document/d/1KET1BVHJihs5EdxMPG9DLenHrvGPHg2QlhvvMQRxLhM/edit?usp=sharing"
+    },
+    {
+      "name": "Portfolio",
+      "link": "https://jesutobi-joseph.netlify.app/"
+    }
+  ],
+  "Documentation": [
+    {
+      "name": "Github",
+      "link": "https://github.com/jesutobi"
+    },
+    {
+      "name": "Postman Documentation",
+      "link": ""
+    },
+    {
+      "name": "Read More about the Project",
+      "link": ""
+    }
+  ]
+}

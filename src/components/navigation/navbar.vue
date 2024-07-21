@@ -5,19 +5,19 @@
         <div class="flex items-center justify-between">
           <div class="flex">
             <!--hamburger -->
-            <div><Hamburger /></div>
+            <div @click="opensidebar" class="cursor-pointer"><Hamburger /></div>
             <!-- mob logo -->
             <div
-              class="font_logo sm:hidden max-[640px]:px-2 max-[640px]:text-[1.6rem] text-black-400 text-[2.5rem]"
+              class="sm:hidden font_logo max-[640px]:px-2 max-[640px]:text-[1.6rem] text-black-400 text-[2.5rem]"
             >
-              <router-link to="/"> <span>OJA</span></router-link>
+              <router-link to="/"> <Logo /></router-link>
             </div>
           </div>
           <!-- logo -->
           <div
-            class="font_logo max-[640px]:text-[2rem] max-[640px]:hidden text-black-400 text-[2.5rem] absolute left-1/2 transform -translate-x-1/2"
+            class="max-[640px]:text-[2rem] max-[640px]:hidden text-black-400 text-[2.5rem] absolute left-1/2 transform -translate-x-1/2"
           >
-            <router-link to="/"> <span>OJA</span></router-link>
+            <router-link to="/" class=""> <Logo /></router-link>
           </div>
           <div class="flex items-center font2 cursor-pointer">
             <div class="">
@@ -66,6 +66,10 @@
         </div>
       </div>
     </div>
+    <!-- sidebar -->
+    <div v-if="sidebar" class="fixed z-40 top-0">
+      <SideBar @closeSideBar="closesidebar" class="animate__animated animate__slideInLeft" />
+    </div>
     <div
       v-if="searchVisibility"
       class="absolute w-full z-40 top-0 bottom-0 h-[100vh] animate__animated animate__bounceInDown"
@@ -76,6 +80,8 @@
 </template>
 
 <script setup>
+import Logo from '@/components/extras/logo.vue'
+import SideBar from './sidebar.vue'
 import Hamburger from './hamburger.vue'
 import Dropdown from './dropDown.vue'
 import Bag from '@/components/navigation/cart.vue'
@@ -97,19 +103,27 @@ const DropdownVar = ref(false)
 const store = useUserStore()
 const isLoggedIn = useIsLoggedIn()
 const { userInfo } = storeToRefs(store)
+const sidebar = ref(false)
 
-function closeModal(data) {
+const closeModal = (data) => {
   console.log(data)
 
   searchVisibility.value = data
 }
 
-function openSearchModal() {
+const openSearchModal = () => {
   searchVisibility.value = true
 }
 
-function dropUser() {
+const dropUser = () => {
   DropdownVar.value = true
+}
+
+const opensidebar = () => {
+  sidebar.value = true
+}
+const closesidebar = () => {
+  sidebar.value = false
 }
 </script>
 

@@ -63,6 +63,7 @@
             <!-- buy now -->
             <div class="py-2 mx-[0.3rem]">
               <button
+                @click="BuyNow(item.product)"
                 type="submit"
                 class="bg-black hover:bg-yellow-500 py-1 px-2 text-white rounded text-xs"
               >
@@ -89,13 +90,14 @@ import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
 import AdressCardGrid from '@/components/slots/AdressCardGrid.vue'
 import { useSavedStore } from '@/stores/save_products.js'
+import { useBuyNow } from '@/composables/buyNow.js'
 
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/Authentication'
 
 const userstore = useUserStore()
-
+const { BuyNow } = useBuyNow()
 const saveStore = useSavedStore()
 const { get_saved_data } = storeToRefs(saveStore)
 const baseURL = ref('http://localhost:8000')

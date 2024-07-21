@@ -5,11 +5,20 @@
     <div class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group">
       <router-link :to="`/Product_details/${props.Data.id}`">
         <!-- image -->
+        <!-- <div
+          v-if="isLoaded"
+          class=""
+        ></div> -->
         <div>
           <img
+            loading="lazy"
+            @load="onImageLoad"
             :src="`${baseURL}/storage/${props.Data.images[0].image_path}`"
             class="w-full object-cover rounded max-[500px]:h-[140px] min-[500px]:h-[227px]"
             alt=""
+            :class="{
+              'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+            }"
           />
         </div>
       </router-link>
@@ -66,12 +75,12 @@ import SaveButton from '@/components/extras/saveButton.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
 import { useCartStore } from '@/stores/cart'
-import { ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
-
 import { useRouter } from 'vue-router'
 
+const isLoaded = ref(false)
 const router = useRouter()
 const baseURL = ref('http://localhost:8000')
 const store = useCartStore()
@@ -96,6 +105,14 @@ const incrementQuantity = (value) => {
     })
   })
 }
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
+onBeforeMount(() => {
+  onImageLoad()
+})
 </script>
 
 <style scoped></style>

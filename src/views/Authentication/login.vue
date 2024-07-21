@@ -174,10 +174,11 @@ const login = handleSubmit((values) => {
       setTimeout(() => {
         toast.update(id, {
           render: successMsg,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
+          theme: 'colored',
           type: 'success',
+          autoClose: 1000,
+          transition: 'slide',
+          dangerouslyHTMLString: true,
           isLoading: false
         })
         setTimeout(() => {

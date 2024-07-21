@@ -50,6 +50,18 @@ export const useOrdersStore = defineStore(
         throw error
       }
     }
+    const DeleteOrderDetail = async (payload) => {
+      try {
+        const response = await axiosClient.delete(`delete_orders/${payload}`)
+        GetOrders()
+
+        return response
+      } catch (error) {
+        // Handle errors
+        console.error('error:', error)
+        throw error
+      }
+    }
 
     return {
       PlaceOrder,
@@ -59,7 +71,8 @@ export const useOrdersStore = defineStore(
       selected_payment_method,
       orderResponseId,
       orders,
-      singleOrderDetail
+      singleOrderDetail,
+      DeleteOrderDetail
     }
   },
   {

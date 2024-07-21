@@ -19,9 +19,14 @@
           <!-- image -->
           <div>
             <img
+              loading="lazy"
+              @load="onImageLoad"
               :src="`${baseURL}/storage/${data.card_image}`"
               class="w-full object-cover rounded max-[500px]:h-[140px] min-[500px]:h-[227px]"
               alt=""
+              :class="{
+                'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+              }"
             />
           </div>
 
@@ -44,11 +49,12 @@ import Title from '@/components/Dashboard/DashboardTitles.vue'
 import 'vue3-carousel/dist/carousel.css'
 import ProductCard from '../slots/productCard.vue'
 import { useProductCategory } from '@/stores/product_category'
-import { onMounted, ref, reactive } from 'vue'
+import { onMounted, ref, reactive, onBeforeMount } from 'vue'
 
 const store = useProductCategory()
 const product_category = ref([])
 const baseURL = ref('http://localhost:8000')
+const isLoaded = ref(false)
 
 const settings = reactive({
   itemsToShow: 1,
@@ -93,8 +99,12 @@ const GetProductCategory = () => {
   })
 }
 
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
 onMounted(() => {
-  GetProductCategory()
+  GetProductCategory(), onImageLoad()
 })
 </script>
 <style scoped>

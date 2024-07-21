@@ -14,9 +14,14 @@
             <!-- image -->
             <div class="sm:block hidden">
               <img
+                :class="{
+                  'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                }"
                 :src="`${baseURL}/storage/${item.images[0].image_path}`"
                 class="object-cover rounded-lg m-2 h-[115px] w-[130px]"
                 alt=""
+                loading="lazy"
+                @load="onImageLoad"
               />
             </div>
             <!-- details -->
@@ -100,14 +105,19 @@ import Trash from '@/assets/svg/trash.vue'
 import { useQuantityPerProduct } from '../../composables/quantityPerProduct'
 import { storeToRefs } from 'pinia'
 
+const isLoaded = ref(false)
 const { getQuantity, incrementQuantity, decrementQuantity, removeProduct } = useQuantityPerProduct()
 const InCartStore = useCartStore()
 const { cartItems } = storeToRefs(InCartStore)
 const baseURL = ref('http://localhost:8000')
 const { formatPrice } = useFormatPrice()
 
-// onMounted(() => {
-//   console.log(productInCart)
-// })
+const onImageLoad = () => {
+  isLoaded.value = true
+}
+
+onMounted(() => {
+  onImageLoad()
+})
 </script>
 <style scoped></style>

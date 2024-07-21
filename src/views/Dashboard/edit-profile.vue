@@ -123,11 +123,7 @@
                     id="floating_state"
                     class="block rounded-2xl p-[1.1rem] w-full border-gray-200 text-gray-400 border text-sm focus:ring-0 peer"
                   >
-                    <option
-                      for="floating_state"
-                      class="peer-focus:font-medium p-[1.1rem] z-10 absolute text-sm text-gray-500 dark:text-gray-400 top-0 duration-300 transform -translate-y-4 scale-75 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-3"
-                      value=""
-                    >
+                    <option for="floating_state" :value="form.state" selected disabled>
                       Select state
                     </option>
                     <option
@@ -172,7 +168,7 @@
             <!-- subnit button -->
 
             <div class="flex justify-center py-1">
-              <AuthButtons class="w-[50%] pt-[2rem]">
+              <AuthButtons class="sm:w-[30%] pt-[2rem] w-[60%]">
                 <span>Save Changes</span>
               </AuthButtons>
             </div>

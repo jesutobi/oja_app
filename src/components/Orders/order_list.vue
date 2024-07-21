@@ -57,8 +57,13 @@
               <!-- image -->
               <div class="">
                 <img
+                  loading="lazy"
+                  @load="onImageLoad"
                   :src="`${baseURL}/storage/${data.product.images[0].image_path}`"
                   class="object-cover rounded-lg h-[90px] w-[95px]"
+                  :class="{
+                    'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                  }"
                   alt=""
                 />
               </div>
@@ -101,10 +106,20 @@
                 ><span class="text-gray-500" v-if="item.total_item > 1">s</span>
                 <span class="text-gray-500">]</span>
               </div>
-              <div title="view details" class="cursor-pointer">
-                <router-link :to="`order-detail/${item.id}`">
-                  <img src="@/assets/icon/hamburger-menu-dots.svg" class="w-[14px]" alt=""
-                /></router-link>
+              <div title="view details" class="flex items-center">
+                <div
+                  v-if="item.payment_status === 'unpaid'"
+                  @click="DeleteOrders(item.id)"
+                  class="cursor-pointer"
+                  title="DeleteOrders"
+                >
+                  <Trash />
+                </div>
+                <div class="cursor-pointer">
+                  <router-link :to="`order-detail/${item.id}`">
+                    <img src="@/assets/icon/hamburger-menu-dots.svg" class="w-[14px]" alt=""
+                  /></router-link>
+                </div>
               </div>
             </div>
           </div>
@@ -117,6 +132,7 @@
 <script setup>
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import Trash from '@/assets/svg/trash.vue'
 import DashboardCard from '@/components/slots/DashboardCard.vue'
 import DashboardCardHeader from '@/components/slots/DashboardCardHeader.vue'
 import AdressCardGrid from '@/components/slots/AdressCardGrid.vue'
@@ -129,13 +145,28 @@ const orderStore = useOrdersStore()
 const { orders } = storeToRefs(orderStore)
 const { formatPrice } = useFormatPrice()
 const baseURL = ref('http://localhost:8000')
+const isLoaded = ref(false)
+
+const onImageLoad = () => {
+  isLoaded.value = true
+}
 
 const getOrders = () => {
   orderStore.GetOrders()
 }
+const DeleteOrders = (value) => {
+  orderStore.DeleteOrderDetail(value)
+  toast('Order deleted succesfully', {
+    theme: 'colored',
+    type: 'success',
+    autoClose: 1000,
+    transition: 'slide',
+    dangerouslyHTMLString: true
+  })
+}
 
 onMounted(() => {
-  getOrders()
+  getOrders(), onImageLoad()
 })
 </script>
 

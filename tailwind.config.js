@@ -12,10 +12,17 @@ module.exports = {
             transform: 'translateY(0rem)',
             opacity: '1'
           }
+        },
+
+        skeleton: {
+          '0%': { backgroundPosition: '-200% 0' },
+          '100%': { backgroundPosition: '200% 0' }
         }
       },
       animation: {
-        'fade-in-down': 'fade-in-down 0.2s ease-in-out both'
+        'fade-in-down': 'fade-in-down 0.2s ease-in-out both',
+
+        skeleton: 'skeleton 3s infinite linear'
       },
       scale: {
         102: '1.02' // Custom scale value

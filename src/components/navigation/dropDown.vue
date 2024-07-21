@@ -17,13 +17,25 @@
       <div v-for="(data, index) in User_Data" :key="index">
         <router-link :to="data.link">
           <div
-            class="flex items-center hover:bg-yellow-400/25 hover:py-4 px-2 hover:rounded-[1rem] py-4"
+            :class="{
+              'rounded-[1rem]': $route.path === data.link,
+
+              'bg-yellow-400/25': $route.path === data.link
+            }"
+            class="flex items-center justify-between hover:bg-yellow-400/25 hover:py-4 px-2 hover:rounded-[1rem] py-4"
           >
-            <div>
-              <img v-if="data" :src="data.icon" alt="" />
+            <div class="flex items-center">
+              <div>
+                <img v-if="data" :src="data.icon" alt="" />
+              </div>
+              <div class="px-2 hover:font-bold">
+                <span>{{ data.text }}</span>
+              </div>
             </div>
-            <div class="px-2 hover:font-bold">
-              <span>{{ data.text }}</span>
+            <div v-if="data.text === 'Saved Items' && get_saved_data.length > 0" class="px-1">
+              <span class="text-xs bg-yellow-400 px-2 py-[0.2rem] rounded text-black font2">{{
+                get_saved_data.length
+              }}</span>
             </div>
           </div>
         </router-link>
@@ -52,6 +64,7 @@
 </template>
 
 <script setup>
+import { useSavedStore } from '@/stores/save_products.js'
 import UserCircle from '@/components/slots/UserCircle.vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
@@ -63,6 +76,8 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 
+const saveStore = useSavedStore()
+const { get_saved_data } = storeToRefs(saveStore)
 const isLoggedIn = useIsLoggedIn()
 const router = useRouter()
 const store = useUserStore()
@@ -71,46 +86,8 @@ const successMsg = ref('')
 const errorsInfo = ref({})
 const { userInfo } = storeToRefs(store)
 
-function logout() {
-  const id = toast.loading('Logging out...')
-  store
-    .logout()
-    .then((msg) => {
-      successMsg.value = msg.data.message
-      setTimeout(() => {
-        toast.update(id, {
-          render: successMsg,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'success',
-          isLoading: false
-        })
-        setTimeout(() => {
-          // done
-          toast.done(
-            router.push({
-              name: 'Login'
-            })
-          )
-        }, 2000)
-      }, 2000)
-    })
-    .catch((error) => {
-      errorsInfo.value = error
-      console.log(errorsInfo)
-      setTimeout(() => {
-        toast.update(id, {
-          render: 'error while logging out',
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'error',
-          isLoading: false
-        })
-      }, 2000)
-      // errorNotify()
-    })
+const logout = () => {
+  store.logout()
 }
 </script>
 
