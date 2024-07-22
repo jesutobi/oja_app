@@ -35,7 +35,7 @@
             :key="index"
           >
             <router-link :to="item.link">
-              <span>
+              <span class="hover:text-black" @click="$emit('closeSideBar')">
                 {{ item.text }}
               </span></router-link
             >
@@ -52,14 +52,14 @@
             v-for="(item, index) in category"
             :key="index"
           >
-            <span>
+            <span class="hover:text-black" @click="$emit('closeSideBar')">
               {{ item.category_title }}
             </span>
           </div>
         </div>
       </div>
       <!-- sign out and copyrirght -->
-      <div class="px-3">
+      <div @click="$emit('closeSideBar')" class="px-3">
         <div class="absolute bottom-6 w-full">
           <div
             v-if="isLoggedIn"

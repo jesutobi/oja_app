@@ -52,77 +52,79 @@
               </div>
             </div>
           </DashboardCardHeader>
-          <div class="p-2" v-if="item.order_items">
-            <div v-for="(data, index) in item.order_items.splice(0, 1)" :key="index" class="flex">
-              <!-- image -->
-              <div class="">
-                <img
-                  loading="lazy"
-                  @load="onImageLoad"
-                  :src="`${baseURL}/storage/${data.product.images[0].image_path}`"
-                  class="object-cover rounded-lg h-[90px] w-[95px]"
-                  :class="{
-                    'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
-                  }"
-                  alt=""
-                />
+          <router-link :to="`order-detail/${item.id}`">
+            <div class="p-2" v-if="item.order_items">
+              <div v-for="(data, index) in item.order_items.splice(0, 1)" :key="index" class="flex">
+                <!-- image -->
+                <div class="">
+                  <img
+                    loading="lazy"
+                    @load="onImageLoad"
+                    :src="`${baseURL}/storage/${data.product.images[0].image_path}`"
+                    class="object-cover rounded-lg h-[90px] w-[95px]"
+                    :class="{
+                      'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                    }"
+                    alt=""
+                  />
+                </div>
+                <!-- details -->
+                <div class="p-2">
+                  <!-- product title -->
+                  <div class="productFont text-xs sm:text-sm">
+                    <span
+                      >{{
+                        data.product.product_title
+                          .toString()
+                          .replace(/(<([^>]+)>)/gi, '')
+                          .substring(0, 42)
+                      }}
+                    </span>
+                  </div>
+                  <!-- product brand -->
+                  <div class="font2 py-1 text-yellow-600 text-xs">
+                    <span>{{ data.product.product_brand }} </span>
+                  </div>
+
+                  <!-- product features -->
+                  <div class="py-1">
+                    <ul class="list-disc px-2 py-1 text-xs">
+                      <li>
+                        <span>Quantity</span>
+
+                        <span class="font-black"> : {{ data.product_quantity }}</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
               <!-- details -->
-              <div class="p-2">
-                <!-- product title -->
-                <div class="productFont text-xs sm:text-sm">
-                  <span
-                    >{{
-                      data.product.product_title
-                        .toString()
-                        .replace(/(<([^>]+)>)/gi, '')
-                        .substring(0, 42)
-                    }}
-                  </span>
+              <div class="flex items-center pt-1 justify-between">
+                <!-- price -->
+                <div class="text-[0.78rem]">
+                  <span class="productFont">&#8358;{{ formatPrice(item.total_amount) }}</span>
+                  <span class="text-gray-500 ps-1">[{{ item.total_item }} item</span
+                  ><span class="text-gray-500" v-if="item.total_item > 1">s</span>
+                  <span class="text-gray-500">]</span>
                 </div>
-                <!-- product brand -->
-                <div class="font2 py-1 text-yellow-600 text-xs">
-                  <span>{{ data.product.product_brand }} </span>
-                </div>
-
-                <!-- product features -->
-                <div class="py-1">
-                  <ul class="list-disc px-2 py-1 text-xs">
-                    <li>
-                      <span>Quantity</span>
-
-                      <span class="font-black"> : {{ data.product_quantity }}</span>
-                    </li>
-                  </ul>
+                <div title="view details" class="flex items-center">
+                  <div
+                    v-if="item.payment_status === 'unpaid'"
+                    @click="DeleteOrders(item.id)"
+                    class="cursor-pointer"
+                    title="DeleteOrders"
+                  >
+                    <Trash />
+                  </div>
+                  <div class="cursor-pointer">
+                    <router-link :to="`order-detail/${item.id}`">
+                      <img src="@/assets/icon/hamburger-menu-dots.svg" class="w-[14px]" alt=""
+                    /></router-link>
+                  </div>
                 </div>
               </div>
             </div>
-            <!-- details -->
-            <div class="flex items-center pt-1 justify-between">
-              <!-- price -->
-              <div class="text-[0.78rem]">
-                <span class="productFont">&#8358;{{ formatPrice(item.total_amount) }}</span>
-                <span class="text-gray-500 ps-1">[{{ item.total_item }} item</span
-                ><span class="text-gray-500" v-if="item.total_item > 1">s</span>
-                <span class="text-gray-500">]</span>
-              </div>
-              <div title="view details" class="flex items-center">
-                <div
-                  v-if="item.payment_status === 'unpaid'"
-                  @click="DeleteOrders(item.id)"
-                  class="cursor-pointer"
-                  title="DeleteOrders"
-                >
-                  <Trash />
-                </div>
-                <div class="cursor-pointer">
-                  <router-link :to="`order-detail/${item.id}`">
-                    <img src="@/assets/icon/hamburger-menu-dots.svg" class="w-[14px]" alt=""
-                  /></router-link>
-                </div>
-              </div>
-            </div>
-          </div>
+          </router-link>
         </DashboardCard>
       </AdressCardGrid>
     </div>

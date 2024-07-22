@@ -15,7 +15,11 @@
 
     <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
       <Slide v-for="(data, index) in product_category" :key="index" class="py-[1rem]">
-        <div class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group">
+        <router-link
+          :to="`/Product/category/${data.id}`"
+          class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group"
+        >
+          <!-- <div > -->
           <!-- image -->
           <div>
             <img
@@ -33,7 +37,8 @@
           <div class="text-center py-2 text-yellow-600 font2 text-sm">
             <span>{{ data.category_title }}</span>
           </div>
-        </div>
+          <!-- </div> -->
+        </router-link>
       </Slide>
       <template #addons>
         <Navigation />

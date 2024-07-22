@@ -8,6 +8,8 @@ export const useProductCategory = defineStore(
     // Define your state here
 
     const category = ref([])
+    const ProductsByCategory = ref([])
+    const ProductCategoryInfo = ref({})
 
     const getProductCategory = async () => {
       try {
@@ -20,8 +22,26 @@ export const useProductCategory = defineStore(
         throw error
       }
     }
+    const getProductsByCategory = async (payload) => {
+      try {
+        const response = await axiosClient.get(`get_Products_By_Category/${payload}`)
+        ProductsByCategory.value = response.data.products_by_category
+        ProductCategoryInfo.value = response.data.category
+        console.log(response)
 
-    return { getProductCategory, category }
+        return response
+      } catch (error) {
+        throw error
+      }
+    }
+
+    return {
+      getProductCategory,
+      category,
+      getProductsByCategory,
+      ProductsByCategory,
+      ProductCategoryInfo
+    }
   },
   {
     persist: {
@@ -29,7 +49,7 @@ export const useProductCategory = defineStore(
       strategies: [
         {
           storage: localStorage,
-          paths: ['category']
+          paths: ['category', 'ProductsByCategory', 'ProductCategoryInfo']
         }
       ]
     }

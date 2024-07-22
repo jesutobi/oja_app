@@ -65,6 +65,11 @@ const router = createRouter({
           component: () => import('../views/Order_Process/shopping_cart.vue')
         },
         {
+          path: 'category/:id',
+          name: 'shop_by_category',
+          component: () => import('../views/Category/shop_by_category.vue')
+        },
+        {
           meta: { requiresAuth: true },
           path: 'checkout',
           name: 'checkout',
@@ -190,7 +195,14 @@ const router = createRouter({
         }
       ]
     }
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
 })
 
 router.beforeEach((to, from, next) => {

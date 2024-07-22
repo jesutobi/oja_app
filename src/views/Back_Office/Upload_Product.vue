@@ -280,8 +280,9 @@ const submitForm = async () => {
   formData.append('product_quantity', form.value.product_quantity)
   formData.append('product_brand', form.value.product_brand)
 
-  formData.append('product_category', JSON.stringify(form.value.product_category))
-  formData.append('selected_product_feature', JSON.stringify(form.value.SelectedproductFeature))
+  formData.append('product_category', JSON.stringify(form.value.product_category)),
+    formData.append('category_id', form.value.product_category.id),
+    formData.append('selected_product_feature', JSON.stringify(form.value.SelectedproductFeature))
   form.value.product_images.forEach((file, index) => {
     formData.append(`product_images[]`, file)
   })

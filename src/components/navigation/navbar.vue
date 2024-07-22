@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="">
     <div class="sm:py-[2rem] max-[640px]:py-[1.6rem] px-7 max-[640px]:px-1 relative shadow-md">
       <div class="">
         <div class="flex items-center justify-between">

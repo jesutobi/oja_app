@@ -129,6 +129,7 @@
             </div></router-link
           >
         </DashboardCard>
+
         <!-- payment details -->
         <DashboardCard class="mt-2">
           <DashboardCardHeader class="p-2">
@@ -250,6 +251,7 @@
   </div>
 </template>
 <script setup>
+import { useUserStore } from '@/stores/Authentication'
 import Set from '@/assets/svg/set.vue'
 import ProdButton from '../slots/productButtons.vue'
 import DashboardCard from '@/components/slots/DashboardCard.vue'
@@ -258,20 +260,88 @@ import { useOrdersStore } from '@/stores/orders'
 import { useFormatPrice } from '../../composables/formatPrice'
 import { storeToRefs } from 'pinia'
 import { ref, onMounted } from 'vue'
+import { usePaymentStore } from '@/stores/payment_details.js'
 
+const paymentstore = usePaymentStore()
 const baseURL = ref('http://localhost:8000')
 // const { formatDate, formatTime } = useFormatDate()
 const { formatPrice } = useFormatPrice()
 const orderStore = useOrdersStore()
 const { singleOrderDetail } = storeToRefs(orderStore)
+const store = useUserStore()
+const { userInfo } = storeToRefs(store)
+const transactionReference = ref('')
+const order_id = singleOrderDetail.value.id
+
 const isLoaded = ref(false)
+
+const initializePayment = () => {
+  generateTransactionReference()
+  const handler = PaystackPop.setup({
+    key: 'pk_test_3267ad833473ba445a15e20bd2c4382746945327',
+    email: userInfo.value.email,
+    amount: singleOrderDetail.value.total_amount * 100,
+    currency: 'NGN',
+    ref: transactionReference.value,
+
+    callback: (response) => {
+      const payload = {
+        payment_status: response.status,
+        transaction_code: response.trans,
+        reference_code: response.trxref,
+        order_details_id: order_id
+      }
+      paymentstore.PaymentDetails(payload)
+      processPayment()
+    },
+
+    onClose: function () {
+      close()
+    }
+  })
+  handler.openIframe()
+}
+
+const generateReference = (prefix) => {
+  const length = 10
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  let result = prefix
+
+  for (let i = length; i > 0; --i) {
+    result += chars[Math.floor(Math.random() * chars.length)]
+  }
+  return result
+}
+const generateTransactionReference = () => {
+  transactionReference.value = generateReference('Oja_')
+}
+const processPayment = () => {
+  const id = 'Payment Successful'
+  toast(id, {
+    theme: 'colored',
+    type: 'success',
+    autoClose: 2000,
+    transition: 'slide',
+    dangerouslyHTMLString: true
+  })
+  // paymentstore.PaymentDetails(payload)
+  setTimeout(() => {
+    router.push({
+      name: 'shopping_cart'
+    })
+  }, 2000)
+}
 
 const onImageLoad = () => {
   isLoaded.value = true
 }
 
 onMounted(() => {
+  // console.log(singleOrderDetail)
   onImageLoad()
+  const script = document.createElement('script')
+  script.setAttribute('src', 'https://js.paystack.co/v1/inline.js')
+  document.body.appendChild(script)
 })
 </script>
 <style></style>

@@ -38,12 +38,7 @@
           <div class="sm:text-[1rem] text-[0.8rem] text-start">
             <!-- product name -->
             <div class="productFont">
-              <span>{{
-                props.Data.product_title
-                  .toString()
-                  .replace(/(<([^>]+)>)/gi, '')
-                  .substring(0, 12)
-              }}</span>
+              <span>{{ truncateText(props.Data.product_title, 13) }}</span>
             </div>
             <!-- price -->
             <div class="productFont text-[#FFBF00]">
@@ -53,12 +48,7 @@
           <div class="sm:text-[0.75rem] text-[0.8rem] text-end">
             <!-- category -->
             <div class="font2">
-              <span>{{
-                props.Data.product_category.category_title
-                  .toString()
-                  .replace(/(<([^>]+)>)/gi, '')
-                  .substring(0, 12)
-              }}</span>
+              <span>{{ truncateText(props.Data.product_category.category_title, 7) }}</span>
             </div>
             <!-- price -->
             <div class="productFont">
@@ -104,6 +94,11 @@ const incrementQuantity = (value) => {
       dangerouslyHTMLString: true
     })
   })
+}
+const truncateText = (text, maxLength) => {
+  if (text) {
+    return text.length > maxLength ? text.substring(0, maxLength) + '..' : text
+  }
 }
 
 const onImageLoad = () => {

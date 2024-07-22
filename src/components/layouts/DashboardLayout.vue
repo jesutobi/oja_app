@@ -1,10 +1,10 @@
 <template>
   <div class="font">
-    <div>
+    <div class="sticky top-0 z-50 bg-white">
       <!-- nav -->
       <NavBar />
     </div>
-    <div class="bgwhite1 bg-cover h-[100vh]">
+    <div class="bgwhite1 bg-cover">
       <div class="container mx-auto">
         <div class="mx-2">
           <div class="pt-7"><Back /></div>
@@ -86,7 +86,7 @@
         </div>
       </div>
     </div>
-    <div>
+    <div class="">
       <FooterInfo />
     </div>
   </div>
