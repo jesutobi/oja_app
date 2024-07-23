@@ -43,7 +43,12 @@
                 class="flex items-center text-xs p-[0.6rem] hover:text-gray-400 cursor-pointer"
               >
                 <div>
-                  <input type="radio" />
+                  <input
+                    v-model="selectedCategory"
+                    @change="fetchProducts(item.id)"
+                    type="radio"
+                    :value="item.id"
+                  />
                 </div>
                 <div class="px-2">
                   <span>{{ item.category_title }}</span>
@@ -80,7 +85,18 @@
                     <span class="font2">Products</span>
                   </div>
                   <div class="productFont text-sm">
-                    <span>Showing 01-09 of 17 Results</span>
+                    <span>
+                      Showing
+                      {{ (ProductsByCategory.current_page - 1) * ProductsByCategory.per_page + 1 }}
+                      -
+                      {{
+                        Math.min(
+                          ProductsByCategory.current_page * ProductsByCategory.per_page,
+                          ProductsByCategory.total
+                        )
+                      }}
+                      of {{ ProductsByCategory.total }} Results
+                    </span>
                   </div>
                 </div>
               </DashboardCardHeader>
@@ -95,6 +111,10 @@
                 class="w-full"
               />
             </div>
+            <!-- pagination -->
+            <div class="pt-5">
+              <Pagination :Data="ProductsByCategory" />
+            </div>
           </div>
         </div>
       </div>
@@ -103,8 +123,9 @@
 </template>
 
 <script setup>
+import Pagination from '@/components/extras/pagination.vue'
 import Filter from '@/json/filter.json'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useProductCategory } from '@/stores/product_category.js'
 import DashboardCardHeader from '@/components/slots/DashboardCardHeader.vue'
 import { useRoute } from 'vue-router'
@@ -117,9 +138,22 @@ const baseURL = ref('http://localhost:8000')
 const route = useRoute()
 const productCategoryStore = useProductCategory()
 const { ProductsByCategory, ProductCategoryInfo, category } = storeToRefs(productCategoryStore)
+const selectedCategory = null
+
+const fetchProducts = (id) => {
+  productCategoryStore.getProductsByCategory(id)
+}
+
+// Watch for changes in route parameters and fetch new data
+watch(
+  () => route.params.id,
+  (newId) => {
+    fetchProducts(newId)
+  }
+)
 
 onMounted(() => {
-  productCategoryStore.getProductsByCategory(route.params.id)
+  fetchProducts(route.params.id)
 })
 </script>
 

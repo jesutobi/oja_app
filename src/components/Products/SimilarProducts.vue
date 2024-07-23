@@ -12,7 +12,7 @@
 
     <!-- product card -->
     <ProductGrid>
-      <div v-for="(product, index) in Data" :key="index">
+      <div v-for="(product, index) in simlarProducts.data" :key="index">
         <ProductCard :Data="product" class="w-full" />
       </div>
     </ProductGrid>
@@ -26,24 +26,29 @@ import Title from '@/components/Dashboard/DashboardTitles.vue'
 import ProductGrid from '../slots/productCard.vue'
 import ProductCard from './product_card.vue'
 import { useSimilarProducts } from '@/stores/similar_products'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 const store = useSimilarProducts()
+const { simlarProducts } = storeToRefs(store)
 const Data = ref([])
 const route = useRoute()
+const id = ref(route.params.id)
 
-const getSimilarProduct = async () => {
-  try {
-    const response = await store.GetSimilarProducts(route.params.id)
-    Data.value = response.data
-  } catch (error) {
-    console.error('Failed to fetch similar product:', error)
-  }
+const getSimilarProduct = (id) => {
+  store.GetSimilarProducts(id)
 }
 
+watch(
+  () => route.params.id,
+  (newId) => {
+    getSimilarProduct(newId)
+  }
+)
+
 onMounted(() => {
-  getSimilarProduct()
+  getSimilarProduct(route.params.id)
 })
 // const similarProducts
 </script>

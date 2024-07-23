@@ -42,7 +42,7 @@
             </div>
             <!-- price -->
             <div class="productFont text-[#FFBF00]">
-              <span> &#8358; {{ props.Data.product_price }}</span>
+              <span> &#8358; {{ formatPrice(props.Data.product_price) }}</span>
             </div>
           </div>
           <div class="sm:text-[0.75rem] text-[0.8rem] text-end">
@@ -69,7 +69,9 @@ import { onBeforeMount, onMounted, ref } from 'vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import { useRouter } from 'vue-router'
+import { useFormatPrice } from '@/composables/formatPrice'
 
+const { formatPrice } = useFormatPrice()
 const isLoaded = ref(false)
 const router = useRouter()
 const baseURL = ref('http://localhost:8000')

@@ -10,7 +10,7 @@
 <script setup>
 import ProductDetail from '@/components/Products/Product_details.vue'
 import SimilarProducts from '@/components/Products/SimilarProducts.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProduct } from '@/stores/product'
 
@@ -23,8 +23,8 @@ const CategoryId = ref(Category.value.id)
 //   localStorage.setItem('product_id', route.params.id)
 // }
 
-const getProductDetail = () => {
-  store.GetProductDetail(route.params.id).then((response) => {
+const getProductDetail = (id) => {
+  store.GetProductDetail(id).then((response) => {
     const data = response.data
 
     Category.value = JSON.parse(data.product_category)
@@ -32,9 +32,16 @@ const getProductDetail = () => {
   })
 }
 
+watch(
+  () => route.params.id,
+  (newId) => {
+    getProductDetail(newId)
+  }
+)
+
 onMounted(() => {
   // getId()
-  getProductDetail()
+  getProductDetail(route.params.id)
 })
 </script>
 

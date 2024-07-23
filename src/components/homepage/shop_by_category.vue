@@ -109,7 +109,7 @@ const onImageLoad = () => {
 }
 
 onMounted(() => {
-  GetProductCategory(), onImageLoad()
+  onImageLoad(), GetProductCategory()
 })
 </script>
 <style scoped>

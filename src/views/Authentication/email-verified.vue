@@ -18,12 +18,12 @@
             </div>
             <div v-if="successMsg !== ''">
               <div class="py-2 text-sm">
-                <span>Your email ({{ user }}) has been sucesfully verfied. </span>
+                <span>Your email ({{ userInfo.email }}) has been sucesfully verfied. </span>
               </div>
             </div>
             <div v-if="errorsInfo !== ''">
               <div class="py-2 text-sm">
-                <span>Your email ({{ user }}) has already been verfied. </span>
+                <span>Your email ({{ userInfo.email }}) has already been verfied. </span>
               </div>
             </div>
             <div v-if="errorsInfo !== '' || successMsg !== ''" class="py-1">

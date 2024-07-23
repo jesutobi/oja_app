@@ -40,15 +40,27 @@
               <div class="font2 text-[0.8rem]">
                 <span>{{ item.order_code }} </span>
               </div>
-              <div>
-                <span
-                  :class="{
-                    yellowBadge: item.order_status === 'pending',
-                    greebBadge: item.order_status === 'delivered'
-                  }"
-                  class="p-1 text-[0.7rem] rounded-lg"
-                  >{{ item.order_status }}</span
-                >
+              <div class="flex items-center gap-1">
+                <div>
+                  <span
+                    :class="{
+                      yellowBadge: item.order_status === 'pending',
+                      greenBadge: item.order_status === 'delivered'
+                    }"
+                    class="p-1 text-[0.7rem] rounded-lg"
+                    >{{ item.order_status }}</span
+                  >
+                </div>
+                <div>
+                  <span
+                    :class="{
+                      redBadge: item.payment_status === 'unpaid',
+                      greenBadge: item.payment_status === 'paid'
+                    }"
+                    class="p-1 text-[0.7rem] rounded-lg"
+                    >{{ item.payment_status }}</span
+                  >
+                </div>
               </div>
             </div>
           </DashboardCardHeader>
@@ -168,7 +180,7 @@ const DeleteOrders = (value) => {
 }
 
 onMounted(() => {
-  getOrders(), onImageLoad()
+  onImageLoad(), getOrders()
 })
 </script>
 

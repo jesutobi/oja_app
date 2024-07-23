@@ -52,9 +52,11 @@
             v-for="(item, index) in category"
             :key="index"
           >
-            <span class="hover:text-black" @click="$emit('closeSideBar')">
-              {{ item.category_title }}
-            </span>
+            <router-link :to="`/Product/category/${item.id}`">
+              <span class="hover:text-black" @click="$emit('closeSideBar')">
+                {{ item.category_title }}
+              </span>
+            </router-link>
           </div>
         </div>
       </div>
