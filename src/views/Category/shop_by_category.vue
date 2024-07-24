@@ -16,8 +16,9 @@
             </DashboardCardHeader> -->
             <!-- search -->
             <div class="m-2">
-              <form action="">
+              <form @keydown="searchBytext" @input="searchBytext" action="">
                 <input
+                  v-model="searchValue"
                   type="text"
                   class="rounded-lg border border-slate w-full px-2 py-3 my-2 text-sm"
                   placeholder="Search for product "
@@ -76,7 +77,13 @@
           </div>
         </div>
         <div class="col-span-9 max-[768px]:col-span-12">
-          <div class="bg-white shadow p-1 rounded-lg mt-2">
+          <div
+            v-if="ProductsByCategory?.data?.length <= 0"
+            class="bg-white shadow p-1 rounded-lg mt-2"
+          >
+            <NoData :text="'No product under this category at the moment'" />
+          </div>
+          <div v-else class="bg-white shadow p-1 rounded-lg mt-2">
             <!-- header -->
             <div>
               <DashboardCardHeader class="p-1">
@@ -104,6 +111,7 @@
             <div
               class="grid grid-cols-2 max-[550px]:grid-cols-2 max-[639px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-2"
             >
+              <!-- {{ ProductsByCategory }} -->
               <ProductCard
                 v-for="(product, index) in ProductsByCategory.data"
                 :key="index"
@@ -116,6 +124,7 @@
               <Pagination :Data="ProductsByCategory" />
             </div>
           </div>
+          <!-- no data -->
         </div>
       </div>
     </div>
@@ -123,6 +132,7 @@
 </template>
 
 <script setup>
+import NoData from '@/components/extras/noData.vue'
 import Pagination from '@/components/extras/pagination.vue'
 import Filter from '@/json/filter.json'
 import { onMounted, ref, watch } from 'vue'
@@ -133,15 +143,27 @@ import { storeToRefs } from 'pinia'
 import HeroSection from '@/components/Shop_by_category/hero_category_section.vue'
 import ProductCard from '@/components/Products/product_card.vue'
 import ProductGrid from '@/components/slots/productCard.vue'
+import { useSearchStore } from '@/stores/search.js'
 
 const baseURL = ref('http://localhost:8000')
 const route = useRoute()
 const productCategoryStore = useProductCategory()
 const { ProductsByCategory, ProductCategoryInfo, category } = storeToRefs(productCategoryStore)
 const selectedCategory = null
+const searchValue = ref('')
+const searchStore = useSearchStore()
 
 const fetchProducts = (id) => {
   productCategoryStore.getProductsByCategory(id)
+}
+
+const searchBytext = (event) => {
+  if (event.key === 'Backspace') {
+    console.log('Backspace key pressed')
+    fetchProducts(route.params.id)
+    // Perform your action here
+  }
+  searchStore.GetProductsBySearch(searchValue.value)
 }
 
 // Watch for changes in route parameters and fetch new data

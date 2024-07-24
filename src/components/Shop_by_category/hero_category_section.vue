@@ -13,7 +13,7 @@
           }"
         />
         <div class="font2 sm:text-[2rem] text-[1.5rem] absolute bottom-0 right-0">
-          <span class="bg-white py-2 px-4 rounded-l-[1rem] rounded-r-[1rem]">
+          <span class="bgwhite1 py-2 px-4 rounded-l-[1rem] rounded-r-[1rem]">
             {{ ProductCategoryInfo.category_title }}
           </span>
         </div>
