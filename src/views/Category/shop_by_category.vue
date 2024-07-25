@@ -16,12 +16,12 @@
             </DashboardCardHeader> -->
             <!-- search -->
             <div class="m-2">
-              <form @keydown="searchBytext" @input="searchBytext" action="">
+              <form @input="searchBytext" action="">
                 <input
                   v-model="searchValue"
                   type="text"
                   class="rounded-lg border border-slate w-full px-2 py-3 my-2 text-sm"
-                  placeholder="Search for product "
+                  placeholder="Search by title & brand "
                 />
               </form>
             </div>
@@ -61,29 +61,28 @@
               <div class="p-2 text-xs">
                 <span class="font2">Filters</span>
               </div>
-              <div
+              <!-- <div
                 v-for="(item, index) in Filter"
                 :key="index"
                 class="flex items-center text-xs p-[0.6rem] hover:text-gray-400 cursor-pointer"
               >
                 <div>
-                  <input type="radio" />
+                  <input
+                    :value="item.value"
+                    @change="searchBytext"
+                    v-model="selectedValue"
+                    type="radio"
+                  />
                 </div>
                 <div class="px-2">
-                  <span>{{ item }}</span>
+                  <span>{{ item.text }}</span>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
         <div class="col-span-9 max-[768px]:col-span-12">
-          <div
-            v-if="ProductsByCategory?.data?.length <= 0"
-            class="bg-white shadow p-1 rounded-lg mt-2"
-          >
-            <NoData :text="'No product under this category at the moment'" />
-          </div>
-          <div v-else class="bg-white shadow p-1 rounded-lg mt-2">
+          <div class="bg-white shadow p-1 rounded-lg mt-2">
             <!-- header -->
             <div>
               <DashboardCardHeader class="p-1">
@@ -108,20 +107,25 @@
                 </div>
               </DashboardCardHeader>
             </div>
-            <div
-              class="grid grid-cols-2 max-[550px]:grid-cols-2 max-[639px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-2"
-            >
-              <!-- {{ ProductsByCategory }} -->
-              <ProductCard
-                v-for="(product, index) in ProductsByCategory.data"
-                :key="index"
-                :Data="product"
-                class="w-full"
-              />
+            <div v-if="ProductsByCategory?.data?.length <= 0">
+              <NoData :text="'No product under this category at the moment'" />
             </div>
-            <!-- pagination -->
-            <div class="pt-5">
-              <Pagination :Data="ProductsByCategory" />
+            <div v-else>
+              <div
+                class="grid grid-cols-2 max-[550px]:grid-cols-2 max-[639px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 sm:gap-2"
+              >
+                <!-- {{ ProductsByCategory }} -->
+                <ProductCard
+                  v-for="(product, index) in ProductsByCategory.data"
+                  :key="index"
+                  :Data="product"
+                  class="w-full"
+                />
+              </div>
+              <!-- pagination -->
+              <div class="pt-5">
+                <Pagination :Data="ProductsByCategory" />
+              </div>
             </div>
           </div>
           <!-- no data -->
@@ -151,18 +155,14 @@ const productCategoryStore = useProductCategory()
 const { ProductsByCategory, ProductCategoryInfo, category } = storeToRefs(productCategoryStore)
 const selectedCategory = null
 const searchValue = ref('')
+// const selectedValue = ref()
 const searchStore = useSearchStore()
 
 const fetchProducts = (id) => {
   productCategoryStore.getProductsByCategory(id)
 }
 
-const searchBytext = (event) => {
-  if (event.key === 'Backspace') {
-    console.log('Backspace key pressed')
-    fetchProducts(route.params.id)
-    // Perform your action here
-  }
+const searchBytext = () => {
   searchStore.GetProductsBySearch(searchValue.value)
 }
 

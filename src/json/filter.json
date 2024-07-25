@@ -1,1 +1,6 @@
-["Featured Product ", "Newest", "Oldest"]
+[
+  {
+    "text": "Featured Product ",
+    "value": 1
+  }
+]

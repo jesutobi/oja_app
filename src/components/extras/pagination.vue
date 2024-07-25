@@ -48,9 +48,7 @@ const paginate = async (value) => {
   }
   try {
     const response = await axiosClient.get(`${props.Data.path}?page=${props.Data.current_page}`)
-    console.log(response.data.products_by_category.data)
-
-    productCategoryStore.ProductsByCategory = response.data.products_by_category
+    productCategoryStore.ProductsByCategory = response.data.products
   } catch (error) {
     throw error
   }

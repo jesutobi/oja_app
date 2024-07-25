@@ -74,6 +74,9 @@ input:focus {
 textarea:focus {
   outline: none !important;
 }
+select:focus {
+  outline: none !important;
+}
 
 .yellowBadge {
   color: black !important;

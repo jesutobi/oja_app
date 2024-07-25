@@ -8,23 +8,19 @@
             <div @click="opensidebar" class="cursor-pointer"><Hamburger /></div>
             <!-- mob logo -->
             <div
-              class="sm:hidden font_logo max-[640px]:px-2 max-[640px]:text-[1.6rem] text-black-400 text-[2.5rem]"
+              class="lg:hidden font_logo max-[640px]:px-2 max-[640px]:text-[1.6rem] max-[1024px]:text-[2rem] max-[1024px]:px-3 text-black-400 text-[2.5rem]"
             >
               <router-link to="/"> <Logo /></router-link>
             </div>
           </div>
           <!-- logo -->
           <div
-            class="max-[640px]:text-[2rem] max-[640px]:hidden text-black-400 text-[2.5rem] absolute left-1/2 transform -translate-x-1/2"
+            class="max-[640px]:text-[2rem] max-[1024px]:hidden text-black-400 text-[2.5rem] absolute left-1/2 transform -translate-x-1/2"
           >
             <router-link to="/" class=""> <Logo /></router-link>
           </div>
           <div class="flex items-center font2 cursor-pointer">
-            <div class="">
-              <IconHover>
-                <Search @click="openSearchModal" :color="`#000000`" />
-              </IconHover>
-            </div>
+            <div class=""><SearchBar /></div>
 
             <!-- cart -->
 
@@ -80,12 +76,12 @@
 </template>
 
 <script setup>
+import SearchBar from '@/components/navigation/searchBar.vue'
 import Logo from '@/components/extras/logo.vue'
 import SideBar from './sidebar.vue'
 import Hamburger from './hamburger.vue'
 import Dropdown from './dropDown.vue'
 import Bag from '@/components/navigation/cart.vue'
-import Search from '@/assets/svg/search.vue'
 import User from '@/assets/svg/user.vue'
 import IconHover from '@/components/slots/iconHover.vue'
 import UserCircle from '@/components/slots/UserCircle.vue'
@@ -95,6 +91,7 @@ import SearchM from '../homepage/searchPage.vue'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import { useCartStore } from '@/stores/cart'
 import { storeToRefs } from 'pinia'
+import { useSearchStore } from '@/stores/search.js'
 
 const searchVisibility = ref(false)
 const InCartStore = useCartStore()

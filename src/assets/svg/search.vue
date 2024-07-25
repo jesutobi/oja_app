@@ -1,8 +1,8 @@
 <template>
   <div>
     <svg
-      width="30px"
-      height="30px"
+      :width="size"
+      :height="size"
       viewBox="0 0 24 24"
       fill="none"
       class="width space"
@@ -22,7 +22,8 @@
 </template>
 <script setup>
 defineProps({
-  color: String
+  color: String,
+  size: String
 })
 </script>
 <style scoped>

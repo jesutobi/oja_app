@@ -25,7 +25,7 @@ export const useProductCategory = defineStore(
     const getProductsByCategory = async (payload) => {
       try {
         const response = await axiosClient.get(`get_Products_By_Category/${payload}`)
-        ProductsByCategory.value = response.data.products_by_category
+        ProductsByCategory.value = response.data.products
         ProductCategoryInfo.value = response.data.category
         console.log(response)
 

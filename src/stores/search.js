@@ -13,7 +13,25 @@ export const useSearchStore = defineStore(
     const GetProductsBySearch = async (queryValue) => {
       try {
         const productCategoryStore = useProductCategory()
-        const response = await axiosClient.get(`search`, { params: { query: queryValue } })
+        const response = await axiosClient.get(`search`, {
+          params: { query: queryValue }
+        })
+
+        productCategoryStore.ProductsByCategory = response.data.products
+
+        return response
+      } catch (error) {
+        // Handle errors
+        console.error('error:', error)
+        throw error
+      }
+    }
+    const NavSearch = async (payload) => {
+      try {
+        const productCategoryStore = useProductCategory()
+        const response = await axiosClient.get(`search_Products_By_Category/${payload.id}`, {
+          params: { query: payload.phrase }
+        })
 
         productCategoryStore.ProductsByCategory = response.data.products
 
@@ -26,7 +44,8 @@ export const useSearchStore = defineStore(
     }
 
     return {
-      GetProductsBySearch
+      GetProductsBySearch,
+      NavSearch
     }
   },
   {
