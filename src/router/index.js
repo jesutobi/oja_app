@@ -74,9 +74,15 @@ const router = createRouter({
           path: 'checkout',
           name: 'checkout',
           component: () => import('../views/Order_Process/checkout.vue')
+        },
+        {
+          path: 'search/:id',
+          name: 'search',
+          component: () => import('../views/search/searchPage.vue')
         }
       ]
     },
+
     // back office
     {
       path: '/BackOffice',

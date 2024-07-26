@@ -28,6 +28,7 @@ import { computed, ref } from 'vue'
 import axiosClient from '@/axios'
 import { useProductCategory } from '@/stores/product_category.js'
 import { storeToRefs } from 'pinia'
+import { useSearchStore } from '@/stores/search.js'
 
 const props = defineProps({
   Data: {
@@ -39,6 +40,7 @@ const productCategoryStore = useProductCategory()
 const { ProductsByCategory } = storeToRefs(productCategoryStore)
 const disable = ref('#9e9e9e')
 const current_page_data = ref(props.Data.current_page)
+const searchStore = useSearchStore()
 
 const paginate = async (value) => {
   if (value === 'prev') {
@@ -49,6 +51,7 @@ const paginate = async (value) => {
   try {
     const response = await axiosClient.get(`${props.Data.path}?page=${props.Data.current_page}`)
     productCategoryStore.ProductsByCategory = response.data.products
+    searchStore.SearchResult = response.data.products
   } catch (error) {
     throw error
   }

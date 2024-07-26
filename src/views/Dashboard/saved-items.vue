@@ -93,7 +93,7 @@ import { useSavedStore } from '@/stores/save_products.js'
 import { useBuyNow } from '@/composables/buyNow.js'
 
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useUserStore } from '@/stores/Authentication'
 
 const userstore = useUserStore()
@@ -103,5 +103,10 @@ const { get_saved_data } = storeToRefs(saveStore)
 const baseURL = ref('http://localhost:8000')
 const { formatPrice } = useFormatPrice()
 const { userInfo, token } = storeToRefs(userstore)
+
+watch(get_saved_data, (newData, oldData) => {
+  get_saved_data.value = newData
+  console.log('Saved data changed:', newData)
+})
 </script>
 <style scoped></style>

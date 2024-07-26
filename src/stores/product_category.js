@@ -10,6 +10,8 @@ export const useProductCategory = defineStore(
     const category = ref([])
     const ProductsByCategory = ref([])
     const ProductCategoryInfo = ref({})
+    const beautyProducts = ref({})
+    const art = ref({})
 
     const getProductCategory = async () => {
       try {
@@ -26,6 +28,8 @@ export const useProductCategory = defineStore(
       try {
         const response = await axiosClient.get(`get_Products_By_Category/${payload}`)
         ProductsByCategory.value = response.data.products
+        beautyProducts.value = response.data.products
+        // art.value = response.data.products
         ProductCategoryInfo.value = response.data.category
         console.log(response)
 
@@ -40,7 +44,9 @@ export const useProductCategory = defineStore(
       category,
       getProductsByCategory,
       ProductsByCategory,
-      ProductCategoryInfo
+      ProductCategoryInfo,
+      beautyProducts,
+      art
     }
   },
   {
@@ -49,7 +55,7 @@ export const useProductCategory = defineStore(
       strategies: [
         {
           storage: localStorage,
-          paths: ['category', 'ProductsByCategory', 'ProductCategoryInfo']
+          paths: ['category', 'ProductsByCategory', 'ProductCategoryInfo', 'beautyProducts', 'art']
         }
       ]
     }

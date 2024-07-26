@@ -55,7 +55,7 @@
       <ProdButton @click="BuyNow(Data)" :Width="`w-[100%]`" class="w-[40%] md:w-[30%]"
         >Buy Now</ProdButton
       >
-      <SaveButton :Data="Data" class="px-2" />
+      <SaveButton :Data="productDetail" class="px-2" />
     </div>
 
     <!-- product features-->
@@ -64,7 +64,7 @@
         <span>Features</span>
       </div>
       <!-- {{ JSON.parse(Feature) }} -->
-      <div>
+      <div class="overflow-auto xl:h-[25vh] lg:h-[20vh] h-[25vh]">
         <ul class="list-disc p-2" v-for="(data, index) in Feature" :key="index">
           <li>
             <div class="flex items-center">
@@ -89,12 +89,16 @@ import { ref, reactive } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useFormatPrice } from '../../composables/formatPrice'
 import { useBuyNow } from '@/composables/buyNow.js'
+import { useProduct } from '@/stores/product'
+import { storeToRefs } from 'pinia'
 
 defineProps({
   Data: Object,
   Feature: Array
 })
 
+const storedetail = useProduct()
+const { productDetail, productFeature } = storeToRefs(storedetail)
 const store = useCartStore()
 const productQuantity = reactive(store.cartItemCount)
 const cart_number = ref(0)

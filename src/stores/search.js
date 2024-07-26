@@ -8,7 +8,7 @@ import { useProductCategory } from '@/stores/product_category.js'
 export const useSearchStore = defineStore(
   'Search',
   () => {
-    const Nigerian_States = ref([])
+    const SearchResult = ref([])
 
     const GetProductsBySearch = async (queryValue) => {
       try {
@@ -26,14 +26,14 @@ export const useSearchStore = defineStore(
         throw error
       }
     }
-    const NavSearch = async (payload) => {
+    const NavSearch = async (value, value2) => {
       try {
         const productCategoryStore = useProductCategory()
-        const response = await axiosClient.get(`search_Products_By_Category/${payload.id}`, {
-          params: { query: payload.phrase }
+        const response = await axiosClient.get(`search_Products_By_Category/${value}`, {
+          params: { query: value2 }
         })
-
-        productCategoryStore.ProductsByCategory = response.data.products
+        productCategoryStore.ProductCategoryInfo = response.data.category
+        SearchResult.value = response.data.products
 
         return response
       } catch (error) {
@@ -45,13 +45,14 @@ export const useSearchStore = defineStore(
 
     return {
       GetProductsBySearch,
-      NavSearch
+      NavSearch,
+      SearchResult
     }
   },
   {
     persist: {
       enabled: true,
-      strategies: [{ storage: localStorage, paths: ['Nigerian_States'] }]
+      strategies: [{ storage: localStorage, paths: ['SearchResult'] }]
     }
   }
 )

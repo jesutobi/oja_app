@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
 import Heart from '@/assets/svg/heart.vue'
 import { useSavedStore } from '@/stores/save_products.js'
@@ -33,6 +33,10 @@ const { get_saved_data } = storeToRefs(saveStore)
 const isLoggedIn = useIsLoggedIn()
 const { userInfo, token } = storeToRefs(userstore)
 
+const getSavedProduct = () => {
+  saveStore.get_save_product(userInfo.value ? userInfo.value.id : null)
+}
+
 const data = ref({ user_id: userInfo.value ? userInfo.value.id : null, product_id: props.Data.id })
 
 const saveProduct = () => {
@@ -47,6 +51,7 @@ const saveProduct = () => {
         dangerouslyHTMLString: true
       })
     })
+
     getSavedProduct()
   } else {
     toast('Login to save products', {
@@ -63,15 +68,21 @@ const saveProduct = () => {
     }, 2000)
   }
 }
-const getSavedProduct = () => {
-  saveStore.get_save_product(userInfo.value ? userInfo.value.id : null)
-}
+
 const isProductSaved = computed(() => {
   return (
     Array.isArray(get_saved_data.value) &&
     get_saved_data.value.find((item) => item.product_id === props.Data.id)
   )
 })
+
+watch(
+  () => props.Data.id,
+  () => {
+    data.value.product_id = props.Data.id
+    getSavedProduct()
+  }
+)
 
 onMounted(() => {
   getSavedProduct()

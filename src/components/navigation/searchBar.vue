@@ -41,16 +41,19 @@ import { useSearchStore } from '@/stores/search.js'
 import Search from '@/assets/svg/search.vue'
 import { ref } from 'vue'
 import { useProductCategory } from '@/stores/product_category.js'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const categoryStore = useProductCategory()
 const { category } = storeToRefs(categoryStore)
-const route = useRoute()
+const router = useRouter()
 const sidebar = ref(false)
 const SearchInput = ref(false)
 const hidedisplaySearchInput = ref(true)
 const searchStore = useSearchStore()
+
 const navSearchPayload = ref({
   id: '',
   phrase: ''
@@ -62,15 +65,28 @@ const displaySearchInput = () => {
 }
 
 const fetchSearchedProducts = () => {
-  try {
+  if (navSearchPayload.value.phrase !== '' && navSearchPayload.value.id !== '') {
+    const phrase = navSearchPayload.value.phrase
     SearchInput.value = false
     hidedisplaySearchInput.value = true
     searchStore.NavSearch(navSearchPayload.value)
     navSearchPayload.value.phrase = ''
-    route.push
-  } catch (error) {
-    SearchInput.value = true
+
+    router.push({
+      path: `/Product/search/${navSearchPayload.value.id}`,
+      query: { phrase: phrase }
+    })
+  } else {
+    toast('ommited required options', {
+      theme: 'colored',
+      type: 'error',
+      autoClose: 1000,
+      transition: 'slide',
+      dangerouslyHTMLString: true
+    })
   }
+  navSearchPayload.value.phrase = ''
+  navSearchPayload.value.id = ''
 }
 </script>
 

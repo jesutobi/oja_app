@@ -175,7 +175,7 @@ watch(
 )
 
 onMounted(() => {
-  fetchProducts(route.params.id)
+  fetchProducts(route.params.id, route.query.phrase)
 })
 </script>
 

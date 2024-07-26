@@ -12,7 +12,7 @@
 
     <!-- product card -->
     <ProductGrid>
-      <div v-for="(product, index) in simlarProducts.data" :key="index">
+      <div v-for="(product, index) in simlarProducts.data.splice(0, 10)" :key="index">
         <ProductCard :Data="product" class="w-full" />
       </div>
     </ProductGrid>

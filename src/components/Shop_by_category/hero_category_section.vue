@@ -25,11 +25,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useProductCategory } from '@/stores/product_category.js'
+import { useSearchStore } from '@/stores/search.js'
 import { storeToRefs } from 'pinia'
 
 const baseURL = ref('http://localhost:8000')
 const productCategoryStore = useProductCategory()
+const searchStore = useSearchStore()
 const { ProductCategoryInfo } = storeToRefs(productCategoryStore)
+const { NavSearch } = storeToRefs(searchStore)
 const isLoaded = ref(false)
 
 const onImageLoad = () => {

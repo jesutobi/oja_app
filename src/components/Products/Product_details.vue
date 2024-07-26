@@ -4,8 +4,8 @@
       class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 pt-11 max-[1024px]:gap-2 min-[1024px]:gap-5"
     >
       <!-- product images -->
-      <div class="lg:col-span-5 col-span-12 shadow bg-white sm:rounded-lg">
-        <Images :Data="productDetail" />
+      <div class="lg:col-span-5 col-span-12 shadow sm:rounded-lg bg-white">
+        <Images class="" :Data="productDetail" />
       </div>
       <!-- product info -->
       <div class="lg:col-span-7 col-span-12 py-2 px-4 shadow bg-white sm:rounded-lg">
