@@ -17,7 +17,7 @@ export const useUpdateUserStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('Authentication Failed:', error)
+        'Authentication Failed:', error
         throw error
       }
     }
@@ -28,7 +28,7 @@ export const useUpdateUserStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('Authentication Failed:', error)
+        'Authentication Failed:', error
         throw error
       }
     }

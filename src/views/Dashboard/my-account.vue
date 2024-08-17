@@ -146,15 +146,13 @@ const AddressData = ref([])
 const GetShippingAdress = () => {
   store.GetShippingAdress().then((response) => {
     AddressData.value = response.data.data
-    state.value = JSON.parse(response.data.state)
-    console.log(response)
+    state.value = JSON.parse(response.data.state)(response)
   })
 }
 const getDefaultAddress = () => {
   store.GetDefaultAdress().then((response) => {
     AddressData.value = response.data.data
-    addressState.value = response.data.data.state
-    console.log(addressState.value)
+    addressState.value = response.data.data.state(addressState.value)
     addressCity.value = response.data.data.city
   })
 }
@@ -162,8 +160,7 @@ const getDefaultAddress = () => {
 const getData = async () => {
   userStore.GetUser().then((response) => {
     user_data.value = response.data
-    state.value = JSON.parse(response.data.state)
-    console.log('nirv', response)
+    state.value = JSON.parse(response.data.state)('nirv', response)
   })
 }
 

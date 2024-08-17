@@ -158,7 +158,7 @@ import { onMounted, ref } from 'vue'
 const orderStore = useOrdersStore()
 const { orders } = storeToRefs(orderStore)
 const { formatPrice } = useFormatPrice()
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const isLoaded = ref(false)
 
 const onImageLoad = () => {

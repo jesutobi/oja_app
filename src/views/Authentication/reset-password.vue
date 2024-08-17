@@ -201,8 +201,7 @@ const reset_password = handleSubmit((values) => {
       }, 2000)
     })
     .catch((error) => {
-      errorsInfo.value = error
-      console.log(errorsInfo)
+      errorsInfo.value = error(errorsInfo)
       setTimeout(() => {
         toast.update(id, {
           render: 'errr',

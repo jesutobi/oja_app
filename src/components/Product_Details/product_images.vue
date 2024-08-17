@@ -61,7 +61,7 @@ import { reactive, ref, onMounted } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const currentSlide = ref(0)
 const name = ref('Gallery')
 const carousel = ref(null)

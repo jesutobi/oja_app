@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>
+    <div v-if="new_arrivals == []">
       <!-- title -->
       <DashTitleSlot class="">
         <div>
@@ -13,7 +13,7 @@
       <!-- product card -->
       <ProductGrid v-if="products.splice">
         <!-- <div > -->
-        <div v-for="(product, index) in products.splice(0, 10)" :key="index">
+        <div v-for="(product, index) in new_arrivals.data.data" :key="index">
           <ProductCard :Data="product" class="w-full" />
         </div>
         <!-- </div> -->
@@ -33,17 +33,15 @@ import ProductGrid from '../slots/productCard.vue'
 import ProductCard from '../Products/product_card.vue'
 import { useProduct } from '@/stores/product'
 import { onMounted, ref, reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const store = useProduct()
+const { new_arrivals } = storeToRefs(store)
 const products = ref({})
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 
 const GetNewlyArrivedProducts = () => {
-  store.GetNewArrivals().then((response) => {
-    console.log(response)
-    const data = response.data
-    products.value = data
-  })
+  store.GetNewArrivals()
 }
 
 onMounted(() => {

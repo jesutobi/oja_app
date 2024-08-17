@@ -161,7 +161,7 @@ const DeleteAddress = (value) => {
       }, 1000)
     })
     .catch((error) => {
-      console.log(error)
+      error
       errorsInfo.value = error.response.data.message
       setTimeout(() => {
         toast.update(id, {

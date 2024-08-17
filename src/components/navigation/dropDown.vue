@@ -32,10 +32,8 @@
                 <span>{{ data.text }}</span>
               </div>
             </div>
-            <div v-if="data.text === 'Saved Items' && get_saved_data.length > 0" class="px-1">
-              <span class="text-xs bg-yellow-400 px-2 py-[0.2rem] rounded text-black font2">{{
-                get_saved_data.length
-              }}</span>
+            <div v-if="data.text === 'Saved Items'" class="px-1">
+              <saveNotify />
             </div>
           </div>
         </router-link>
@@ -64,6 +62,7 @@
 </template>
 
 <script setup>
+import saveNotify from '@/components/extras/SavedNotify.vue'
 import { useSavedStore } from '@/stores/save_products.js'
 import UserCircle from '@/components/slots/UserCircle.vue'
 import AuthButtons from '../../components/slots/AuthButtons.vue'

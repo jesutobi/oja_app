@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="">
     <form @submit.prevent="fetchSearchedProducts" action="">
+      <!-- desktop search bar -->
       <div
         v-if="SearchInput"
-        class="rounded-lg border p-1 flex items-center animate__animated animate__slideInRight"
+        class="rounded-lg border p-1 flex items-center animate__animated animate__slideInRight max-[546px]:hidden"
       >
         <!-- select category -->
         <div>
@@ -27,9 +28,38 @@
           <Search @click="fetchSearchedProducts" :color="`#9cafa3`" :size="`22px`" />
         </IconHover>
       </div>
-      <div v-if="hidedisplaySearchInput">
+      <div v-if="hidedisplaySearchInput" class="max-[600px]:hidden">
         <IconHover @click="displaySearchInput">
           <Search :color="`#000000`" :size="`30px`" />
+        </IconHover>
+      </div>
+      <!-- mobile search bar -->
+      <div class="rounded-lg border p-1 flex justify-between items-center min-[600px]:hidden">
+        <div class="flex items-center">
+          <!-- select category -->
+          <div>
+            <select
+              v-model="navSearchPayload.id"
+              class="bg-yellow-400 rounded-lg text-xs py-2 px-1"
+            >
+              <option :value="navSearchPayload.id" disabled selected>Categories</option>
+              <option v-for="(item, index) in category" :key="index" :value="item.id" class="py-1">
+                {{ item.category_title }}
+              </option>
+            </select>
+          </div>
+          <!-- input -->
+          <div>
+            <input
+              type="text"
+              v-model="navSearchPayload.phrase"
+              class="p-1 text-xs"
+              placeholder="Product & brand"
+            />
+          </div>
+        </div>
+        <IconHover>
+          <Search @click="fetchSearchedProducts" :color="`#9cafa3`" :size="`22px`" />
         </IconHover>
       </div>
     </form>
@@ -37,6 +67,7 @@
 </template>
 
 <script setup>
+import IconHover from '@/components/slots/iconHover.vue'
 import { useSearchStore } from '@/stores/search.js'
 import Search from '@/assets/svg/search.vue'
 import { ref } from 'vue'

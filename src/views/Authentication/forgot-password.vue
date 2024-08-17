@@ -110,8 +110,7 @@ const forgot_password = handleSubmit((values) => {
       }, 2000)
     })
     .catch((error) => {
-      errorsInfo.value = error
-      console.log(errorsInfo)
+      errorsInfo.value = error(errorsInfo)
       setTimeout(() => {
         toast.update({
           render: 'errr',

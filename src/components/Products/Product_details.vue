@@ -128,10 +128,9 @@ const getProductDetail = () => {
 const getProductReview = async () => {
   try {
     const response = await store.GetReviews(route.params.id)
-    product_review.value = response.data.reviews
-    console.log(product_review.value)
+    product_review.value = response.data.reviews(product_review.value)
   } catch (error) {
-    console.error('Failed to fetch product reviews:', error)
+    'Failed to fetch product reviews:', error
   }
 }
 const openTextArea = () => {

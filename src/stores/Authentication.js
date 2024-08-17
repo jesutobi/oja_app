@@ -27,7 +27,7 @@ export const useUserStore = defineStore(
 
         return response.data
       } catch (error) {
-        console.error('login failed:', error)
+        'login failed:', error
         throw error
       }
     }
@@ -44,7 +44,7 @@ export const useUserStore = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('registeration failed:', error)
+        'registeration failed:', error
         throw error
       }
     }
@@ -76,9 +76,11 @@ export const useUserStore = defineStore(
           autoClose: 1000,
           transition: 'slide',
           dangerouslyHTMLString: true
-        })
-        // Handle errors
-        console.error('logout failed:', error)
+        })(
+          // Handle errors
+          'logout failed:',
+          error
+        )
         throw error
       }
     }

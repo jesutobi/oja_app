@@ -14,16 +14,19 @@ export const useProduct = defineStore(
 
     const productDetail = ref({})
     const productFeature = ref([])
+    const FeaturedProduct = ref([])
+    const new_arrivals = ref([])
 
     const GetFeaturedProducts = async () => {
       try {
         const response = await axiosClient.get(`get_featured_product`)
 
-        products.value.featured_products = response // Access the data property
-        return response.data
+        FeaturedProduct.value = response // Access the data property
+
+        return response
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -31,11 +34,11 @@ export const useProduct = defineStore(
       try {
         const response = await axiosClient.get(`new_arrival`)
 
-        products.value.new_arrivals_products = response // Access the data property
-        return response.data
+        new_arrivals.value = response // Access the data property
+        return response
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -49,18 +52,17 @@ export const useProduct = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
     const PostReviews = async (review, id) => {
       try {
-        const response = await axiosClient.post(`post_product_review/${id}`, review)
-        console.log(response)
+        const response = await axiosClient.post(`post_product_review/${id}`, review)(response)
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -70,7 +72,7 @@ export const useProduct = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -83,13 +85,16 @@ export const useProduct = defineStore(
       GetReviews,
       PostReviews,
       productDetail,
-      productFeature
+      productFeature,
+      FeaturedProduct
     }
   },
   {
     persist: {
       enabled: true,
-      strategies: [{ storage: localStorage, paths: ['productDetail', 'productFeature'] }]
+      strategies: [
+        { storage: localStorage, paths: ['productDetail', 'productFeature', 'FeaturedProduct'] }
+      ]
     }
   }
 )

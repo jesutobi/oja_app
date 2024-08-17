@@ -42,10 +42,12 @@ const form = ref({
 
 const submitForm = async () => {
   try {
-    const response = await axiosClient.post('/UploadFeature', form.value)
-    console.log('Form submitted successfully', response.data)
+    const response = await axiosClient.post('/UploadFeature', form.value)(
+      'Form submitted successfully',
+      response.data
+    )
   } catch (error) {
-    console.error('Error submitting form:', error)
+    'Error submitting form:', error
   }
 }
 </script>

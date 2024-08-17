@@ -1,6 +1,8 @@
 <template>
   <div class="">
-    <div class="sm:py-[2rem] max-[640px]:py-[1.6rem] px-7 max-[640px]:px-1 relative shadow-md">
+    <div
+      class="sm:py-[2rem] max-[640px]:py-[1.6rem] max-[546px]:pt-[1.2rem] max-[546px]:pb-[0.7rem] px-7 max-[640px]:px-1 relative shadow-md"
+    >
       <div class="">
         <div class="flex items-center justify-between">
           <div class="flex">
@@ -20,7 +22,7 @@
             <router-link to="/" class=""> <Logo /></router-link>
           </div>
           <div class="flex items-center font2 cursor-pointer">
-            <div class=""><SearchBar /></div>
+            <div class="max-[546px]:hidden"><SearchBar /></div>
 
             <!-- cart -->
 
@@ -61,6 +63,7 @@
           </div>
         </div>
       </div>
+      <div class="mx-2 pt-4 min-[546px]:hidden"><SearchBar class="" /></div>
     </div>
     <!-- sidebar -->
     <div v-if="sidebar" class="fixed z-40 top-0">
@@ -103,7 +106,7 @@ const { userInfo } = storeToRefs(store)
 const sidebar = ref(false)
 
 const closeModal = (data) => {
-  console.log(data)
+  data
 
   searchVisibility.value = data
 }

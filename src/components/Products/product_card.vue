@@ -22,9 +22,10 @@
           />
         </div>
       </router-link>
-      <Button_pop_up>
+
+      <Button_pop_up class="max-[400px]:hidden">
         <!-- save items -->
-        <div><SaveButton :Data="Data" /></div>
+        <!-- <div><SaveButton :Data="Data" /></div> -->
         <div>
           <span>|</span>
         </div>
@@ -61,7 +62,7 @@
   </div>
 </template>
 <script setup>
-import SaveButton from '@/components/extras/saveButton.vue'
+// import SaveButton from '@/components/extras/saveButton.vue'
 import AddToCart from '@/assets/svg/add_to_cart.vue'
 import Button_pop_up from '../slots/button_pop_up.vue'
 import { useCartStore } from '@/stores/cart'
@@ -74,7 +75,7 @@ import { useFormatPrice } from '@/composables/formatPrice'
 const { formatPrice } = useFormatPrice()
 const isLoaded = ref(false)
 const router = useRouter()
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const store = useCartStore()
 
 const props = defineProps({

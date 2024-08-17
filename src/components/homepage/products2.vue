@@ -46,7 +46,7 @@ import axiosClient from '@/axios'
 
 const store = useProduct()
 const products = ref({})
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const productCategoryStore = useProductCategory()
 const art = ref([])
 

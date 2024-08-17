@@ -286,29 +286,26 @@ const submitForm = async () => {
   form.value.product_images.forEach((file, index) => {
     formData.append(`product_images[]`, file)
   })
-  formData.append('featured', form.value.featured ? '1' : '0')
-  console.log(formData)
+  formData.append('featured', form.value.featured ? '1' : '0')(formData)
 
   try {
     const response = await axiosClient.post('/UploadProduct', formData)
   } catch (error) {
-    console.error('Error submitting form:', error)
+    'Error submitting form:', error
   }
 }
 
 // get product category
 const GetProductCategory = () => {
   store.getProductCategory().then((response) => {
-    product_category.value = response.data.categories
-    console.log(response)
+    product_category.value = response.data.categories(response)
   })
 }
 
 // get product feature
 const GetProductFeature = () => {
   storeFeature.getProductFeature().then((response) => {
-    product_feature.value = response.data.data
-    console.log(response)
+    product_feature.value = response.data.data(response)
   })
 }
 

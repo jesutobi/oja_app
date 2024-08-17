@@ -8,12 +8,11 @@ export const useGetIpStore = defineStore('get_ip', () => {
   const getIp = async () => {
     try {
       const response = await axios.get('http://ipinfo.io/json')
-      ipDetails.value = response
-      console.log(ipDetails.value)
+      ipDetails.value = response(ipDetails.value)
       return response
     } catch (error) {
       // Handle errors
-      console.error('verification failed:', error)
+      'verification failed:', error
       throw error
     }
   }

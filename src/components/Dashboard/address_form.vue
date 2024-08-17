@@ -215,8 +215,7 @@ const shipping_details = ref({
 })
 const getCities = (data) => {
   const selectedState = JSON.parse(data)
-  cities.value = NaijaStates.lgas(selectedState.state).lgas
-  console.log(selectedState)
+  cities.value = NaijaStates.lgas(selectedState.state).lgas(selectedState)
 }
 
 const clearForm = () => {
@@ -277,7 +276,7 @@ const addShippingAddress = () => {
     store
       .EditShippingAdressDetail(shipping_details.value, route.params.id)
       .then((msg) => {
-        console.log(msg)
+        msg
         successMsg.value = msg.message
         setTimeout(() => {
           toast.update(id, {
@@ -298,7 +297,7 @@ const addShippingAddress = () => {
         }, 2000)
       })
       .catch((error) => {
-        console.log(error)
+        error
         errorsInfo.value = error
         setTimeout(() => {
           toast.update(id, {
@@ -324,14 +323,13 @@ const getShippingAdressDetail = () => {
       shipping_details.value.additional_information = response.data.additional_information
       shipping_details.value.delivery_address = response.data.delivery_address
       shipping_details.value.state = response.data.state
-      shipping_details.value.city = response.data.city
-      console.log(response)
+      shipping_details.value.city = response.data.city(response)
     })
   }
 }
 
 onMounted(() => {
-  // console.log(shipping_details.value.state)
+  // (shipping_details.value.state)
   getShippingAdressDetail()
 })
 </script>

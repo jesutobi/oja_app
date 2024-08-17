@@ -285,7 +285,7 @@ const getIpData = async () => {
     ipDetails.value = response.data
   } catch (error) {
     // Handle errors
-    console.error('failed:', error)
+
     throw error
   }
 }

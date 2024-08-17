@@ -10,14 +10,12 @@ export const useSocialAuthStore = defineStore('social_auth', () => {
 
   const GoogleAuth = async (provider) => {
     try {
-      const response = await axiosClient.get(`auth/${provider}/redirect`)
-
-      console.log(response)
+      const response = await axiosClient.get(`auth/${provider}/redirect`)(response)
 
       return response
     } catch (error) {
       // Handle errors
-      console.error('Authentication Failed:', error)
+      'Authentication Failed:', error
       throw error
     }
   }

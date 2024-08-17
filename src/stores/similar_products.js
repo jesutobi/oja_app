@@ -15,7 +15,7 @@ export const useSimilarProducts = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }

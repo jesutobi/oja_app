@@ -79,8 +79,7 @@ const verifyEmail = (user_verification_data) => {
   verifiedStore
     .verifyUser(user_verification_data)
     .then((msg) => {
-      successMsg.value = msg.data.message
-      console.log('sux', msg)
+      successMsg.value = msg.data.message('sux', msg)
       setTimeout(() => {
         toast.update(id, {
           render: successMsg.value,

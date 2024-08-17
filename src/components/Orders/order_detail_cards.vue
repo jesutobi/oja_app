@@ -118,7 +118,7 @@
               </div>
             </div>
           </div>
-          <router-link to="address-book">
+          <!-- <router-link to="address-book">
             <div class="text-xs justify-end p-2 flex items-center cursor-pointer">
               <div class="px-2 cursor-pointer" title="set address">
                 <Set />
@@ -127,7 +127,7 @@
                 <span>Change address</span>
               </div>
             </div></router-link
-          >
+          > -->
         </DashboardCard>
 
         <!-- payment details -->
@@ -261,9 +261,11 @@ import { useFormatPrice } from '../../composables/formatPrice'
 import { storeToRefs } from 'pinia'
 import { ref, onMounted } from 'vue'
 import { usePaymentStore } from '@/stores/payment_details.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 const paymentstore = usePaymentStore()
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 // const { formatDate, formatTime } = useFormatDate()
 const { formatPrice } = useFormatPrice()
 const orderStore = useOrdersStore()
@@ -324,12 +326,6 @@ const processPayment = () => {
     transition: 'slide',
     dangerouslyHTMLString: true
   })
-  // paymentstore.PaymentDetails(payload)
-  setTimeout(() => {
-    router.push({
-      name: 'shopping_cart'
-    })
-  }, 2000)
 }
 
 const onImageLoad = () => {
@@ -337,7 +333,7 @@ const onImageLoad = () => {
 }
 
 onMounted(() => {
-  // console.log(singleOrderDetail)
+  // (singleOrderDetail)
   onImageLoad()
   const script = document.createElement('script')
   script.setAttribute('src', 'https://js.paystack.co/v1/inline.js')

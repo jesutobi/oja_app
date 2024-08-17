@@ -17,7 +17,6 @@ export const useProductCategory = defineStore(
       try {
         const response = await axiosClient.get(`get_product_category`)
         category.value = response.data.categories
-        console.log(category.value)
 
         return response
       } catch (error) {
@@ -31,7 +30,6 @@ export const useProductCategory = defineStore(
         beautyProducts.value = response.data.products
         // art.value = response.data.products
         ProductCategoryInfo.value = response.data.category
-        console.log(response)
 
         return response
       } catch (error) {

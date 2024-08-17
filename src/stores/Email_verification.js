@@ -22,7 +22,7 @@ export const useVerifyEmailStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('verification failed:', error)
+        'verification failed:', error
         throw error
       }
     }

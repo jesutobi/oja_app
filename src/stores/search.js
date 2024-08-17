@@ -22,7 +22,7 @@ export const useSearchStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }
@@ -38,7 +38,7 @@ export const useSearchStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }

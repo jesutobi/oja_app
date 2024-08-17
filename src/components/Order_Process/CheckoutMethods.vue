@@ -33,7 +33,6 @@
             type="radio"
             :value="item.id"
             name=""
-            :disabled="item.is_default === 0"
           />
         </div>
         <div class="flex w-full justify-between items-center">

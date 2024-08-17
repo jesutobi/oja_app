@@ -14,14 +14,15 @@ export const useOrdersStore = defineStore(
     const PlaceOrder = async (payload) => {
       try {
         const response = await axiosClient.post(`place_order`, payload)
-        orderResponseId.value = response.data.orderItem.order_detail_id
-
-        console.log('tet', orderResponseId.value)
+        orderResponseId.value = response.data.orderItem.order_detail_id(
+          'tet',
+          orderResponseId.value
+        )
 
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }
@@ -34,7 +35,7 @@ export const useOrdersStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }
@@ -46,7 +47,7 @@ export const useOrdersStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }
@@ -58,7 +59,7 @@ export const useOrdersStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }

@@ -109,7 +109,7 @@ const isLoaded = ref(false)
 const { getQuantity, incrementQuantity, decrementQuantity, removeProduct } = useQuantityPerProduct()
 const InCartStore = useCartStore()
 const { cartItems } = storeToRefs(InCartStore)
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const { formatPrice } = useFormatPrice()
 
 const onImageLoad = () => {

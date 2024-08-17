@@ -30,7 +30,7 @@
             <div><img src="@/assets/icon/dashboard.svg" alt="" class="w-[20px]" /></div>
           </div>
           <div
-            class="text-[0.9rem] text-gray-500 py-2"
+            class="text-[0.9rem] text-gray-500 py-2 flex items-center justify-between"
             v-for="(item, index) in SideBarData"
             :key="index"
           >
@@ -39,6 +39,9 @@
                 {{ item.text }}
               </span></router-link
             >
+            <div v-if="item.text === 'Saved Items'" class="px-1">
+              <saveNotify />
+            </div>
           </div>
         </div>
         <div class="px-3">
@@ -84,6 +87,7 @@
   </div>
 </template>
 <script setup>
+import saveNotify from '@/components/extras/SavedNotify.vue'
 import SideBarData from '../../json/dashboard_data.json'
 import Copyright from '@/components/extras/copyright.vue'
 import ProdButton from '../slots/productButtons.vue'

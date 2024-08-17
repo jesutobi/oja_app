@@ -17,12 +17,12 @@ export const useStatesStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }
     const GetCities = async (payload) => {
-      console.log('me', payload)
+      'me', payload
       // Parse the payload if it is a stringified JSON
       // let parsedPayload
       // try {
@@ -32,12 +32,12 @@ export const useStatesStore = defineStore(
       //     `https://nigeria-states-towns-lga.onrender.com/api/${state}/towns`
       //   )
 
-      //   console.log(response)
+      //   (response)
 
       //   return response
       // } catch (error) {
       //   // Handle errors
-      //   console.error('Authentication Failed:', error)
+      //   ('Authentication Failed:', error)
       //   throw error
       // }
     }

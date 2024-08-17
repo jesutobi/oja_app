@@ -206,7 +206,7 @@ const states = NaijaStates.all()
 
 const getUser = () => {
   store.GetUser().then((response) => {
-    console.log(form.value.state)
+    form.value.state
     form.value.first_name = response.data.first_name
     form.value.last_name = response.data.last_name
     form.value.email = response.data.email

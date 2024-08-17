@@ -7,14 +7,12 @@ export const useBackOffice = defineStore('back_officee', () => {
 
   const UploadCategory = async (provider) => {
     try {
-      const response = await axiosClient.get(`auth/${provider}/redirect`)
-
-      console.log(response)
+      const response = await axiosClient.get(`auth/${provider}/redirect`)(response)
 
       return response
     } catch (error) {
       // Handle errors
-      console.error('Authentication Failed:', error)
+      'Authentication Failed:', error
       throw error
     }
   }

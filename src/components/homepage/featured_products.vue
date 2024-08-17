@@ -16,7 +16,7 @@
       <!-- product card -->
 
       <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="(product, index) in products" :key="index" class="py-[1rem]">
+        <Slide v-for="(product, index) in FeaturedProduct.data.data" :key="index" class="py-[1rem]">
           <ProductCard :Data="product" class="w-full" />
         </Slide>
 
@@ -43,10 +43,12 @@ import Button_pop_up from '../slots/button_pop_up.vue'
 import ProductCard from '../Products/product_card.vue'
 import { useProduct } from '@/stores/product'
 import { onMounted, ref, reactive } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const store = useProduct()
+const { FeaturedProduct } = storeToRefs(store)
 const products = ref({})
-const baseURL = ref('http://localhost:8000')
+
 const starFive = ref(5)
 
 const settings = reactive({
@@ -86,10 +88,7 @@ const breakpoints = reactive({
 })
 
 const GetFeaturedProducts = () => {
-  store.GetFeaturedProducts().then((response) => {
-    const data = response.data
-    products.value = data
-  })
+  store.GetFeaturedProducts()
 }
 
 onMounted(() => {

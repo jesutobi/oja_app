@@ -28,7 +28,7 @@ const getProductDetail = (id) => {
     const data = response.data
 
     // Category.value = JSON.parse(data.product_category)
-    // console.log('cat', Category.value)
+    // ('cat', Category.value)
   })
 }
 

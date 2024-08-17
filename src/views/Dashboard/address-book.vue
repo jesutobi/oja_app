@@ -51,8 +51,7 @@ const store = useShippingAddressStore()
 
 const GetShippingAdress = () => {
   store.GetShippingAdress().then((response) => {
-    AddressData.value = response.data.data
-    console.log(response)
+    AddressData.value = response.data.data(response)
   })
 }
 

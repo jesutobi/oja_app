@@ -19,11 +19,11 @@
         </div>
       </div>
       <!-- sign in with google -->
-      <div class="my-2">
+      <!-- <div class="my-2">
         <GoogleButtons>
           <span class="font2 px-2">Register with Google</span>
         </GoogleButtons>
-      </div>
+      </div> -->
       <!-- input space -->
       <div>
         <form @submit="register">

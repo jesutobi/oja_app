@@ -14,7 +14,7 @@
     <!-- product card -->
 
     <Carousel :settings="settings" :breakpoints="breakpoints" :wrap-around="true">
-      <Slide v-for="(data, index) in product_category" :key="index" class="py-[1rem]">
+      <Slide v-for="(data, index) in category" :key="index" class="py-[1rem]">
         <router-link
           :to="`/Product/category/${data.id}`"
           class="hover:shadow-lg hover:bg-white hover:rounded-lg p-2 w-full relative group"
@@ -55,10 +55,12 @@ import 'vue3-carousel/dist/carousel.css'
 import ProductCard from '../slots/productCard.vue'
 import { useProductCategory } from '@/stores/product_category'
 import { onMounted, ref, reactive, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
 
 const store = useProductCategory()
+const { category } = storeToRefs(store)
 const product_category = ref([])
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const isLoaded = ref(false)
 
 const settings = reactive({
@@ -98,10 +100,7 @@ const breakpoints = reactive({
 })
 
 const GetProductCategory = () => {
-  store.getProductCategory().then((response) => {
-    product_category.value = response.data.categories
-    console.log(response)
-  })
+  store.getProductCategory()
 }
 
 const onImageLoad = () => {
@@ -109,7 +108,10 @@ const onImageLoad = () => {
 }
 
 onMounted(() => {
-  onImageLoad(), GetProductCategory()
+  GetProductCategory()
+})
+onBeforeMount(() => {
+  onImageLoad()
 })
 </script>
 <style scoped>

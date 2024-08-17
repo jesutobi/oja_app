@@ -51,6 +51,8 @@
         </div>
       </div>
     </div>
+    <!-- booking app -->
+    <div></div>
   </div>
 </template>
 
@@ -66,7 +68,7 @@ import HeroSection from '@/components/Shop_by_category/hero_category_section.vue
 import ProductCard from '@/components/Products/product_card.vue'
 import { useSearchStore } from '@/stores/search.js'
 
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const route = useRoute()
 const searchStore = useSearchStore()
 const { SearchResult } = storeToRefs(searchStore)

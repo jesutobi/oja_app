@@ -11,7 +11,7 @@ export const usePaymentStore = defineStore(
 
         return response
       } catch (error) {
-        console.error('error:', error)
+        'error:', error
         throw error
       }
     }

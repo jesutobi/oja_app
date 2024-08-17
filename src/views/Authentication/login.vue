@@ -19,11 +19,11 @@
         </div>
       </div>
       <!-- sign in with google -->
-      <div class="my-2">
+      <!-- <div class="my-2">
         <GoogleButtons>
           <span class="font2 px-2">Sign In with Google</span>
         </GoogleButtons>
-      </div>
+      </div> -->
 
       <!-- input space -->
       <div>
@@ -192,8 +192,7 @@ const login = handleSubmit((values) => {
       }, 2000)
     })
     .catch((error) => {
-      errorsInfo.value = error
-      console.log(errorsInfo)
+      errorsInfo.value = error(errorsInfo)
       setTimeout(() => {
         toast.update(id, {
           render: 'The Provided credentials are not correct',

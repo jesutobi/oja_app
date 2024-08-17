@@ -149,7 +149,7 @@ import ProductCard from '@/components/Products/product_card.vue'
 import ProductGrid from '@/components/slots/productCard.vue'
 import { useSearchStore } from '@/stores/search.js'
 
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const route = useRoute()
 const productCategoryStore = useProductCategory()
 const { ProductsByCategory, ProductCategoryInfo, category } = storeToRefs(productCategoryStore)

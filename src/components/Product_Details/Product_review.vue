@@ -141,8 +141,7 @@ const [rating, ratingAttrs] = defineField('rating')
 
 const PostReview = handleSubmit((values) => {
   const id = toast.loading('Uploading...')
-  const prodcutId = JSON.stringify(props.Data)
-  console.log(values)
+  const prodcutId = JSON.stringify(props.Data)(values)
   store
     .PostReviews(values, prodcutId)
     .then((msg) => {

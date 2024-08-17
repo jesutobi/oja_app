@@ -16,7 +16,7 @@ export const useShippingAddressStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -27,7 +27,7 @@ export const useShippingAddressStore = defineStore(
         return response
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -37,14 +37,12 @@ export const useShippingAddressStore = defineStore(
         JSON.stringify(payload.state)
         JSON.stringify(payload.city)
 
-        const response = await axiosClient.post(`add_shipping_address`, payload)
-
-        console.log('add', response)
+        const response = await axiosClient.post(`add_shipping_address`, payload)('add', response)
 
         return response
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -56,7 +54,7 @@ export const useShippingAddressStore = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -67,7 +65,7 @@ export const useShippingAddressStore = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -78,7 +76,7 @@ export const useShippingAddressStore = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }
@@ -89,7 +87,7 @@ export const useShippingAddressStore = defineStore(
         return response.data
       } catch (error) {
         // Handle errors
-        console.error('Failed:', error)
+
         throw error
       }
     }

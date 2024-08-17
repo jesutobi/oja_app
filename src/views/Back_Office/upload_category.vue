@@ -120,10 +120,12 @@ const submitForm = async () => {
   formData.append('card_image', form.value.card_image)
 
   try {
-    const response = await axiosClient.post('/UploadCategory', formData)
-    console.log('Form submitted successfully', response.data)
+    const response = await axiosClient.post('/UploadCategory', formData)(
+      'Form submitted successfully',
+      response.data
+    )
   } catch (error) {
-    console.error('Error submitting form:', error)
+    'Error submitting form:', error
   }
 }
 </script>

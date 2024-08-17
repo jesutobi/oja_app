@@ -10,7 +10,7 @@ export const useResetPasswordStore = defineStore('reset_password', () => {
       return response
     } catch (error) {
       // Handle errors
-      console.error('logout failed:', error)
+      'logout failed:', error
       throw error
     }
   }
@@ -20,7 +20,7 @@ export const useResetPasswordStore = defineStore('reset_password', () => {
       return response
     } catch (error) {
       // Handle errors
-      console.error('reset failed:', error)
+      'reset failed:', error
       throw error
     }
   }

@@ -39,6 +39,7 @@ const props = defineProps({
 const productCategoryStore = useProductCategory()
 const { ProductsByCategory } = storeToRefs(productCategoryStore)
 const disable = ref('#9e9e9e')
+const active = ref('#00000')
 const current_page_data = ref(props.Data.current_page)
 const searchStore = useSearchStore()
 
@@ -65,6 +66,8 @@ const color = computed(() => {
 const increase = computed(() => {
   if (props.Data.current_page === props.Data.last_page) {
     return disable.value
+  } else if (props.Data.current_page !== props.Data.last_page) {
+    return active.value
   }
 })
 </script>

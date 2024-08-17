@@ -65,7 +65,7 @@
               <button
                 @click="BuyNow(item.product)"
                 type="submit"
-                class="bg-black hover:bg-yellow-500 py-1 px-2 text-white rounded text-xs"
+                class="bg-black py-1 px-2 text-white rounded text-xs"
               >
                 <span class="">Buy now</span>
               </button>
@@ -100,13 +100,12 @@ const userstore = useUserStore()
 const { BuyNow } = useBuyNow()
 const saveStore = useSavedStore()
 const { get_saved_data } = storeToRefs(saveStore)
-const baseURL = ref('http://localhost:8000')
+const baseURL = ref('https://api.ojastore.com.ng')
 const { formatPrice } = useFormatPrice()
 const { userInfo, token } = storeToRefs(userstore)
 
 watch(get_saved_data, (newData, oldData) => {
-  get_saved_data.value = newData
-  console.log('Saved data changed:', newData)
+  get_saved_data.value = newData('Saved data changed:', newData)
 })
 </script>
 <style scoped></style>
