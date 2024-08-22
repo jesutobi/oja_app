@@ -1,10 +1,22 @@
-[
-  {
-    "icon": "sale-ad.png",
-    "link": "/dashboard/my-account"
-  },
-  {
-    "icon": "sale-ad.png",
-    "link": "/dashboard/my-account"
-  }
-]
+{
+  "box1": [
+    {
+      "icon": "gad-2.jpg",
+      "link": "/Product/category/1"
+    },
+    {
+      "icon": "gad-01.png",
+      "link": "/Product/category/1"
+    }
+  ],
+  "hero": [
+    {
+      "icon": "sale-ad4.png",
+      "link": "/Product/category/3"
+    },
+    {
+      "icon": "sale-ad5.png",
+      "link": "/Product/category/3"
+    }
+  ]
+}

@@ -23,7 +23,7 @@
             </div>
           </div>
           <!-- socials -->
-          <div class="sm:col-span-4 pt-4 sm:pb-0 pb-[4rem] sm:py-0">
+          <div class="sm:col-span-4 max-[639px]: pt-4 sm:pb-0 max-[639px]:py-2 pb-[4rem] sm:py-0">
             <!-- address -->
             <div class="text-sm text-gray-400">
               <div class="text-white">
@@ -41,7 +41,7 @@
             </div>
           </div>
           <!-- socials -->
-          <div class="sm:col-span-4 py-4 sm:py-0">
+          <div class="sm:col-span-4 py-4 max-[639px]:mb-[2rem] sm:py-0">
             <!-- address -->
             <div class="text-sm text-gray-400">
               <div class="text-white">

@@ -87,11 +87,28 @@
             <!-- header -->
             <div>
               <DashboardCardHeader class="p-1">
-                <div class="flex justify-between">
+                <div class="flex items-center justify-between">
                   <div>
-                    <span class="font2">Products</span>
+                    <div>
+                      <span class="font2">Products</span>
+                    </div>
+                    <div class="text-xs min-[768px]:hidden">
+                      <span>
+                        {{
+                          (ProductsByCategory.current_page - 1) * ProductsByCategory.per_page + 1
+                        }}
+                        -
+                        {{
+                          Math.min(
+                            ProductsByCategory.current_page * ProductsByCategory.per_page,
+                            ProductsByCategory.total
+                          )
+                        }}
+                        of {{ ProductsByCategory.total }} Results
+                      </span>
+                    </div>
                   </div>
-                  <div class="productFont text-sm">
+                  <div class="productFont text-sm max-[768px]:hidden">
                     <span>
                       Showing
                       {{ (ProductsByCategory.current_page - 1) * ProductsByCategory.per_page + 1 }}
@@ -104,6 +121,9 @@
                       }}
                       of {{ ProductsByCategory.total }} Results
                     </span>
+                  </div>
+                  <div @click="opensidebar" class="cursor-pointer min-[768px]:hidden">
+                    <Hamburger />
                   </div>
                 </div>
               </DashboardCardHeader>
@@ -132,11 +152,17 @@
           <!-- no data -->
         </div>
       </div>
+      <!-- sidebar -->
+    </div>
+    <div v-if="sidebar" class="fixed z-40 right-0 top-0 bottom-0">
+      <SideBar @closeSideBar="closesidebar" class="animate__animated animate__slideInRight" />
     </div>
   </div>
 </template>
 
 <script setup>
+import SideBar from '@/components/navigation/sidebarCategoryController.vue'
+import Hamburger from '@/components/navigation/hamburger.vue'
 import NoData from '@/components/extras/noData.vue'
 import Pagination from '@/components/extras/pagination.vue'
 import Filter from '@/json/filter.json'
@@ -156,6 +182,7 @@ const productCategoryStore = useProductCategory()
 const { ProductsByCategory, ProductCategoryInfo, category } = storeToRefs(productCategoryStore)
 const selectedCategory = null
 const searchValue = ref('')
+const sidebar = ref(false)
 // const selectedValue = ref()
 const searchStore = useSearchStore()
 
@@ -169,6 +196,12 @@ const getAllProducts = () => {
 
 const searchBytext = () => {
   searchStore.GetProductsBySearch(searchValue.value)
+}
+const opensidebar = () => {
+  sidebar.value = true
+}
+const closesidebar = () => {
+  sidebar.value = false
 }
 
 // Watch for changes in route parameters and fetch new data
