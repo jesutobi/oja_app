@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import AuthLayout from '../components/layouts/AuthLayout.vue'
 import DefaultLayout from '../components/layouts/DefaultLayout.vue'
 import DashboardLayout from '../components/layouts/DashboardLayout.vue'
 // import Home from '../views/index.vue'
 import { useUserStore } from '../stores/Authentication'
 import { useVerifyEmailStore } from '../stores/Email_verification'
+import { useUpdateUserStore } from '../stores/Update_user'
 import { storeToRefs } from 'pinia'
 
 const router = createRouter({
@@ -213,14 +215,21 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const store = useUserStore()
+  const updatestore = useUpdateUserStore()
   const verifyStore = useVerifyEmailStore()
   const { userInfo, token } = storeToRefs(store)
+  const { AuthResponse } = storeToRefs(updatestore)
 
   if (to.meta.requiresAuth && !token.value) {
     next({ name: 'Login' })
   } else if (token.value && to.meta.isGuest) {
     next({ name: 'home' })
-  } else if (to.meta.requiresAuth && token.value && userInfo.value.verified_at == null) {
+  } else if (
+    to.meta.requiresAuth &&
+    token.value &&
+    AuthResponse.value.verified_at == null &&
+    userInfo.value.verified_at == null
+  ) {
     next({ name: 'notVerified' })
   } else {
     next()

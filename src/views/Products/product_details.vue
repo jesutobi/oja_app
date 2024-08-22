@@ -24,12 +24,7 @@ const route = useRoute()
 // }
 
 const getProductDetail = (id) => {
-  store.GetProductDetail(id).then((response) => {
-    const data = response.data
-
-    // Category.value = JSON.parse(data.product_category)
-    // ('cat', Category.value)
-  })
+  store.GetProductDetail(id)
 }
 
 watch(

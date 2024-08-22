@@ -46,15 +46,18 @@
               <span> &#8358; {{ formatPrice(props.Data.product_price) }}</span>
             </div>
           </div>
+
           <div class="sm:text-[0.75rem] text-[0.8rem] text-end">
             <!-- category -->
-            <div class="font2">
-              <span>{{ truncateText(props.Data.product_category.category_title, 7) }}</span>
-            </div>
-            <!-- price -->
+            <!-- <div class="font2">
+              <span>{{
+                truncateText(JSON.parse(props.Data.product_category).category_title, 7)
+              }}</span>
+            </div> -->
+            <!-- price
             <div class="productFont">
               <span>star</span>
-            </div>
+            </div> -->
           </div>
         </div>
       </router-link>

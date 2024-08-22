@@ -33,7 +33,7 @@
               <!-- subnit button -->
 
               <div class="py-1">
-                <router-link to="/">
+                <router-link @click="refreshUser" to="/">
                   <AuthButtons class="w-[50%] pt-[2rem]">
                     <span>Continue </span>
                   </AuthButtons>
@@ -55,6 +55,7 @@ import Logo from '../../components/icons/Logo.vue'
 import AuthFormGrid from '../../components/slots/AuthFormGrid.vue'
 import { useVerifyEmailStore } from '@/stores/Email_verification'
 import { useUserStore } from '@/stores/Authentication'
+import { useUpdateUserStore } from '@/stores/Update_user'
 import { useRoute, useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
@@ -66,6 +67,7 @@ const userStore = useUserStore()
 const successMsg = ref('')
 const errorsInfo = ref('')
 const { userInfo } = storeToRefs(userStore)
+const updatestore = useUpdateUserStore()
 
 const user_verification_data = {
   token: route.query.token,
@@ -73,6 +75,10 @@ const user_verification_data = {
 }
 
 const user = userInfo.value.email
+
+const refreshUser = () => {
+  updatestore.GetUser()
+}
 
 const verifyEmail = (user_verification_data) => {
   const id = toast.loading('Verifying..')

@@ -26,37 +26,37 @@
           </div>
         </DashboardCardHeader>
 
-        <div v-if="user_data" class="text-sm md:p-3 p-2">
+        <div v-if="AuthResponse" class="text-sm md:p-3 p-2">
           <div class="flex items-center py-2">
             <div>
               <span>Full name :</span>
             </div>
             <div class="px-1 text-gray-500">
-              <span> {{ user_data.first_name }} {{ user_data.last_name }}</span>
+              <span> {{ AuthResponse.first_name }} {{ AuthResponse.last_name }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
             <div><span> Email :</span></div>
             <div class="px-1 text-gray-500">
-              <span>{{ user_data.email }}</span>
+              <span>{{ AuthResponse.email }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
             <div><span> Phone number :</span></div>
             <div class="px-1 text-gray-500">
-              <span>{{ user_data.phone_number }}</span>
+              <span>{{ AuthResponse.phone_number }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
             <div><span> State :</span></div>
-            <div v-if="state" class="px-1 text-gray-500">
-              <span>{{ state.state }}</span>
+            <div class="px-1 text-gray-500">
+              <span>{{ JSON.parse(AuthResponse.state).state }}</span>
             </div>
           </div>
           <div class="flex items-center py-2">
             <div><span>Home address :</span></div>
             <div class="px-1 text-gray-500">
-              <span>{{ user_data.home_address }}</span>
+              <span>{{ AuthResponse.home_address }}</span>
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@
           </div>
         </DashboardCardHeader>
 
-        <div v-if="AddressData === null" class="">
+        <div v-if="DefaultAddress === null" class="">
           <NoData :text="`Go to your Address Book to update your default shipping Address`" />
         </div>
         <div v-else class="text-sm md:p-3 p-2">
@@ -86,32 +86,32 @@
                 <span>Recipient : </span>
               </div>
               <div class="px-1 text-gray-500">
-                <span>{{ AddressData.first_name + ' ' + AddressData.last_name }}</span>
+                <span>{{ DefaultAddress.first_name + ' ' + DefaultAddress.last_name }}</span>
               </div>
             </div>
 
             <div class="flex items-center py-2">
               <div><span> Phone number :</span></div>
               <div class="px-1 text-gray-500">
-                <span>{{ AddressData.phone_number }}</span>
+                <span>{{ DefaultAddress.phone_number }}</span>
               </div>
             </div>
             <div class="flex items-center py-2">
               <div><span> State :</span></div>
-              <div v-if="addressState" class="px-1 text-gray-500">
-                <span>{{ JSON.parse(addressState).state }}</span>
+              <div class="px-1 text-gray-500">
+                <span>{{ JSON.parse(DefaultAddress.state).state }}</span>
               </div>
             </div>
             <div class="flex items-center py-2">
               <div><span> Lga :</span></div>
-              <div v-if="addressCity" class="px-1 text-gray-500">
-                <span>{{ JSON.parse(addressCity) }}</span>
+              <div class="px-1 text-gray-500">
+                <span>{{ JSON.parse(DefaultAddress.city) }}</span>
               </div>
             </div>
             <div class="py-2">
               <div>
                 <span>Home address :</span
-                ><span class="px-1 text-gray-500">{{ AddressData.delivery_address }}</span>
+                ><span class="px-1 text-gray-500">{{ DefaultAddress.delivery_address }}</span>
               </div>
             </div>
           </div>
@@ -134,38 +134,19 @@ import Title from '@/components/Dashboard/DashboardTitles.vue'
 import { ref, onMounted, computed } from 'vue'
 import { useShippingAddressStore } from '@/stores/shipping_address'
 import { useUpdateUserStore } from '@/stores/Update_user'
+import { storeToRefs } from 'pinia'
 
-const user_data = ref({})
-const state = ref('')
-const addressState = ref('')
-const addressCity = ref('')
 const store = useShippingAddressStore()
 const userStore = useUpdateUserStore()
-const AddressData = ref([])
+const { DefaultAddress } = storeToRefs(store)
+const { AuthResponse } = storeToRefs(userStore)
 
-const GetShippingAdress = () => {
-  store.GetShippingAdress().then((response) => {
-    AddressData.value = response.data.data
-    state.value = JSON.parse(response.data.state)(response)
-  })
-}
 const getDefaultAddress = () => {
-  store.GetDefaultAdress().then((response) => {
-    AddressData.value = response.data.data
-    addressState.value = response.data.data.state(addressState.value)
-    addressCity.value = response.data.data.city
-  })
-}
-
-const getData = async () => {
-  userStore.GetUser().then((response) => {
-    user_data.value = response.data
-    state.value = JSON.parse(response.data.state)('nirv', response)
-  })
+  store.GetDefaultAdress()
 }
 
 onMounted(() => {
-  getData(), GetShippingAdress(), getDefaultAddress()
+  getDefaultAddress()
 })
 </script>
 

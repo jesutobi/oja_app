@@ -32,7 +32,7 @@
               </div>
               <div class="flex items-center text-xs p-[0.6rem] hover:text-gray-400 cursor-pointer">
                 <div>
-                  <input type="radio" />
+                  <input @click="getAllProducts" type="radio" />
                 </div>
                 <div class="px-2">
                   <span>All</span>
@@ -49,6 +49,7 @@
                     @change="fetchProducts(item.id)"
                     type="radio"
                     :value="item.id"
+                    :name="'category'"
                   />
                 </div>
                 <div class="px-2">
@@ -160,6 +161,10 @@ const searchStore = useSearchStore()
 
 const fetchProducts = (id) => {
   productCategoryStore.getProductsByCategory(id)
+}
+const getAllProducts = () => {
+  productCategoryStore.getProductCategory()
+  productCategoryStore.GetAllProducts()
 }
 
 const searchBytext = () => {

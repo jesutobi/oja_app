@@ -9,32 +9,40 @@
   "Socials": [
     {
       "name": "Instagram",
-      "link": "https://www.instagram.com/jesutobbi/"
+      "link": ""
     },
     {
       "name": "linkedin",
-      "link": "https://www.linkedin.com/in/jesutobi-joseph-191557167/"
+      "link": ""
     },
     {
-      "name": "Resume",
-      "link": "https://docs.google.com/document/d/1KET1BVHJihs5EdxMPG9DLenHrvGPHg2QlhvvMQRxLhM/edit?usp=sharing"
-    },
-    {
-      "name": "Portfolio",
-      "link": "https://jesutobi-joseph.netlify.app/"
+      "name": "Youtube",
+      "link": ""
     }
   ],
   "Documentation": [
     {
-      "name": "Github",
-      "link": "https://github.com/jesutobi"
-    },
-    {
-      "name": "Postman Documentation",
+      "name": "About us",
       "link": ""
     },
     {
-      "name": "Read More about the Project",
+      "name": "Oja careers",
+      "link": ""
+    },
+    {
+      "name": "Privacy policy",
+      "link": ""
+    },
+    {
+      "name": "Help center",
+      "link": ""
+    },
+    {
+      "name": "FAQs",
+      "link": ""
+    },
+    {
+      "name": "Terms and conditions",
       "link": ""
     }
   ]

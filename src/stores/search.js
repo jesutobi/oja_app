@@ -26,6 +26,7 @@ export const useSearchStore = defineStore(
         throw error
       }
     }
+
     const NavSearch = async (value, value2) => {
       try {
         const productCategoryStore = useProductCategory()
@@ -45,6 +46,7 @@ export const useSearchStore = defineStore(
 
     return {
       GetProductsBySearch,
+
       NavSearch,
       SearchResult
     }

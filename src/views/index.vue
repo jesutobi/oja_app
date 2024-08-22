@@ -1,7 +1,7 @@
 <template>
   <div class="overflow-hidden">
     <div class="container mx-auto"><HeroSection /></div>
-    <div class="container mx-auto overflow-hidden"><FeaturedProducts /></div>
+    <!-- <div class="container mx-auto overflow-hidden"><FeaturedProducts /></div> -->
     <div class="container mx-auto overflow-hidden"><NewArrival /></div>
     <div class="container mx-auto overflow-hidden"><Products1 /></div>
     <div class="container mx-auto overflow-hidden"><Products2 /></div>

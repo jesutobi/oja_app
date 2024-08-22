@@ -8,7 +8,7 @@ export const useProduct = defineStore(
   () => {
     // Define your state here
     const products = ref({
-      featured_products: [],
+      featured_products: {},
       new_arrivals_products: []
     })
 
@@ -21,7 +21,7 @@ export const useProduct = defineStore(
       try {
         const response = await axiosClient.get(`get_featured_product`)
 
-        FeaturedProduct.value = response // Access the data property
+        FeaturedProduct.value = response.data // Access the data property
 
         return response
       } catch (error) {

@@ -23,7 +23,7 @@ export const useShippingAddressStore = defineStore(
     const GetDefaultAdress = async () => {
       try {
         const response = await axiosClient.get(`default-address`)
-        DefaultAddress.value = response
+        DefaultAddress.value = response.data.data
         return response
       } catch (error) {
         // Handle errors

@@ -1,24 +1,24 @@
 [
   {
     "text": "My Account",
-    "icon": "../../public/icon/account.svg",
+    "icon": "/public/icon/account.svg",
     "link": "/dashboard/my-account"
   },
   {
     "text": "Edit Profile",
-    "icon": "../../public/icon/edit.svg",
+    "icon": "/public/icon/edit.svg",
     "link": "/dashboard/edit-profile"
   },
-  { "text": "Orders", "icon": "../../public/icon/order.svg", "link": "/dashboard/orders" },
+  { "text": "Orders", "icon": "/public/icon/order.svg", "link": "/dashboard/orders" },
 
   {
     "text": "Saved Items",
-    "icon": "../../public/icon/heart.svg",
+    "icon": "/public/icon/heart.svg",
     "link": "/dashboard/saved-items"
   },
   {
     "text": "Address Book",
-    "icon": "../../public/icon/address-book.svg",
+    "icon": "/public/icon/address-book.svg",
     "link": "/dashboard/address-book"
   }
 ]

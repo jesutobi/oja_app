@@ -15,10 +15,28 @@
                 <span>Abuja, Nigeria </span>
               </div>
               <div class="py-2 hover:text-yellow-400">
-                <a href="mailto:Jesutobit@gmail.com"> <span>Jesutobit@gmail.com</span></a>
+                <a href="mailto:Jesutobit@gmail.com"> <span>oja@gmail.com</span></a>
               </div>
               <div class="py-2 hover:text-yellow-400">
                 <span>+234-(0)8143400267</span>
+              </div>
+            </div>
+          </div>
+          <!-- socials -->
+          <div class="sm:col-span-4 pt-4 sm:pb-0 pb-[4rem] sm:py-0">
+            <!-- address -->
+            <div class="text-sm text-gray-400">
+              <div class="text-white">
+                <span>About Oja</span>
+              </div>
+              <div
+                v-for="(item, index) in FooterText.Documentation"
+                :key="index"
+                class="py-2 hover:text-yellow-400"
+              >
+                <a :href="item.link" target="_blank">
+                  <span>{{ item.name }} </span></a
+                >
               </div>
             </div>
           </div>
@@ -31,24 +49,6 @@
               </div>
               <div
                 v-for="(item, index) in FooterText.Socials"
-                :key="index"
-                class="py-2 hover:text-yellow-400"
-              >
-                <a :href="item.link" target="_blank">
-                  <span>{{ item.name }} </span></a
-                >
-              </div>
-            </div>
-          </div>
-          <!-- socials -->
-          <div class="sm:col-span-4 pt-4 sm:pb-0 pb-[4rem] sm:py-0">
-            <!-- address -->
-            <div class="text-sm text-gray-400">
-              <div class="text-white">
-                <span>Documentation</span>
-              </div>
-              <div
-                v-for="(item, index) in FooterText.Documentation"
                 :key="index"
                 class="py-2 hover:text-yellow-400"
               >

@@ -17,7 +17,7 @@
       </Slide>
 
       <template #addons>
-        <div class="max-[768px]:block max-[768px]:hidden lg:hidden">
+        <div class="max-[768px]:hidden lg:hidden">
           <Navigation />
         </div>
       </template>
@@ -57,10 +57,12 @@ defineProps({
   Data: Object
 })
 
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref, onMounted, watch } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const baseURL = ref('https://api.ojastore.com.ng')
 const currentSlide = ref(0)
 const name = ref('Gallery')

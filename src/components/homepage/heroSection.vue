@@ -4,13 +4,48 @@
       <!-- product -->
       <div class="xl:col-span-3 max-[1189px]:hidden">
         <div class="max-[1280px]:grid grid-cols-6 gap-[3rem] max-[1280px]:my-[3rem]">
-          <div class="bg-black max-[1280px]:h-[23rem] xl:h-[17rem] col-span-3 mb-[3rem]">sdsf</div>
-          <div class="bg-black max-[1280px]:h-[23rem] xl:h-[17rem] col-span-3">sdsf</div>
+          <div class="col-span-3 mb-[1rem] shadow-md">
+            <Carousel :autoplay="3000" :wrap-around="true">
+              <Slide v-for="(img, index) in Images" :key="index">
+                <!-- <div class="carousel__item"> -->
+
+                <img
+                  @load="onImageLoad"
+                  loading="lazy"
+                  :src="`/public/images/${img.icon}`"
+                  class="max-[1280px]:h-[23rem] xl:h-[18rem] object-fill w-full"
+                  alt=""
+                  :class="{
+                    'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                  }"
+                />
+                <!-- </div> -->
+              </Slide>
+            </Carousel>
+          </div>
+          <div class="col-span-3 shadow-lg">
+            <Carousel :autoplay="2000" :wrap-around="true">
+              <Slide v-for="slide in 4" :key="slide">
+                <!-- <div class="carousel__item"> -->
+                <img
+                  @load="onImageLoad"
+                  loading="lazy"
+                  src="@/assets/images/glassy.png"
+                  class="max-[1280px]:h-[23rem] xl:h-[18rem] object-fill w-full"
+                  alt=""
+                  :class="{
+                    'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                  }"
+                />
+                <!-- </div> -->
+              </Slide>
+            </Carousel>
+          </div>
         </div>
       </div>
       <!-- hero advert -->
       <div class="col-span-12 xl:col-span-9">
-        <div class="relative">
+        <div class="relative shadow-md">
           <div class="">
             <img
               @load="onImageLoad"
@@ -46,6 +81,7 @@
             </div>
             <div class="my-[3rem] max-[640px]:my-[0rem] animate-slide-up delay-400">
               <button
+                @click="getAllProducts"
                 class="border-black hover:bg-black sm:w-56 w-[8rem] text-[0.7rem] hover:text-white border-2 p-2 sm:text-base"
               >
                 <span>SHOP NOW</span>
@@ -58,12 +94,27 @@
   </div>
 </template>
 <script setup>
+import Images from '@/json/hero_image.json'
+import { Carousel, Navigation, Slide } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
 import { onMounted, ref } from 'vue'
+import { useProductCategory } from '@/stores/product_category.js'
+import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
+const route = useRouter()
+const name = ref('Autoplay')
+const productCategoryStore = useProductCategory()
+const { ProductsByCategory } = storeToRefs(productCategoryStore)
 const isLoaded = ref(false)
 
 const onImageLoad = () => {
   isLoaded.value = true
+}
+const getAllProducts = () => {
+  productCategoryStore.getProductCategory()
+  productCategoryStore.GetAllProducts()
+  route.push({ name: 'shop_by_category', params: { id: 'shop-now' } })
 }
 
 onMounted(() => {

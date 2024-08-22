@@ -23,6 +23,17 @@ export const useProductCategory = defineStore(
         throw error
       }
     }
+    const GetAllProducts = async () => {
+      try {
+        const response = await axiosClient.get(`get_all_products`)
+        ProductsByCategory.value = response.data.products
+        return response
+      } catch (error) {
+        // Handle errors
+        'error:', error
+        throw error
+      }
+    }
     const getProductsByCategory = async (payload) => {
       try {
         const response = await axiosClient.get(`get_Products_By_Category/${payload}`)
@@ -44,6 +55,7 @@ export const useProductCategory = defineStore(
       ProductsByCategory,
       ProductCategoryInfo,
       beautyProducts,
+      GetAllProducts,
       art
     }
   },

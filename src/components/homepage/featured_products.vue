@@ -16,7 +16,7 @@
       <!-- product card -->
 
       <Carousel :settings="settings" :breakpoints="breakpoints">
-        <Slide v-for="(product, index) in FeaturedProduct.data.data" :key="index" class="py-[1rem]">
+        <Slide v-for="(product, index) in FeaturedProduct?.data" :key="index" class="py-[1rem]">
           <ProductCard :Data="product" class="w-full" />
         </Slide>
 
