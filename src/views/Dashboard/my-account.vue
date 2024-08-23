@@ -99,13 +99,13 @@
             <div class="flex items-center py-2">
               <div><span> State :</span></div>
               <div class="px-1 text-gray-500">
-                <span>{{ JSON.parse(DefaultAddress.state).state }}</span>
+                <span>{{ parseJsons(DefaultAddress.state)?.state }}</span>
               </div>
             </div>
             <div class="flex items-center py-2">
               <div><span> Lga :</span></div>
               <div class="px-1 text-gray-500">
-                <span>{{ JSON.parse(DefaultAddress.city) }}</span>
+                <span>{{ parseJsons(DefaultAddress.city) }}</span>
               </div>
             </div>
             <div class="py-2">
@@ -145,8 +145,22 @@ const getDefaultAddress = () => {
   store.GetDefaultAdress()
 }
 
+const getUser = () => {
+  userStore.GetUser()
+}
+
+const parseJsons = (data) => {
+  try {
+    return JSON.parse(data)
+  } catch (e) {
+    return null
+  }
+}
+
 onMounted(() => {
   getDefaultAddress()
+  parseJsons()
+  getUser()
 })
 </script>
 

@@ -9,7 +9,7 @@ export const useUserStore = defineStore(
   'user',
   () => {
     const router = useRouter()
-    const userInfo = ref('')
+    const userInfo = ref({})
     const token = ref('')
     // const user = ref({
     //   userInfo: JSON.parse(localStorage.getItem('USER')),
@@ -54,7 +54,7 @@ export const useUserStore = defineStore(
       try {
         // Send logout request
         const response = await axiosClient.post('/logout')
-        localStorage.clear()
+
         token.value = null
         userInfo.value = null
 
@@ -68,6 +68,7 @@ export const useUserStore = defineStore(
         router.push({
           name: 'home'
         })
+        localStorage.clear()
         return response
       } catch (error) {
         toast(error, {
