@@ -50,17 +50,17 @@
         <Carousel :autoplay="4000" :wrap-around="true">
           <Slide v-for="(img, index) in Images.hero" :key="index">
             <!-- <div class="carousel__item"> -->
-
-            <img
-              @load="onImageLoad"
-              loading="lazy"
-              :src="`/images/${img.icon}`"
-              class="xl:h-[37rem] max-[568px]:h-[17rem] object-cover w-full"
-              alt=""
-              :class="{
-                'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
-              }"
-            />
+            <router-link :to="img.link" class="w-full">
+              <img
+                @load="onImageLoad"
+                loading="lazy"
+                :src="`/images/${img.icon}`"
+                class="xl:h-[37rem] max-[568px]:h-[17rem] object-cover w-full"
+                alt=""
+                :class="{
+                  'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+                }"
+            /></router-link>
             <!-- </div> -->
           </Slide>
         </Carousel>
