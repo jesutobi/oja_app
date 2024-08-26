@@ -55,7 +55,7 @@
       <ProdButton @click="BuyNow(productDetail)" :Width="`w-[100%]`" class="w-[40%] md:w-[30%]"
         >Buy Now</ProdButton
       >
-      <!-- <SaveButton :Data="productDetail" class="px-2" /> -->
+      <SaveButton :Data="productDetail" class="px-2" />
     </div>
 
     <!-- product features-->
@@ -68,11 +68,9 @@
         <ul class="list-disc p-2" v-for="(data, index) in parseData(productFeature)" :key="index">
           <li>
             <div class="flex items-center">
-              <div class="font2">
-                <span>{{ data.key.feature_title }}</span>
-              </div>
               <div>
-                <span> : {{ data.value }}</span>
+                <span class="font2">{{ data.key.feature_title }}</span
+                ><span class="px-1 text-gray-500"> : {{ data.value }}</span>
               </div>
             </div>
           </li>
@@ -82,7 +80,7 @@
   </div>
 </template>
 <script setup>
-// import SaveButton from '@/components/extras/saveButton.vue'
+import SaveButton from '@/components/extras/saveButton.vue'
 import QuantityChange from '@/components/extras/quantityChange.vue'
 import ProdButton from '../slots/productButtons.vue'
 import { ref, reactive } from 'vue'
@@ -91,12 +89,16 @@ import { useFormatPrice } from '../../composables/formatPrice'
 import { useBuyNow } from '@/composables/buyNow.js'
 import { useProduct } from '@/stores/product'
 import { storeToRefs } from 'pinia'
+import { useSavedStore } from '@/stores/save_products.js'
+import { onMounted, watch } from 'vue'
 
 defineProps({
   Data: Object,
   Feature: Array
 })
 
+const saveStore = useSavedStore()
+const { get_saved_data } = storeToRefs(saveStore)
 const storedetail = useProduct()
 const { productDetail, productFeature } = storeToRefs(storedetail)
 const store = useCartStore()
@@ -134,5 +136,13 @@ const copyLink = () => {
 const parseData = (data) => {
   return JSON.parse(data)
 }
+
+watch(
+  () => get_saved_data.value,
+  () => {
+    // data.value.product_id = props.Data.id
+    saveStore.get_save_product()
+  }
+)
 </script>
 <style scoped></style>

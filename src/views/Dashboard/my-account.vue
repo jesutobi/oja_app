@@ -54,9 +54,9 @@
             </div>
           </div>
           <div class="flex items-center py-2">
-            <div><span>Home address :</span></div>
-            <div class="px-1 text-gray-500">
-              <span>{{ AuthResponse.home_address }}</span>
+            <div>
+              <span>Home address :</span>
+              <span class="px-1 text-gray-500">{{ AuthResponse.home_address }}</span>
             </div>
           </div>
         </div>
