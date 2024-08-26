@@ -1,7 +1,7 @@
 <template>
   <div>
     <Carousel id="gallery" :items-to-show="1" :wrap-around="false" v-model="currentSlide">
-      <Slide v-for="(data, index) in Data.images" :key="index" class="md:w-full sm:p-2">
+      <Slide v-for="(data, index) in productDetail.images" :key="index" class="md:w-full sm:p-2">
         <div class="carousel__item w-full">
           <img
             loading="lazy"
@@ -32,7 +32,7 @@
       ref="carousel"
       :breakpoints="breakpoints"
     >
-      <Slide v-for="(data, index) in Data.images" :key="index">
+      <Slide v-for="(data, index) in productDetail.images" :key="index">
         <div class="carousel__item my-2" @click="slideTo(index - 1)">
           <img
             loading="lazy"
@@ -56,12 +56,15 @@
 defineProps({
   Data: Object
 })
-
+import { useProduct } from '@/stores/product'
 import { reactive, ref, onMounted, watch } from 'vue'
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import { useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
+const store = useProduct()
+const { productDetail } = storeToRefs(store)
 const route = useRoute()
 const baseURL = ref('https://api.ojastore.com.ng')
 const currentSlide = ref(0)

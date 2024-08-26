@@ -37,7 +37,7 @@ const route = useRoute()
 const id = ref(route.params.id)
 
 const getSimilarProduct = (id) => {
-  store.GetSimilarProducts(id)
+  store.GetSimilarProducts(route.params.id)
 }
 
 watch(

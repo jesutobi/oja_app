@@ -16,6 +16,7 @@ export const useProduct = defineStore(
     const productFeature = ref([])
     const FeaturedProduct = ref([])
     const new_arrivals = ref([])
+    const productReview = ref([])
 
     const GetFeaturedProducts = async () => {
       try {
@@ -58,10 +59,11 @@ export const useProduct = defineStore(
     }
     const PostReviews = async (review, id) => {
       try {
-        const response = await axiosClient.post(`post_product_review/${id}`, review)(response)
+        const response = await axiosClient.post(`post_product_review/${id}`, review)
         return response.data
       } catch (error) {
         // Handle errors
+        console.log(error)
 
         throw error
       }
@@ -69,6 +71,7 @@ export const useProduct = defineStore(
     const GetReviews = async (id) => {
       try {
         const response = await axiosClient.get(`get_product_review/${id}`)
+        productReview.value = response.data
         return response.data
       } catch (error) {
         // Handle errors
@@ -86,14 +89,18 @@ export const useProduct = defineStore(
       PostReviews,
       productDetail,
       productFeature,
-      FeaturedProduct
+      FeaturedProduct,
+      productReview
     }
   },
   {
     persist: {
       enabled: true,
       strategies: [
-        { storage: localStorage, paths: ['productDetail', 'productFeature', 'FeaturedProduct'] }
+        {
+          storage: localStorage,
+          paths: ['productDetail', 'productFeature', 'FeaturedProduct', 'productReview']
+        }
       ]
     }
   }

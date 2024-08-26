@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useSavedStore } from '@/stores/save_products.js'
 import { useUserStore } from '@/stores/Authentication'
 import { useIsLoggedIn } from '@/composables/isAuhenticated'
@@ -16,7 +16,7 @@ const { userInfo } = storeToRefs(userstore)
 const saveStore = useSavedStore()
 const isLoggedIn = useIsLoggedIn()
 const user_id = ref(userInfo.value ? userInfo.value.id : null)
-
+const { get_saved_data } = storeToRefs(saveStore)
 // // import paystack from 'vue-paystack'
 </script>
 

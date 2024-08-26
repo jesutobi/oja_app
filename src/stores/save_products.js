@@ -22,13 +22,11 @@ export const useSavedStore = defineStore(
     }
     const get_save_product = async (payload) => {
       try {
-        const response = await axiosClient.get(`get_saved_product/${payload}`)
+        const response = await axiosClient.get(`get_saved_product`)
         get_saved_data.value = response.data.savedProductsDetails
 
         return response
       } catch (error) {
-        // Handle errors
-        'error:', error
         throw error
       }
     }

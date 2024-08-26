@@ -66,9 +66,9 @@
           <div>
             <Copyright class="" />
           </div>
-          <div class="text-[1.5rem] tracking-wide font_logo">
+          <!-- <div class="text-[1.5rem] tracking-wide font_logo">
             <span>J.J.J</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

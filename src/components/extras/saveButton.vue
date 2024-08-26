@@ -29,13 +29,10 @@ const props = defineProps({
 const userstore = useUserStore()
 const saveStore = useSavedStore()
 const saved_response = ref({})
+
 const { get_saved_data } = storeToRefs(saveStore)
 const isLoggedIn = useIsLoggedIn()
 const { userInfo, token } = storeToRefs(userstore)
-
-const getSavedProduct = () => {
-  saveStore.get_save_product(userInfo.value ? userInfo.value.id : null)
-}
 
 const data = ref({ user_id: userInfo.value ? userInfo.value.id : null, product_id: props.Data.id })
 
@@ -52,7 +49,7 @@ const saveProduct = () => {
       })
     })
 
-    getSavedProduct()
+    saveStore.get_save_product()
   } else {
     toast('Login to save products', {
       theme: 'colored',
@@ -70,22 +67,7 @@ const saveProduct = () => {
 }
 
 const isProductSaved = computed(() => {
-  return (
-    Array.isArray(get_saved_data.value) &&
-    get_saved_data.value.find((item) => item.product_id === props.Data.id)
-  )
-})
-
-watch(
-  () => props.Data.id,
-  () => {
-    data.value.product_id = props.Data.id
-    getSavedProduct()
-  }
-)
-
-onMounted(() => {
-  getSavedProduct()
+  return get_saved_data.value.find((item) => item.product.id === props.Data.id)
 })
 </script>
 

@@ -88,9 +88,7 @@
           <span class="text-xs text-red-600">{{ errors.rating }}</span>
         </div>
       </div>
-
       <!-- subnit button -->
-
       <div class="mx-auto w-[43%] pt-[2rem]">
         <ProdButton :Width="`w-[100%]`"> Submit review </ProdButton>
       </div>
@@ -99,6 +97,7 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from 'vue-router'
 import ProdButton from '../slots/productButtons.vue'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
@@ -109,10 +108,8 @@ import { ref } from 'vue'
 import { useProduct } from '@/stores/product'
 import { object, string, number } from 'yup'
 
-const props = defineProps({
-  Data: Number
-})
-
+const route = useRoute()
+const router = useRoute()
 const store = useProduct()
 const successMsg = ref('')
 const errorsInfo = ref('')
@@ -140,45 +137,51 @@ const [content, contentAttrs] = defineField('content')
 const [rating, ratingAttrs] = defineField('rating')
 
 const PostReview = handleSubmit((values) => {
-  const id = toast.loading('Uploading...')
-  const prodcutId = JSON.stringify(props.Data)(values)
   store
-    .PostReviews(values, prodcutId)
+    .PostReviews(values, route.params.id)
     .then((msg) => {
       successMsg.value = msg.message
-      setTimeout(() => {
-        toast.update(id, {
-          render: successMsg,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
-          type: 'success',
-          isLoading: false
-        })
+      // setTimeout(() => {
+      //   toast.update(id, {
+      //     render: successMsg,
+      //     autoClose: true,
+      //     closeOnClick: true,
+      //     closeButton: true,
+      //     type: 'success',
+      //     isLoading: false
+      //   })
 
-        setTimeout(() => {
-          // done
-          toast.done(
-            router.push({
-              name: 'Product_details'
-            })
-          )
-        }, 2000)
-      }, 2000)
+      //   setTimeout(() => {
+      //     // done
+      //     toast.done(
+      //       router.push({
+      //         name: 'Product_details'
+      //       })
+      //     )
+      //   }, 2000)
+      // }, 2000)
+      setTimeout(() => {
+        const id = msg.message
+        toast(id, {
+          theme: 'colored',
+          type: 'success',
+          autoClose: 1000,
+          transition: 'slide',
+          dangerouslyHTMLString: true
+        })
+      })
       resetForm()
     })
     .catch((error) => {
-      errorsInfo.value = 'Invalid submission'
       setTimeout(() => {
-        toast.update(id, {
-          render: errorsInfo,
-          autoClose: true,
-          closeOnClick: true,
-          closeButton: true,
+        toast(error, {
+          theme: 'colored',
           type: 'error',
-          isLoading: false
+          autoClose: 10000,
+          transition: 'slide',
+          dangerouslyHTMLString: true
         })
-      }, 2000)
+      })
       // errorNotify()
     })
   // Reset the form data

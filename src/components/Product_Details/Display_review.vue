@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex py-2" v-for="(data, index) in props.Data" :key="index">
+    <div class="flex py-2" v-for="(data, index) in productReview?.data?.reviews" :key="index">
       <div>
         <UserCircle>
           <span class="text-black">{{ data.user.first_name.charAt(0) }}</span>
@@ -35,11 +35,16 @@
   </div>
 </template>
 <script setup>
+import { useProduct } from '@/stores/product'
 import { useFormatDate } from '../../composables/formatDate'
 
 import UserCircle from '@/components/slots/UserCircle.vue'
 import Icon from '@/components/slots/UserCircle.vue'
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+
+const store = useProduct()
+const { productReview } = storeToRefs(store)
 
 const props = defineProps({
   Data: Array

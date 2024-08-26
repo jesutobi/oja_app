@@ -3,14 +3,14 @@
     <!-- product tite -->
     <div class="flex justify-between">
       <div class="leading-loose tracking-wide productFont sm:text-[1rem] text-[0.9rem] w-[80%]">
-        <span class="">{{ Data.product_title }}</span>
+        <span class="">{{ productDetail.product_title }}</span>
       </div>
 
       <div class="py-1 cursor-pointer">
         <a
           v-if="copyButton"
           ref="link"
-          :href="`http://localhost:5173/Product_details/${Data.id}`"
+          :href="`http://localhost:5173/Product_details/${productDetail.id}`"
           @click.prevent="copyLink"
         >
           <img src="@/assets/icon/copy-link.svg" style="width: 20px" alt=""
@@ -24,7 +24,7 @@
     <div
       class="leading-loose tracking-wide productFont sm:text-[1.5rem] text-[1.2rem] sm:py-3 py-2"
     >
-      <span class="">&#8358;{{ formatPrice(Data.product_price) }}</span>
+      <span class="">&#8358;{{ formatPrice(productDetail.product_price) }}</span>
     </div>
     <!-- brand -->
     <div class="sm:text-sm text-xs flex items-center my-3">
@@ -32,7 +32,7 @@
         <span>Brand</span>
       </div>
       <div>
-        <span class="text-yellow-600">: {{ Data.product_brand }}</span>
+        <span class="text-yellow-600">: {{ productDetail.product_brand }}</span>
       </div>
     </div>
     <!-- Quantity -->
@@ -41,21 +41,21 @@
         <span>Store count</span>
       </div>
       <div>
-        <span class="text-yellow-600">: {{ Data.product_quantity }}</span>
+        <span class="text-yellow-600">: {{ productDetail.product_quantity }}</span>
       </div>
     </div>
     <!-- add to cart -->
 
     <div class="flex items-center sm:text-sm text-xs py-3">
       <div><span>Add to bag : </span></div>
-      <QuantityChange :Data="Data" />
+      <QuantityChange :Data="productDetail" />
     </div>
     <!-- buy now button -->
     <div class="py-3 flex items-center w-full">
-      <ProdButton @click="BuyNow(Data)" :Width="`w-[100%]`" class="w-[40%] md:w-[30%]"
+      <ProdButton @click="BuyNow(productDetail)" :Width="`w-[100%]`" class="w-[40%] md:w-[30%]"
         >Buy Now</ProdButton
       >
-      <SaveButton :Data="productDetail" class="px-2" />
+      <!-- <SaveButton :Data="productDetail" class="px-2" /> -->
     </div>
 
     <!-- product features-->
@@ -63,9 +63,9 @@
       <div class="py-2 font2">
         <span>Features</span>
       </div>
-      <!-- {{ JSON.parse(Feature) }} -->
+
       <div class="overflow-auto xl:h-[25vh] lg:h-[20vh] h-[25vh]">
-        <ul class="list-disc p-2" v-for="(data, index) in Feature" :key="index">
+        <ul class="list-disc p-2" v-for="(data, index) in parseData(productFeature)" :key="index">
           <li>
             <div class="flex items-center">
               <div class="font2">
@@ -82,7 +82,7 @@
   </div>
 </template>
 <script setup>
-import SaveButton from '@/components/extras/saveButton.vue'
+// import SaveButton from '@/components/extras/saveButton.vue'
 import QuantityChange from '@/components/extras/quantityChange.vue'
 import ProdButton from '../slots/productButtons.vue'
 import { ref, reactive } from 'vue'
@@ -130,6 +130,9 @@ const copyLink = () => {
       copyButton.value = true
     }, 1000)
   }
+}
+const parseData = (data) => {
+  return JSON.parse(data)
 }
 </script>
 <style scoped></style>

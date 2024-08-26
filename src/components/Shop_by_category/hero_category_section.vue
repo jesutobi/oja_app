@@ -3,14 +3,14 @@
     <div class="m-2">
       <div class="relative">
         <img
+          :class="{
+            'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
+          }"
           loading="lazy"
           @load="onImageLoad"
           :src="`${baseURL}/storage/${ProductCategoryInfo.hero_image}`"
           alt=""
           class="rounded-[2rem] h-[20rem] w-full object-cover"
-          :class="{
-            'skeleton-loader animate-skeleton bg-slate-400/10': isLoaded
-          }"
         />
         <div class="font2 sm:text-[2rem] text-[1.5rem] absolute bottom-0 right-0">
           <span
