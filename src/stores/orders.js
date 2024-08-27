@@ -31,6 +31,7 @@ export const useOrdersStore = defineStore(
       try {
         const response = await axiosClient.get(`get_all_orders`)
         orders.value = response.data.data
+        console.log(response)
 
         return response
       } catch (error) {

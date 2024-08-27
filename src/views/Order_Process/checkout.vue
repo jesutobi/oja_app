@@ -3,6 +3,7 @@
     <!-- <div class="pt-2">
       <Back />
     </div> -->
+
     <div
       class="grid grid-cols-12 max-[768px]:gap-0 max-[768px]:grid-cols-1 max-[1024px]:gap-2 pt-[2rem] min-[1024px]:gap-6"
     >

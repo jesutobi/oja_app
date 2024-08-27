@@ -12,7 +12,10 @@
     </DashTitleSlot>
 
     <!-- form space -->
-    <div>
+    <div v-if="input_loader">
+      <InputLoader v-for="(number, index) in 3" :key="index" />
+    </div>
+    <div v-else>
       <form @submit.prevent="update">
         <div class="">
           <div class="">
@@ -180,6 +183,7 @@
 </template>
 
 <script setup>
+import InputLoader from '@/components/loaders/input_loader.vue'
 import NaijaStates from 'naija-state-local-government'
 import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 // import Edit from '@/assets/svg/edit.vue'
@@ -195,6 +199,7 @@ import { useUpdateUserStore } from '@/stores/Update_user'
 import { useStatesStore } from '@/stores/States'
 import { useRouter } from 'vue-router'
 
+const input_loader = ref(true)
 const router = useRouter()
 const storeState = useStatesStore()
 const store = useUpdateUserStore()
@@ -203,6 +208,17 @@ const errorsInfo = ref('')
 
 const user_state = ref({})
 const states = NaijaStates.all()
+
+const getUsers = async () => {
+  input_loader.value = true
+  try {
+    await store.GetUser()
+  } catch (error) {
+    console.error('Error:', error)
+  } finally {
+    input_loader.value = false
+  }
+}
 
 const getUser = () => {
   store.GetUser().then((response) => {
@@ -291,7 +307,7 @@ const update = () => {
 }
 
 onMounted(() => {
-  getUser()
+  getUser(), getUsers()
 })
 
 getUser()

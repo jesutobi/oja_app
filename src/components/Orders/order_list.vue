@@ -2,7 +2,7 @@
   <div>
     <div>
       <!-- filter box -->
-      <div v-if="orders.length > 0" class="inline-block float-end justify-end py-4 relative group">
+      <!-- <div v-if="orders.length > 0" class="inline-block float-end justify-end py-4 relative group">
         <div class="group-hover:block cursor-pointer">
           <div class="flex items-center rounded-lg bg-white shadow p-2">
             <div class="text-[0.8rem] font2">
@@ -31,7 +31,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <AdressCardGrid class="clear-both">
         <DashboardCard v-for="(item, index) in orders" :key="index">
@@ -165,9 +165,17 @@ const onImageLoad = () => {
   isLoaded.value = true
 }
 
-const getOrders = () => {
-  orderStore.GetOrders()
-}
+// const getOrders = async () => {
+//   text_loader.value = true
+//   try {
+//     await orderStore.GetOrders()
+//   } catch (error) {
+//     console.error('Error:', error)
+//   } finally {
+//     text_loader.value = false
+//   }
+// }
+
 const DeleteOrders = (value) => {
   orderStore.DeleteOrderDetail(value)
   toast('Order deleted succesfully', {
@@ -180,7 +188,8 @@ const DeleteOrders = (value) => {
 }
 
 onMounted(() => {
-  onImageLoad(), getOrders()
+  onImageLoad()
+  // getOrders()
 })
 </script>
 

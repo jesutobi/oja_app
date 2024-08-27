@@ -19,7 +19,10 @@
       </div>
     </DashTitleSlot>
     <!-- form space -->
-    <div>
+    <div v-if="input_loader">
+      <InputLoader v-for="(number, index) in 3" :key="index" />
+    </div>
+    <div v-else>
       <form @submit.prevent="addShippingAddress">
         <div class="">
           <div class="">
@@ -182,6 +185,7 @@
 </template>
 
 <script setup>
+import InputLoader from '@/components/loaders/input_loader.vue'
 import NaijaStates from 'naija-state-local-government'
 import DashTitleSlot from '@/components/slots/DashboardTitle.vue'
 import Plus from '@/assets/svg/plus.vue'
@@ -196,6 +200,7 @@ import { object, string } from 'yup'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+const input_loader = ref(true)
 const router = useRouter()
 const store = useShippingAddressStore()
 const route = useRoute()
@@ -327,10 +332,23 @@ const getShippingAdressDetail = () => {
     })
   }
 }
+const getShippingAdressDetails = async () => {
+  input_loader.value = true
+  try {
+    if (route.params.id) {
+      await store.GetShippingAdressDetail(route.params.id)
+    }
+  } catch (error) {
+    console.error('Error:', error)
+  } finally {
+    input_loader.value = false
+  }
+}
 
 onMounted(() => {
   // (shipping_details.value.state)
   getShippingAdressDetail()
+  getShippingAdressDetails()
 })
 </script>
 

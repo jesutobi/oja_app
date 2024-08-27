@@ -5,11 +5,18 @@
     >
       <!-- product images -->
       <div class="lg:col-span-5 col-span-12 shadow sm:rounded-lg bg-white">
-        <Images class="" />
+        <div v-if="Image_loader" class="py-0">
+          <Image class="m-2" />
+        </div>
+        <Images v-else class="" />
       </div>
       <!-- product info -->
       <div class="lg:col-span-7 col-span-12 py-2 px-4 shadow bg-white sm:rounded-lg">
-        <Info />
+        <div v-if="text_loader">
+          <Text v-for="index in 5" :key="index" />
+        </div>
+
+        <Info v-else />
       </div>
     </div>
     <!-- product description and review -->
@@ -20,7 +27,10 @@
       <div
         class="lg:col-span-6 max-[1024px]:col-span-6 shadow sm:rounded-lg text-sm py-2 px-4 bg-white"
       >
-        <Description />
+        <div v-if="text_loader">
+          <Text v-for="index in 5" :key="index" />
+        </div>
+        <Description v-else />
       </div>
       <!-- Product review -->
       <div
@@ -87,6 +97,8 @@
 </template>
 
 <script setup>
+import Text from '@/components/loaders/text_loader.vue'
+import Image from '@/components/loaders/detail_image.vue'
 import ProdButton from '../slots/productButtons.vue'
 import Images from '@/components/Product_Details/product_images.vue'
 import Info from '@/components/Product_Details/Product_info.vue'
@@ -100,6 +112,8 @@ import { onBeforeMount, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 
+const text_loader = ref(true)
+const Image_loader = ref(true)
 const store = useProduct()
 const { productDetail, productFeature, productReview } = storeToRefs(store)
 const route = useRoute()
@@ -111,8 +125,17 @@ const displayReview = ref(true)
 
 const id = ref(0)
 
-const getProductDetail = () => {
-  store.GetProductDetail(route.params.id)
+const getProductDetail = async () => {
+  text_loader.value = true
+  Image_loader.value = true
+  try {
+    await store.GetProductDetail(route.params.id)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    text_loader.value = false
+    Image_loader.value = false
+  }
 }
 const getProductReview = () => {
   store.GetReviews(route.params.id)

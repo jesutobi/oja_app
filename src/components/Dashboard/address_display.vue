@@ -2,7 +2,7 @@
   <div>
     <div>
       <AdressCardGrid>
-        <DashboardCard v-for="(data, index) in store.ShippingAddresses" :key="index">
+        <DashboardCard v-for="(data, index) in ShippingAddresses" :key="index">
           <DashboardCardHeader class="p-2">
             <div class="flex items-center justify-between">
               <div class="font2 text-sm">
@@ -123,18 +123,18 @@ import AdressCardGrid from '@/components/slots/AdressCardGrid.vue'
 import { useShippingAddressStore } from '@/stores/shipping_address'
 import { onMounted, ref, reactive } from 'vue'
 import { useSetDefault } from '../../composables/setAsDefault'
+import { storeToRefs } from 'pinia'
 
 const { setAsDefault } = useSetDefault()
-
 const store = useShippingAddressStore()
-const AddressData = reactive(store.ShippingAddresses)
+// const AddressData = reactive(store.ShippingAddresses)
 const successMsg = ref('')
 const errorsInfo = ref('')
+const { ShippingAddresses } = storeToRefs(store)
 
-const GetShippingAdress = () => {
-  store.GetShippingAdress()
-  AddressData.value = store.ShippingAddresses
-}
+// const GetShippingAdress = () => {
+//   AddressData.value = store.ShippingAddresses
+// }
 const DeleteAddress = (value) => {
   confirm('Are you sure you want to delete address')
   const id = toast.loading('Deleting address..')
@@ -175,12 +175,8 @@ const DeleteAddress = (value) => {
       }, 2000)
       // errorNotify()
     })
-  GetShippingAdress()
+  store.GetShippingAdress()
 }
-
-onMounted(() => {
-  GetShippingAdress()
-})
 </script>
 
 <style scoped></style>

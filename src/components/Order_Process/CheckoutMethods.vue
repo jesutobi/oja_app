@@ -19,54 +19,58 @@
         </div>
       </CheckOutCardTitle>
       <!-- address -->
-
-      <div
-        v-for="(item, index) in prioritizedShippingAddresses"
-        :key="index"
-        class="flex w-full mt-4 p-2"
-      >
-        <div class="">
-          <input
-            id="specifyColor"
-            v-model="SelectedShipping"
-            @change="getSelectedShippingId"
-            type="radio"
-            :value="item.id"
-            name=""
-          />
-        </div>
-        <div class="flex w-full justify-between items-center">
-          <div class="px-2">
-            <!-- name -->
-            <div class="font-black font2 text-xs sm:text-[0.9rem]">
-              <span>{{ item.first_name + ' ' + item.last_name }}</span>
-            </div>
-            <!-- address -->
-            <div class="py-2 text-gray-500">
-              <span>{{ item.delivery_address }}</span>
-            </div>
-            <!-- phone number -->
-            <div class="text-gray-500 text-xs">
-              <span>{{ item.phone_number }}</span>
-            </div>
-            <div v-if="item.is_default === 1" class="text-green-600 text-xs pt-1">
-              <span>Default shipping address</span>
-            </div>
-            <div
-              @click="setAsDefault(item.id)"
-              v-if="item.is_default === 0"
-              class="text-green-600 underline text-xs pt-1 cursor-pointer"
-            >
-              <span>Set as default address</span>
-            </div>
-          </div>
-          <div v-if="item.is_default === 1">
-            <Check />
-          </div>
-        </div>
+      <div v-if="text_loader">
+        <Loader v-for="(number, index) in 3" :key="index" />
       </div>
-      <div v-if="ShippingAddresses.length === 0" class="">
-        <NoData :text="`You have no Shipping address`" />
+      <div v-else>
+        <div
+          v-for="(item, index) in prioritizedShippingAddresses"
+          :key="index"
+          class="flex w-full mt-4 p-2"
+        >
+          <div class="">
+            <input
+              id="specifyColor"
+              v-model="SelectedShipping"
+              @change="getSelectedShippingId"
+              type="radio"
+              :value="item.id"
+              name=""
+            />
+          </div>
+          <div class="flex w-full justify-between items-center">
+            <div class="px-2">
+              <!-- name -->
+              <div class="font-black font2 text-xs sm:text-[0.9rem]">
+                <span>{{ item.first_name + ' ' + item.last_name }}</span>
+              </div>
+              <!-- address -->
+              <div class="py-2 text-gray-500">
+                <span>{{ item.delivery_address }}</span>
+              </div>
+              <!-- phone number -->
+              <div class="text-gray-500 text-xs">
+                <span>{{ item.phone_number }}</span>
+              </div>
+              <div v-if="item.is_default === 1" class="text-green-600 text-xs pt-1">
+                <span>Default shipping address</span>
+              </div>
+              <div
+                @click="setAsDefault(item.id)"
+                v-if="item.is_default === 0"
+                class="text-green-600 underline text-xs pt-1 cursor-pointer"
+              >
+                <span>Set as default address</span>
+              </div>
+            </div>
+            <div v-if="item.is_default === 1">
+              <Check />
+            </div>
+          </div>
+        </div>
+        <div v-if="ShippingAddresses.length === 0" class="">
+          <NoData :text="`You have no Shipping address`" />
+        </div>
       </div>
 
       <!-- add new address -->
@@ -93,6 +97,7 @@
           <img src="@/assets/icon/cash-dollar-flow-svgrepo-com.svg" class="w-[30px]" alt="" />
         </div>
       </CheckOutCardTitle>
+
       <!-- address -->
       <div class="flex w-full mt-4 p-2">
         <div class="">
@@ -121,6 +126,7 @@
   </div>
 </template>
 <script setup>
+import Loader from '@/components/loaders/text_loader.vue'
 import NoData from '@/components/extras/noData.vue'
 import Title from '@/components/Dashboard/DashboardTitles.vue'
 import LittleInfo from '@/components/extras/littleInfo.vue'
@@ -142,12 +148,18 @@ const orderStore = useOrdersStore()
 const { setAsDefault } = useSetDefault()
 const payWith = ref('')
 const SelectedShipping = ref({})
+const text_loader = ref(true)
 
-const getShippingAddress = () => {
-  store.GetShippingAdress()
-  // ShippingAddresses.value = store.ShippingAddresses
+const getShippingAddress = async () => {
+  text_loader.value = true
+  try {
+    await store.GetShippingAdress()
+  } catch (error) {
+    console.error('Error fetching shipping address:', error)
+  } finally {
+    text_loader.value = false
+  }
 }
-
 const prioritizedShippingAddresses = computed(() => {
   // getShippingAddress()
   const defaultAddress = ShippingAddresses.value.find((item) => item.is_default == 1)
